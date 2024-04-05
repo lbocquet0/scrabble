@@ -7,6 +7,8 @@ public class ScrabbleApplicationConsole {
 		System.out.println(SEPARATOR);
 		System.out.println("-- Bienvenue dans notre magnifique jeu de scrabble ! --");
 		System.out.println("-- développé par Hugo                                --");
+		System.out.println("-- et par Eliott                                     --");
+		
 		System.out.println(SEPARATOR);
 
 	}
