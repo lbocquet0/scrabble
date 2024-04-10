@@ -28,7 +28,7 @@ public class TokenTest {
 
 	@Test
 	public void testDescribeJoker() {
-		Token token = new Token(null);
-		assertEquals("Joker", token.describe());
+		Token token = new Joker();
+		assertEquals(" ", token.describe());
 	}
 }
