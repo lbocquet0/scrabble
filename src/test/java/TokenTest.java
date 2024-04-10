@@ -31,4 +31,10 @@ public class TokenTest {
 		Token token = new Joker();
 		assertEquals(" ", token.describe());
 	}
+
+	@Test
+	public void testGetLetter() {
+		Token token = new Token(Letter.A);
+		assertEquals(Letter.A, token.getLetter());
+	}
 }
