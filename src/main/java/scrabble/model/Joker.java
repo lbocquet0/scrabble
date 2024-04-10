@@ -12,6 +12,6 @@ public class Joker extends Token {
 
 	@Override
 	public String describe() {
-		return "⭐";
+		return " ";
 	}
 }
