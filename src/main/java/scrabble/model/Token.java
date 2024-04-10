@@ -11,6 +11,10 @@ public class Token {
 		return letter;
 	}
 
+	public boolean isJoker() {
+		return false;
+	}
+
 	public String describe() {
 		return letter.toString() + " (" + letter.getPoint() + ")";
 	}
