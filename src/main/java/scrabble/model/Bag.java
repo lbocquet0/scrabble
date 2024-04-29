@@ -26,6 +26,10 @@ public class Bag {
         return this.tokens.remove(0);
     }
 
+    public void putToken(Token token) {
+        this.tokens.add(token);
+    }
+
     private void createTokens() {
         for (int i = 0; i < 15; i++) {
             this.tokens.add(new Token(Letter.E));
