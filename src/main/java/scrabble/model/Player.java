@@ -1,16 +1,10 @@
 package scrabble.model;
 
 public class Player {
-	private int score;
 	private Easel easel;
 
 	public Player() {
-		this.score = 0;
 		this.easel = new Easel(this);
-	}
-
-	public int getScore() {
-		return this.score;
 	}
 
 	public Easel getEasel() {
