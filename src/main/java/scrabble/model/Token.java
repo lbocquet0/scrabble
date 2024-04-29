@@ -15,7 +15,7 @@ public class Token {
 		return false;
 	}
 
-	public String describe() {
+	public String display() {
 		return letter.toString() + " (" + letter.getPoint() + ")";
 	}
 }
