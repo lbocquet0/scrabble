@@ -18,7 +18,7 @@ public class Bag {
             this.tokens.set(randomIndex, temp);
         }
     }
-    
+
     public Token pickToken() {
         if (this.tokens.isEmpty()) {
             return null;
@@ -68,6 +68,7 @@ public class Bag {
             this.tokens.add(new Token(Letter.F));
             this.tokens.add(new Token(Letter.H));
             this.tokens.add(new Token(Letter.V));
+            this.tokens.add(new Joker());
         }
         for (int i = 0; i < 1; i++) {
             this.tokens.add(new Token(Letter.J));
