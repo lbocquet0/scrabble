@@ -58,4 +58,15 @@ public class Easel {
 			e.printStackTrace();
 		}
 	}
+	
+	public void display() {
+		Integer i = 0;
+		for(Token token : tokens) { 
+			i++;
+			System.out.println("┏     ┓" + "\n" + "┃ " + token.display() + " ┃" + "\n" + "┗     ┛");
+		}
+		for(Integer rest = MAX_TOKENS - i;rest > 0; rest--) {
+			System.out.println ("┏     ┓" + "\n" + "┃     ┃" + "\n" + "┗     ┛");
+		}
+	}
 }
