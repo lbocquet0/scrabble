@@ -19,10 +19,11 @@ public class Bag {
         }
     }
     
-    public Token pikeToken() {
+    public Token pickToken() {
         if (this.tokens.isEmpty()) {
             return null;
         }
+        this.shuffle();
         return this.tokens.remove(0);
     }
 
