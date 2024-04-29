@@ -11,9 +11,12 @@ public class Box {
 	}
 	
 	public String describe() {
-		if(token == null)
-		{
-			return "";
+		if (token == null) {
+			if (this.middle) {
+				return "⭐";
+			} else {
+				return " ";
+			}
 		}
 		
 		return token.describe();
