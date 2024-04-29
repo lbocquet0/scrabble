@@ -19,7 +19,7 @@ public class Bag {
         }
     }
     
-    public Token pikeToken() {
+    public Token pickToken() {
         if (this.tokens.isEmpty()) {
             return null;
         }
