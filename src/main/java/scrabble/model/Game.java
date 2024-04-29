@@ -19,4 +19,8 @@ public class Game {
 	public Bag getBag() {
 		return this.bag;
 	}
+
+	public Player getPlayer() {
+		return this.player;
+	}
 }
