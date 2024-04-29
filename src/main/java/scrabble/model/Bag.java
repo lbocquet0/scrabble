@@ -20,7 +20,10 @@ public class Bag {
     }
     
     public Token pikeToken() {
-		return null;
+        if (this.tokens.isEmpty()) {
+            return null;
+        }
+        return this.tokens.remove(0);
     }
 
     private void createTokens() {
