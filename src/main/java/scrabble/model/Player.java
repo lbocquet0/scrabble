@@ -5,8 +5,8 @@ public class Player {
 	private Game game;
 
 	public Player(Game game) {
-		this.easel = new Easel(this);
 		this.game = game;
+		this.easel = new Easel(this);
 	}
 
 	public Easel getEasel() {
