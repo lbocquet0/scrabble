@@ -38,7 +38,7 @@ public class Easel {
 		this.tokens.add(token);
 	}
 
-	private void swapTokens(Token token) {
+	public void swapTokens(Token token) {
 		this.tokens.remove(token);
 	
 		Bag bag = this.owner.getGame().getBag();
