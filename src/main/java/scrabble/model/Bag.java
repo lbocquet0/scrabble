@@ -37,6 +37,7 @@ public class Bag {
             this.tokens.add(new Token(Letter.N));
             this.tokens.add(new Token(Letter.R));
             this.tokens.add(new Token(Letter.T));
+            this.tokens.add(new Token(Letter.S));
             this.tokens.add(new Token(Letter.O));
             this.tokens.add(new Token(Letter.U));
         }
