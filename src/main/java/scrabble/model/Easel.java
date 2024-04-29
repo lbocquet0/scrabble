@@ -3,7 +3,7 @@ package scrabble.model;
 import java.util.ArrayList;
 
 public class Easel {
-	private static Integer MAX_TOKENS = 7;
+	public int DEFAULT_TOKENS_AMOUNT = 7;
 
 	private ArrayList<Token> tokens;
 	private Player owner;
@@ -12,12 +12,8 @@ public class Easel {
 		this.tokens = new ArrayList<Token>();
 		this.owner = owner;
 
-		for (int i = 0; i < MAX_TOKENS; i++) {
-			try {
-				this.pickRandomToken();
-			} catch (MaxTokensReachedException e) {
-				e.printStackTrace();
-			}
+		for (int i = 0; i < DEFAULT_TOKENS_AMOUNT; i++) {
+			this.pickRandomToken();
 		}
 	}
 
@@ -29,11 +25,7 @@ public class Easel {
 		return this.owner;
 	}
 
-	public void pickRandomToken() throws MaxTokensReachedException {
-		if (this.tokens.size() >= MAX_TOKENS) {
-			throw new MaxTokensReachedException();
-		}
-
+	public void pickRandomToken() {
 		Bag bag = this.owner.getGame().getBag();
 		Token token = bag.pickToken();
 
@@ -52,10 +44,6 @@ public class Easel {
 		Bag bag = this.owner.getGame().getBag();
 		bag.putToken(token);
 
-		try {
-			this.pickRandomToken();
-		} catch (MaxTokensReachedException e) {
-			e.printStackTrace();
-		}
+		this.pickRandomToken();
 	}
 }
