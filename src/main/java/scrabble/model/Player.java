@@ -6,7 +6,7 @@ public class Player {
 
 	public Player() {
 		this.score = 0;
-		this.easel = new Easel();
+		this.easel = new Easel(this);
 	}
 
 	public int getScore() {
