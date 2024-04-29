@@ -30,6 +30,10 @@ public class Bag {
         this.tokens.add(token);
     }
 
+    public int countTokens() {
+        return this.tokens.size();
+    }
+
     private void createTokens() {
         for (int i = 0; i < 15; i++) {
             this.tokens.add(new Token(Letter.E));
