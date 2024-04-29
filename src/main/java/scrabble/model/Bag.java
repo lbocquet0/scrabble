@@ -23,6 +23,7 @@ public class Bag {
         if (this.tokens.isEmpty()) {
             return null;
         }
+        this.shuffle();
         return this.tokens.remove(0);
     }
 
