@@ -19,7 +19,7 @@ public class Board {
 	}
 	
 	public Board() {
-		boxes = new ArrayList<>();
+		this.boxes = new ArrayList<>();
 		
 		for (int i = 0; i < SIZE; i++) {
 			ArrayList<Box> currentLine = new ArrayList<>();
@@ -31,6 +31,8 @@ public class Board {
 					currentLine.add(new Box(false, null));
 				}
 			}
+
+			this.boxes.add(currentLine);
 		}
 	}
 }
