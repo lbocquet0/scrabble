@@ -7,9 +7,9 @@ public class Game {
 	private Bag bag;
 	
 	public Game() {
-		Player player = new Player(this);
-		Board board = new Board();
-		Bag bag = new Bag();
+		this.bag = new Bag();
+		this.player = new Player(this);
+		this.board = new Board();
 	}
 	
 	public Board getBoard() {
