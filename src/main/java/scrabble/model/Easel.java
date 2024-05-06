@@ -23,6 +23,14 @@ public class Easel {
 		return this.tokens;
 	}
 
+	public int getTokensAmount() {
+		return this.tokens.size();
+	}
+
+	public Token getToken(int index) {
+		return this.tokens.get(index);
+	}
+
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -35,10 +43,10 @@ public class Easel {
 			this.addToken(token);
 
 		} catch (EmptyBagException _e) {
-			
+		
 		}
 	}
-	
+
 	private void addToken(Token token) {
 		this.tokens.add(token);
 	}
