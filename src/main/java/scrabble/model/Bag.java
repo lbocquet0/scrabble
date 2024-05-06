@@ -1,6 +1,7 @@
 package scrabble.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import scrabble.util.EmptyBagException;
 
@@ -13,12 +14,7 @@ public class Bag {
     }
 
     public void shuffle() {
-        for (int i = 0; i < this.tokens.size(); i++) {
-            int randomIndex = (int) (Math.random() * this.tokens.size());
-            Token temp = this.tokens.get(i);
-            this.tokens.set(i, this.tokens.get(randomIndex));
-            this.tokens.set(randomIndex, temp);
-        }
+        Collections.shuffle(this.tokens);
     }
 
     public Token pickToken() throws EmptyBagException {
