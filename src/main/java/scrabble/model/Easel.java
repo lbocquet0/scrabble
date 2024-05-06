@@ -35,7 +35,7 @@ public class Easel {
 		return this.owner;
 	}
 
-	public void pickRandomToken() {
+	private void pickRandomToken() {
 		Bag bag = this.owner.getGame().getBag();
 
 		try {
