@@ -10,6 +10,14 @@ public class Box {
 		this.token = token;
 	}
 	
+	public void setToken(Token token) {
+		this.token = token;
+	}
+	
+	public Token getToken() {
+		return this.token;
+	}
+	
 	public String describe() {
 		if (token == null) {
 			if (this.middle) {
