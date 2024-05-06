@@ -23,13 +23,13 @@ public class TokenTest {
 	@Test
 	public void testDescribeNoJoker() {
 		Token token = new Token(Letter.A);
-		assertEquals("A (1)", token.describe());
+		assertEquals("A 1", token.display());
 	}
 
 	@Test
 	public void testDescribeJoker() {
 		Token token = new Joker();
-		assertEquals(" ", token.describe());
+		assertEquals(" ", token.display());
 	}
 
 	@Test
