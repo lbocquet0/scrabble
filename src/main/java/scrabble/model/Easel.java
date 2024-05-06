@@ -58,7 +58,7 @@ public class Easel {
 			i++;
 			System.out.println("┏     ┓" + "\n" + "┃ " + token.display() + " ┃" + "\n" + "┗     ┛");
 		}
-		for(Integer rest = MAX_TOKENS - i;rest > 0; rest--) {
+		for(Integer rest = DEFAULT_TOKENS_AMOUNT - i;rest > 0; rest--) {
 			System.out.println ("┏     ┓" + "\n" + "┃     ┃" + "\n" + "┗     ┛");
 		}
 	}
