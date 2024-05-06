@@ -1,5 +1,7 @@
 package scrabble.application;
 
+import scrabble.model.Game;
+
 public class ScrabbleApplicationConsole {
 	public static String SEPARATOR = "-------------------------------------------------------";
 
@@ -11,6 +13,8 @@ public class ScrabbleApplicationConsole {
 		System.out.println("-- et par Lucas                                      --");
 		System.out.println(SEPARATOR);
 
+		Game game = new Game();
+		game.start();
 	}
 
 }
