@@ -25,4 +25,30 @@ public class Board {
 			this.boxes.add(currentLine);
 		}
 	}
+	
+	public static void display() {
+	    final int NB_LIGNES = 15;
+	    final int NB_COLONNES = 15;
+
+	    System.out.print("┏");
+	    for (int i = 0; i < NB_COLONNES; i++) {
+	        System.out.print("━━━━━┳");
+	    }
+	    System.out.println("━━━━━┓");
+
+	    for (int i = 0; i < NB_LIGNES; i++) {
+	        System.out.print("┣");
+	        for (int j = 0; j < NB_COLONNES; j++) {
+	            System.out.print("━━━━━╋");
+	        }
+	        System.out.println("━━━━━┫");
+	    }
+
+	    System.out.print("┗");
+	    for (int i = 0; i < NB_COLONNES; i++) {
+	        System.out.print("━━━━━┻");
+	    }
+	    System.out.println("━━━━━┛");
+	}
+
 }

@@ -19,6 +19,6 @@ public class Box {
 			}
 		}
 		
-		return token.describe();
+		return token.display();
 	}
 }
