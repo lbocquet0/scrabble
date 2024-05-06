@@ -24,39 +24,48 @@ public class Board {
 	}
 	
 	public void display() {
-	    System.out.print("┏");
+	    StringBuilder horizontalLine = new StringBuilder("");
 	    for (int i = 1; i < SIZE; i++) {
-	        System.out.print("━━━━━┳");
+	        horizontalLine.append("-----");
 	    }
-	    Console.message("━━━━━┓");
+	    horizontalLine.append("-\n");
 
-	    for (int i = 1; i < SIZE; i++) {
+	    System.out.print(horizontalLine);
+
+	    for (int i = 1; i <= SIZE; i++) {
 	        System.out.print("┃");
-	        for (int j = 1; j < SIZE; j++) {
+	        for (int j = 1; j <= SIZE; j++) {
 	            Position position = new Position(i, j);
 	            Box box = this.boxes.get(position);
-	            String tokenDisplay = " ";
+
+	            String tokenDisplay = "   ";
 	            if (box != null && box.getToken() != null) {
-	                tokenDisplay = box.getToken().display(); 
+	                tokenDisplay = box.getToken().display();
 	            }
-	            System.out.printf("  %s  ┃", tokenDisplay);
+
+	            if (tokenDisplay.length() == 3) {
+	                System.out.printf("%s ┃", tokenDisplay);
+	            } else {
+	                System.out.printf("%s┃", tokenDisplay);
+	            }
 	        }
-	        Console.message("");
-	        if (i < SIZE - 1) {
-	            System.out.print("┣");
-	            for (int j = 1; j < SIZE; j++) {
-	                System.out.print("━━━━━╋");
-	            }
-	            Console.message("━━━━━┫");
+
+	        System.out.println();
+
+	        if (i != SIZE) {
+	            System.out.print(horizontalLine);
 	        }
 	    }
 
-	    System.out.print("┗");
-	    for (int i = 0; i < SIZE; i++) {
-	        System.out.print("━━━━━┻");
+	    StringBuilder bottomHorizontalLine = new StringBuilder("");
+	    for (int i = 1; i < SIZE; i++) {
+	        bottomHorizontalLine.append("-----");
 	    }
-	    Console.message("━━━━━┛");
+	    bottomHorizontalLine.append("-\n");
+	    System.out.print(bottomHorizontalLine);
 	}
+
+
 	
 	public void setToken(Position pos, Token token) {
 		Box box = this.boxes.get(pos);
