@@ -23,4 +23,8 @@ public class Game {
 	public Player getPlayer() {
 		return this.player;
 	}
+
+	public void start() {
+		this.player.play();
+	}	
 }
