@@ -1,28 +1,25 @@
 package scrabble.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Board {
 	
 	private static int SIZE = 15;
 	
-	private ArrayList<ArrayList<Box>> boxes;
+	private HashMap<Position, Box> boxes;
 	
 	public Board() {
-		this.boxes = new ArrayList<>();
+		this.boxes = new HashMap<>();
 		
 		for (int i = 0; i < SIZE; i++) {
-			ArrayList<Box> currentLine = new ArrayList<>();
-			
 			for (int j = 0; j < SIZE; j++) {
-				if (i == 7 && j == 7) {
-					currentLine.add(new Box(true, null));
-				} else {
-					currentLine.add(new Box(false, null));
-				}
-			}
+				Position position = new Position(i, j);
+				
+				boolean isMiddle = position.getX() == 7 && position.getY() == 7;
+				Box box = new Box(isMiddle, null);
 
-			this.boxes.add(currentLine);
+				this.boxes.put(position, box);
+			}
 		}
 	}
 	
@@ -50,5 +47,4 @@ public class Board {
 	    }
 	    System.out.println("━━━━━┛");
 	}
-
 }
