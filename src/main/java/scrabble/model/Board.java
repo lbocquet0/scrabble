@@ -11,8 +11,8 @@ public class Board {
 	public Board() {
 		this.boxes = new HashMap<>();
 		
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 1; i < SIZE; i++) {
+			for (int j = 1; j < SIZE; j++) {
 				Position position = new Position(i, j);
 				
 				boolean isMiddle = position.getX() == 7 && position.getY() == 7;
@@ -25,14 +25,14 @@ public class Board {
 	
 	public void display() {
 	    System.out.print("┏");
-	    for (int i = 0; i < SIZE; i++) {
+	    for (int i = 1; i < SIZE; i++) {
 	        System.out.print("━━━━━┳");
 	    }
 	    System.out.println("━━━━━┓");
 
-	    for (int i = 0; i < SIZE; i++) {
+	    for (int i = 1; i < SIZE; i++) {
 	        System.out.print("┃");
-	        for (int j = 0; j < SIZE; j++) {
+	        for (int j = 1; j < SIZE; j++) {
 	            Position position = new Position(i, j);
 	            Box box = this.boxes.get(position);
 	            String tokenDisplay = " ";
@@ -44,7 +44,7 @@ public class Board {
 	        System.out.println();
 	        if (i < SIZE - 1) {
 	            System.out.print("┣");
-	            for (int j = 0; j < SIZE; j++) {
+	            for (int j = 1; j < SIZE; j++) {
 	                System.out.print("━━━━━╋");
 	            }
 	            System.out.println("━━━━━┫");
