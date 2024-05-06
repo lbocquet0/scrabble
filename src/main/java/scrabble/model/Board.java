@@ -28,7 +28,7 @@ public class Board {
 	    for (int i = 1; i < SIZE; i++) {
 	        System.out.print("━━━━━┳");
 	    }
-	    System.out.println("━━━━━┓");
+	    Console.message("━━━━━┓");
 
 	    for (int i = 1; i < SIZE; i++) {
 	        System.out.print("┃");
@@ -41,13 +41,13 @@ public class Board {
 	            }
 	            System.out.printf("  %s  ┃", tokenDisplay);
 	        }
-	        System.out.println();
+	        Console.message("");
 	        if (i < SIZE - 1) {
 	            System.out.print("┣");
 	            for (int j = 1; j < SIZE; j++) {
 	                System.out.print("━━━━━╋");
 	            }
-	            System.out.println("━━━━━┫");
+	            Console.message("━━━━━┫");
 	        }
 	    }
 
@@ -55,7 +55,7 @@ public class Board {
 	    for (int i = 0; i < SIZE; i++) {
 	        System.out.print("━━━━━┻");
 	    }
-	    System.out.println("━━━━━┛");
+	    Console.message("━━━━━┛");
 	}
 	
 	public void setToken(Position pos, Token token) {
