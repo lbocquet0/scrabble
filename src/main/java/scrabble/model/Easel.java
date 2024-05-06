@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import scrabble.util.EmptyBagException;
 
 public class Easel {
+
 	public int DEFAULT_TOKENS_AMOUNT = 7;
 
 	private ArrayList<Token> tokens;
@@ -61,13 +62,29 @@ public class Easel {
 	}
 	
 	public void display() {
-		Integer i = 0;
-		for(Token token : tokens) { 
-			i++;
-			System.out.println("┏     ┓" + "\n" + "┃ " + token.display() + " ┃" + "\n" + "┗     ┛");
+		String HORIZONTAL_LINE = "---------------------------------------------------------";
+		
+		Console.message(HORIZONTAL_LINE);
+				
+		if(this.getTokensAmount() == 0) {
+			for(int i=0;i < 7; i++) {
+				Console.message("   |");
+			}
+		}else {
+			String retour = "|  ";
+			for(int i=0;i < 7; i++) {
+				if (this.getToken(i) != null) {
+					if (this.getToken(i).display().length() == 3) {
+						retour = retour + this.getToken(i).display() + "  |  ";
+					} else {
+						retour = retour + this.getToken(i).display() + " |  ";
+					}
+				} else {
+					retour = "     |";
+				}
+			}
+			Console.message(retour);
 		}
-		for(Integer rest = DEFAULT_TOKENS_AMOUNT - i;rest > 0; rest--) {
-			System.out.println ("┏     ┓" + "\n" + "┃     ┃" + "\n" + "┗     ┛");
-		}
+		Console.message(HORIZONTAL_LINE);
 	}
 }
