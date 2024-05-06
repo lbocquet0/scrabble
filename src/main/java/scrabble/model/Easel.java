@@ -2,6 +2,8 @@ package scrabble.model;
 
 import java.util.ArrayList;
 
+import scrabble.util.EmptyBagException;
+
 public class Easel {
 	public int DEFAULT_TOKENS_AMOUNT = 7;
 
@@ -27,10 +29,13 @@ public class Easel {
 
 	public void pickRandomToken() {
 		Bag bag = this.owner.getGame().getBag();
-		Token token = bag.pickToken();
 
-		if (token != null) {
+		try {
+			Token token = bag.pickToken();
 			this.addToken(token);
+
+		} catch (EmptyBagException _e) {
+			
 		}
 	}
 	

@@ -2,6 +2,8 @@ package scrabble.model;
 
 import java.util.ArrayList;
 
+import scrabble.util.EmptyBagException;
+
 public class Bag {
     private ArrayList<Token> tokens;
 
@@ -19,10 +21,11 @@ public class Bag {
         }
     }
 
-    public Token pickToken() {
+    public Token pickToken() throws EmptyBagException {
         if (this.tokens.isEmpty()) {
-            return null;
+            throw new EmptyBagException();
         }
+
         this.shuffle();
         return this.tokens.remove(0);
     }
