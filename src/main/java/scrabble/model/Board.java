@@ -15,7 +15,7 @@ public class Board {
 			for (int j = 1; j < SIZE; j++) {
 				Position position = new Position(i, j);
 				
-				boolean isMiddle = position.getX() == 7 && position.getY() == 7;
+				boolean isMiddle = position.getX() == 8 && position.getY() == 8;
 				Box box = new Box(isMiddle, null);
 
 				this.boxes.put(position, box);
@@ -26,7 +26,7 @@ public class Board {
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");
 	    for (int i = 1; i < SIZE; i++) {
-	        horizontalLine.append("-----");
+	        horizontalLine.append("------");
 	    }
 	    horizontalLine.append("-\n");
 
@@ -38,12 +38,16 @@ public class Board {
 	            Position position = new Position(i, j);
 	            Box box = this.boxes.get(position);
 
-	            String tokenDisplay = "   ";
+	            String tokenDisplay = "    ";
 	            if (box != null && box.getToken() != null) {
 	                tokenDisplay = box.getToken().display();
+	            } else {
+	            	if (box != null && box.isMiddle()) {
+	            		tokenDisplay = "  ⭐ ";
+	            	}
 	            }
 
-	            if (tokenDisplay.length() == 3) {
+	            if (tokenDisplay.length() == 4) {
 	                System.out.printf("%s ┃", tokenDisplay);
 	            } else {
 	                System.out.printf("%s┃", tokenDisplay);
@@ -59,7 +63,7 @@ public class Board {
 
 	    StringBuilder bottomHorizontalLine = new StringBuilder("");
 	    for (int i = 1; i < SIZE; i++) {
-	        bottomHorizontalLine.append("-----");
+	        bottomHorizontalLine.append("------");
 	    }
 	    bottomHorizontalLine.append("-\n");
 	    System.out.print(bottomHorizontalLine);
