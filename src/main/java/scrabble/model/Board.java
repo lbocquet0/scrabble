@@ -25,27 +25,40 @@ public class Board {
 	
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");
-	    for (int i = 1; i < SIZE; i++) {
+	    for (int i = 0; i < SIZE; i++) {
 	        horizontalLine.append("------");
 	    }
 	    horizontalLine.append("-\n");
 
 	    System.out.print(horizontalLine);
 
-	    for (int i = 1; i <= SIZE; i++) {
-	        System.out.print("┃");
-	        for (int j = 1; j <= SIZE; j++) {
-	            Position position = new Position(i, j);
-	            Box box = this.boxes.get(position);
-
-	            String tokenDisplay = "    ";
-	            if (box != null && box.getToken() != null) {
-	                tokenDisplay = box.getToken().display();
-	            } else {
-	            	if (box != null && box.isMiddle()) {
-	            		tokenDisplay = "  ⭐ ";
-	            	}
-	            }
+	    for (Integer i = 0; i <= SIZE; i++) {
+	    	if (i < 10) {
+	    		System.out.print(i + "   ┃");
+	    	} else {
+	    		System.out.print(i + "  ┃");
+	    	}
+	       
+	        for (Integer j = 1; j <= SIZE; j++) {
+	        	String tokenDisplay = "    ";
+	        	if (i == 0) {
+	        		tokenDisplay = "  " + j.toString() + " ";
+	        		
+	        	} else {
+	        		Position position = new Position(i, j);
+		            Box box = this.boxes.get(position);
+   
+		            if (box != null && box.getToken() != null) {
+		                tokenDisplay = box.getToken().display();
+		            } else {
+		            	if (box != null && box.isMiddle()) {
+		            		tokenDisplay = "  ⭐ ";
+		            	}
+		            }
+	        		
+	        	}
+	        	
+	            
 
 	            if (tokenDisplay.length() == 4) {
 	                System.out.printf("%s ┃", tokenDisplay);
@@ -62,7 +75,7 @@ public class Board {
 	    }
 
 	    StringBuilder bottomHorizontalLine = new StringBuilder("");
-	    for (int i = 1; i < SIZE; i++) {
+	    for (int i = 0; i < SIZE; i++) {
 	        bottomHorizontalLine.append("------");
 	    }
 	    bottomHorizontalLine.append("-\n");
