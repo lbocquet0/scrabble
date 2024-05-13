@@ -29,4 +29,8 @@ public class Box {
 		
 		return token.display();
 	}
+	
+	public boolean isMiddle() {
+		return this.middle;
+	}
 }
