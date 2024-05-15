@@ -1,4 +1,4 @@
-package scrabble.model;
+package scrabble.model.token;
 
 public class Joker extends Token {
 	public static int OCCURRENCES_AMOUNT = 2;

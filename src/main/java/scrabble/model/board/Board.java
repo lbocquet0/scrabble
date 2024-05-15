@@ -2,7 +2,7 @@ package scrabble.model.board;
 
 import java.util.HashMap;
 
-import scrabble.model.Token;
+import scrabble.model.token.Token;
 
 public class Board {
 	

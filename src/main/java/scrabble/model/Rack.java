@@ -3,6 +3,7 @@ package scrabble.model;
 import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
+import scrabble.model.token.Token;
 import scrabble.utils.EmptyBagException;
 
 public class Rack {

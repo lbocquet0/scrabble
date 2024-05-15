@@ -1,6 +1,7 @@
 package scrabble.model;
 
 import scrabble.gui.console.Console;
+import scrabble.model.token.Token;
 
 public class Player {
 	private Rack easel;

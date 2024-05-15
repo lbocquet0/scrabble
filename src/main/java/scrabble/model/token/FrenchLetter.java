@@ -1,4 +1,4 @@
-package scrabble.model;
+package scrabble.model.token;
 
 // Scrabble french letters with points
 public enum FrenchLetter {

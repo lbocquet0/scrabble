@@ -2,9 +2,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import scrabble.model.Joker;
-import scrabble.model.FrenchLetter;
-import scrabble.model.Token;
+import scrabble.model.token.FrenchLetter;
+import scrabble.model.token.Joker;
+import scrabble.model.token.Token;
 
 public class TokenTest {
 

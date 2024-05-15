@@ -1,4 +1,4 @@
-package scrabble.model;
+package scrabble.model.token;
 
 public class Token {
 	protected FrenchLetter letter;
