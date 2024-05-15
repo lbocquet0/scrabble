@@ -11,14 +11,21 @@ class BoxTest {
     @Test
     void testDescribeWhenTokenIsNull() {
         Box box = new Box(false, null);
-        assertEquals(" ", box.describe());
+
+        String describeResult = box.describe();
+
+        assertEquals(" ", describeResult);
     }
 
     @Test
     void testDescribeWhenTokenIsNotNull() {
         Token token = new Token(FrenchLetter.A);
         Box box = new Box(false, token);
-        assertEquals(token.display(),box.describe());
+        
+        String exceptedResult = token.display();
+        String describeResult = box.describe();
+
+        assertEquals(exceptedResult, describeResult);
     }
 
 }
