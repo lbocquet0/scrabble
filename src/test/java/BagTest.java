@@ -2,7 +2,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import scrabble.model.Bag;
-import scrabble.model.Letter;
+import scrabble.model.FrenchLetter;
 import scrabble.model.Token;
 import scrabble.util.EmptyBagException;
 
@@ -61,7 +61,7 @@ public class BagTest {
             bag.pickToken();
         } catch (EmptyBagException _e) {
         }
-        bag.putToken(new Token(Letter.A));
+        bag.putToken(new Token(FrenchLetter.A));
         assertEquals(102, bag.countTokens());
     }
 

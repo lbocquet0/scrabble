@@ -1,7 +1,7 @@
 package scrabble.model;
 
 // Scrabble french letters with points
-public enum Letter {
+public enum FrenchLetter {
 	E(1, 15), A(1, 9), I(1, 8), N(1, 6), R(1, 6),
 	T(1, 6), O(1, 6), U(1, 6), L(1, 5), S(1, 6), 
 	D(2, 3), M(2, 3), G(2, 2), B(3, 2), C(3, 2),
@@ -12,7 +12,7 @@ public enum Letter {
 	private final int point;
 	private final int occurencesAmount;
 
-	Letter(int point, int occurencesAmount) {
+	FrenchLetter(int point, int occurencesAmount) {
 		this.point = point;
 		this.occurencesAmount = occurencesAmount;
 	}

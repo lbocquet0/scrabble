@@ -1,13 +1,13 @@
 package scrabble.model;
 
 public class Token {
-	protected Letter letter;
+	protected FrenchLetter letter;
 
-	public Token(Letter letter) {
+	public Token(FrenchLetter letter) {
 		this.letter = letter;
 	}
 
-	public Letter getLetter() {
+	public FrenchLetter getLetter() {
 		return letter;
 	}
 

@@ -36,7 +36,7 @@ public class Bag {
 
     private void createTokens() {
         // Default letters
-        for (Letter letter : Letter.values()) {
+        for (FrenchLetter letter : FrenchLetter.values()) {
             for (int i = 0; i < letter.getOccurencesAmount(); i++) {
                 this.tokens.add(new Token(letter));
             }
