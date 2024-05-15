@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBagException;
 
 public class Rack {
 
@@ -13,13 +12,8 @@ public class Rack {
 	private ArrayList<Token> tokens;
 	private Player owner;
 
-	public Rack(Player owner) {
+	public Rack() {
 		this.tokens = new ArrayList<Token>();
-		this.owner = owner;
-
-		for (int i = 0; i < DEFAULT_TOKENS_AMOUNT; i++) {
-			this.pickRandomToken();
-		}
 	}
 
 	public ArrayList<Token> getTokens() {
@@ -33,37 +27,17 @@ public class Rack {
 	public Token getToken(int index) {
 		return this.tokens.get(index);
 	}
+	
+	public Token removeToken(int index) {
+		return this.tokens.remove(index);
+	}
 
 	public Player getOwner() {
 		return this.owner;
 	}
 
-	private void pickRandomToken() {
-		Bag bag = this.owner.getGame().getBag();
-		//TODO delete the demeter 
-
-		try {
-			Token token = bag.pickToken();
-			this.addToken(token);
-
-		} catch (EmptyBagException _e) {
-		
-		}
-	}
-
-	private void addToken(Token token) {
+	public void addToken(Token token) {
 		this.tokens.add(token);
-	}
-
-	public void swapTokens(Token token) {
-		this.tokens.remove(token);
-	
-		Bag bag = this.owner.getGame().getBag();
-		//TODO delete the demeter 
-
-		bag.putToken(token);
-
-		this.pickRandomToken();
 	}
 	
 	public void display() {
