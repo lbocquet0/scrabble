@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import scrabble.util.EmptyBagException;
 
-public class Easel {
+public class Rack {
 
 	public int DEFAULT_TOKENS_AMOUNT = 7;
 
 	private ArrayList<Token> tokens;
 	private Player owner;
 
-	public Easel(Player owner) {
+	public Rack(Player owner) {
 		this.tokens = new ArrayList<Token>();
 		this.owner = owner;
 

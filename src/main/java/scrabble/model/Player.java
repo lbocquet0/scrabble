@@ -1,15 +1,15 @@
 package scrabble.model;
 
 public class Player {
-	private Easel easel;
+	private Rack easel;
 	private Game game;
 
 	public Player(Game game) {
 		this.game = game;
-		this.easel = new Easel(this);
+		this.easel = new Rack(this);
 	}
 
-	public Easel getEasel() {
+	public Rack getEasel() {
 		return this.easel;
 	}
 

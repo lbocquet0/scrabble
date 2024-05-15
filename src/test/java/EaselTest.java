@@ -3,20 +3,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import scrabble.model.Easel;
+import scrabble.model.Rack;
 import scrabble.model.Game;
 import scrabble.model.Player;
 
 class EaselTest {
     Game game;
     Player player;
-    Easel easel;
+    Rack easel;
 
     @BeforeEach
     void setUp() {
         game = new Game();
         player = new Player(game);
-        easel = new Easel(player);
+        easel = new Rack(player);
     }
 
     @Test
