@@ -1,6 +1,6 @@
 package scrabble.model.board;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import scrabble.model.token.Token;
 
@@ -8,20 +8,19 @@ public class Board {
 	
 	private static int SIZE = 15;
 	
-	private HashMap<Position, Box> boxes;
+	private ArrayList<ArrayList<Box>> boxes;
 	
 	public Board() {
-		this.boxes = new HashMap<>();
+		this.boxes = new ArrayList<ArrayList<Box>>();
 		
 		for (int i = 1; i < SIZE; i++) {
+			ArrayList<Box> currentLine = new ArrayList<>();
+			
 			for (int j = 1; j < SIZE; j++) {
-				Position position = new Position(i, j);
-				
-				boolean isMiddle = position.getX() == 8 && position.getY() == 8;
-				Box box = new Box(isMiddle, null);
-
-				this.boxes.put(position, box);
+				boolean isMiddle = (i == 8 && j ==8);
+				currentLine.add(new Box(isMiddle, null));
 			}
+			this.boxes.add(currentLine);
 		}
 	}
 	
@@ -47,8 +46,7 @@ public class Board {
 	        		tokenDisplay = "  " + j.toString() + " ";
 	        		
 	        	} else {
-	        		Position position = new Position(i, j);
-		            Box box = this.boxes.get(position);
+		            Box box = this.boxes.get(i).get(j);
    
 		            if (box != null && box.getToken() != null) {
 		                tokenDisplay = box.getToken().display();
@@ -86,8 +84,8 @@ public class Board {
 
 
 	
-	public void setToken(Position pos, Token token) {
-		Box box = this.boxes.get(pos);
+	public void setToken(Token token, Integer i, Integer j) {
+		Box box = this.boxes.get(i).get(j);
 		
 		box.setToken(token);
 	}
