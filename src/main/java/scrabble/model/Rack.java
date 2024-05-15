@@ -40,6 +40,7 @@ public class Rack {
 
 	private void pickRandomToken() {
 		Bag bag = this.owner.getGame().getBag();
+		//TODO delete the demeter 
 
 		try {
 			Token token = bag.pickToken();
@@ -58,6 +59,8 @@ public class Rack {
 		this.tokens.remove(token);
 	
 		Bag bag = this.owner.getGame().getBag();
+		//TODO delete the demeter 
+
 		bag.putToken(token);
 
 		this.pickRandomToken();
