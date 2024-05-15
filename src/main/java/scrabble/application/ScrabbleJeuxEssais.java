@@ -2,8 +2,8 @@ package scrabble.application;
 
 import scrabble.gui.console.Console;
 import scrabble.model.Bag;
-import scrabble.model.Board;
 import scrabble.model.Rack;
+import scrabble.model.board.Board;
 import scrabble.model.Game;
 import scrabble.model.Player;
 

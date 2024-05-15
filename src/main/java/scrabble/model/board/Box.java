@@ -1,4 +1,6 @@
-package scrabble.model;
+package scrabble.model.board;
+
+import scrabble.model.Token;
 
 public class Box {
 

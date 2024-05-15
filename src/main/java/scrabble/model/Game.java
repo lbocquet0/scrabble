@@ -1,5 +1,7 @@
 package scrabble.model;
 
+import scrabble.model.board.Board;
+
 public class Game {
 	
 	private Player player;

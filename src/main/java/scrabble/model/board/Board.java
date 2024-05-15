@@ -1,6 +1,8 @@
-package scrabble.model;
+package scrabble.model.board;
 
 import java.util.HashMap;
+
+import scrabble.model.Token;
 
 public class Board {
 	

@@ -1,4 +1,4 @@
-package scrabble.model;
+package scrabble.model.board;
 
 import java.util.Objects;
 
