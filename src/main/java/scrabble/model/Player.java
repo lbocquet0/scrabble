@@ -5,16 +5,15 @@ import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
 
 public class Player {
-	private Rack easel;
+	private Rack rack;
 	private Game game;
 
-	public Player(Game game) {
-		this.game = game;
-		this.easel = new Rack(this);
+	public Player() {
+		this.rack = new Rack();
 	}
 
 	public Rack getEasel() {
-		return this.easel;
+		return this.rack;
 	}
 
 	public Game getGame() {
@@ -23,16 +22,16 @@ public class Player {
 
 	public void play() {
 		Console.message("Voici votre chevalet :");
-		this.easel.display();
+		this.rack.display();
 
-		Integer tokenToSwap = Console.askInt("Quel jeton voulez-vous échanger ?", 1, this.easel.remainingTokens());
-		Token token = this.easel.getToken(tokenToSwap - 1);
+		Integer tokenToSwap = Console.askInt("Quel jeton voulez-vous échanger ?", 1, this.rack.remainingTokens());
+		Token token = this.rack.getToken(tokenToSwap - 1);
 
-		this.easel.swapTokens(token);
+		this.rack.swapTokens(token);
 
 		Console.message("Vous venez de d'échanger le jeton " + token.display() + " avec le sac");
 		Console.message("Voici votre nouveau chevalet :");
 		
-		this.easel.display();
+		this.rack.display();
 	}
 }
