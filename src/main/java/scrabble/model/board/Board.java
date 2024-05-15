@@ -13,10 +13,10 @@ public class Board {
 	public Board() {
 		this.boxes = new ArrayList<ArrayList<Box>>();
 		
-		for (int i = 1; i < SIZE; i++) {
+		for (int i = 1; i <= SIZE; i++) {
 			ArrayList<Box> currentLine = new ArrayList<>();
 			
-			for (int j = 1; j < SIZE; j++) {
+			for (int j = 1; j <= SIZE; j++) {
 				boolean isMiddle = (i == 8 && j ==8);
 				currentLine.add(new Box(isMiddle, null));
 			}
@@ -26,7 +26,7 @@ public class Board {
 	
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");
-	    for (int i = 0; i < SIZE; i++) {
+	    for (int i = 0; i <= SIZE; i++) {
 	        horizontalLine.append("------");
 	    }
 	    horizontalLine.append("-\n");
@@ -46,7 +46,7 @@ public class Board {
 	        		tokenDisplay = "  " + j.toString() + " ";
 	        		
 	        	} else {
-		            Box box = this.boxes.get(i).get(j);
+		            Box box = this.boxes.get(i-1).get(j-1);
    
 		            if (box != null && box.getToken() != null) {
 		                tokenDisplay = box.getToken().display();
@@ -75,7 +75,7 @@ public class Board {
 	    }
 
 	    StringBuilder bottomHorizontalLine = new StringBuilder("");
-	    for (int i = 0; i < SIZE; i++) {
+	    for (int i = 0; i <= SIZE; i++) {
 	        bottomHorizontalLine.append("------");
 	    }
 	    bottomHorizontalLine.append("-\n");
