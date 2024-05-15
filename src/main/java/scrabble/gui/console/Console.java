@@ -1,4 +1,4 @@
-package scrabble.model;
+package scrabble.gui.console;
 
 import java.util.Scanner;
 

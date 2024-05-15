@@ -2,6 +2,7 @@ package scrabble.model;
 
 import java.util.ArrayList;
 
+import scrabble.gui.console.Console;
 import scrabble.utils.EmptyBagException;
 
 public class Rack {

@@ -1,6 +1,6 @@
 package scrabble.application;
 
-import scrabble.model.Console;
+import scrabble.gui.console.Console;
 import scrabble.model.Game;
 
 public class ScrabbleApplicationConsole {

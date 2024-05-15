@@ -1,5 +1,7 @@
 package scrabble.model;
 
+import scrabble.gui.console.Console;
+
 public class Player {
 	private Rack easel;
 	private Game game;
