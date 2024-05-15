@@ -25,7 +25,7 @@ public class Player {
 		Console.message("Voici votre chevalet :");
 		this.easel.display();
 
-		Integer tokenToSwap = Console.askInt("Quel jeton voulez-vous échanger ?", 1, this.easel.getTokensAmount());
+		Integer tokenToSwap = Console.askInt("Quel jeton voulez-vous échanger ?", 1, this.easel.remainingTokens());
 		Token token = this.easel.getToken(tokenToSwap - 1);
 
 		this.easel.swapTokens(token);

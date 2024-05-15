@@ -26,7 +26,7 @@ public class Rack {
 		return this.tokens;
 	}
 
-	public int getTokensAmount() {
+	public int remainingTokens() {
 		return this.tokens.size();
 	}
 
@@ -68,7 +68,7 @@ public class Rack {
 		
 		Console.message(HORIZONTAL_LINE);
 				
-		if(this.getTokensAmount() == 0) {
+		if(this.remainingTokens() == 0) {
 			for(int i=0;i < 7; i++) {
 				Console.message("   |");
 			}

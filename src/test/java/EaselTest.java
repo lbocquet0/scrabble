@@ -21,12 +21,12 @@ class EaselTest {
 
     @Test
     void testShouldBeFullOnCreation() {
-        assertEquals(7, easel.getTokensAmount());
+        assertEquals(7, easel.remainingTokens());
     }
 
     @Test
     void testSwapShouldNotChangeAmount() {
         easel.swapTokens(easel.getToken(0));
-        assertEquals(7, easel.getTokensAmount());
+        assertEquals(7, easel.remainingTokens());
     }
 }
