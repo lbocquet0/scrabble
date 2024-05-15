@@ -16,7 +16,7 @@ public class ScrabbleJeuxEssais {
 		Board board = game.getBoard();
 		Rack easel = player.getEasel();
 
-		Console.message("Bag tokens amount (should be equals to 102) : " + bag.countTokens());
+		Console.message("Bag tokens amount (should be equals to 102) : " + bag.remainingTokens());
 		Console.message("Player easel tokens amount (should be equals to 7) : " + easel.remainingTokens());
 		Console.message("Test of display of the board (should be empty) : ");
 		board.display();

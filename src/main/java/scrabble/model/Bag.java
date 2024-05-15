@@ -33,8 +33,16 @@ public class Bag {
         this.tokens.add(token);
     }
 
-    public int countTokens() {
+    public int remainingTokens() {
         return this.tokens.size();
+    }
+
+    public Boolean isEmpty() {
+        return this.tokens.isEmpty();
+    }
+
+    public void clear() {
+        this.tokens.clear();
     }
 
     private void fillTokens() {

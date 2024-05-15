@@ -1,4 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import scrabble.model.Bag;
@@ -13,56 +16,50 @@ public class BagTest {
     @Test
     void ShouldBeFullOnCreate() {
         bag = new Bag();
-        assertEquals(102, bag.countTokens());
+        assertEquals(102, bag.remainingTokens());
+    }
+
+    @Test
+    void ShouldBeEmptyAfterClear() {
+        bag = new Bag();
+        bag.clear();
+        
+        assertTrue(bag.isEmpty());
     }
 
     @Test
     void ShouldThrowExceptionWhenEmpty() {
         bag = new Bag();
-        for (int i = 0; i < 102; i++) {
-            try {
-                bag.pickToken();
-            } catch (EmptyBagException _e) {
-            }
-        }
+        bag.clear();
+
+        assertThrows(EmptyBagException.class, () -> bag.pickToken());
+    }
+
+    @Test
+    void ShouldLoose1TokenAfterPick() {
+        bag = new Bag();
+        int initialCount = bag.remainingTokens();
+
         try {
             bag.pickToken();
         } catch (EmptyBagException e) {
-            assertEquals("The bag is empty.", e.getMessage());
+            fail();
         }
+
+        assertEquals(initialCount - 1, bag.remainingTokens());
     }
 
     @Test
-    void ShouldBeEmptyAfter102Picks() {
+    void ShouldGain1TokenAfterPut() {
         bag = new Bag();
-        for (int i = 0; i < 102; i++) {
-            try {
-                bag.pickToken();
-            } catch (EmptyBagException _e) {
-            }
-        }
-        assertEquals(0, bag.countTokens());
-    }
-
-    @Test
-    void CountShouldBe101After1Pick() {
-        bag = new Bag();
+        
         try {
-            bag.pickToken();
-        } catch (EmptyBagException _e) {
+            Token token = new Token(FrenchLetter.A);
+            bag.putToken(token);
+        } catch (Exception e) {
+            fail();
         }
-        assertEquals(101, bag.countTokens());
-    }
 
-    @Test
-    void CountShouldBe102After1PicksAnd1Put() {
-        bag = new Bag();
-        try {
-            bag.pickToken();
-        } catch (EmptyBagException _e) {
-        }
-        bag.putToken(new Token(FrenchLetter.A));
-        assertEquals(102, bag.countTokens());
+        assertEquals(103, bag.remainingTokens());
     }
-
 }
