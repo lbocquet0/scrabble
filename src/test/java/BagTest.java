@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import scrabble.model.Bag;
 import scrabble.model.FrenchLetter;
 import scrabble.model.Token;
-import scrabble.util.EmptyBagException;
+import scrabble.utils.EmptyBagException;
 
 
 public class BagTest {

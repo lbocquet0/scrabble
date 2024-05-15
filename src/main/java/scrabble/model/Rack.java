@@ -2,7 +2,7 @@ package scrabble.model;
 
 import java.util.ArrayList;
 
-import scrabble.util.EmptyBagException;
+import scrabble.utils.EmptyBagException;
 
 public class Rack {
 

@@ -1,4 +1,4 @@
-package scrabble.util;
+package scrabble.utils;
 
 public class EmptyBagException extends Exception {
 	public EmptyBagException() {

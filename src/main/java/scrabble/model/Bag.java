@@ -3,7 +3,7 @@ package scrabble.model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import scrabble.util.EmptyBagException;
+import scrabble.utils.EmptyBagException;
 
 public class Bag {
     private ArrayList<Token> tokens;
