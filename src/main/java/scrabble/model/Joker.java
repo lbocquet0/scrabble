@@ -1,6 +1,8 @@
 package scrabble.model;
 
 public class Joker extends Token {
+	public static int OCCURRENCES_AMOUNT = 2;
+
 	public Joker() {
 		super(null);
 	}
