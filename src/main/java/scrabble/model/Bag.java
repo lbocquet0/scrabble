@@ -13,7 +13,7 @@ public class Bag {
 
     public Bag() {
         this.tokens = new ArrayList<>();
-        this.createTokens();
+        this.fillTokens();
     }
 
     public void shuffle() {
@@ -37,7 +37,7 @@ public class Bag {
         return this.tokens.size();
     }
 
-    private void createTokens() {
+    private void fillTokens() {
         // Default letters
         for (FrenchLetter letter : FrenchLetter.values()) {
             for (int i = 0; i < letter.getOccurencesAmount(); i++) {
