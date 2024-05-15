@@ -1,10 +1,10 @@
 package scrabble.application;
 
+import scrabble.controller.Game;
 import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
-import scrabble.model.Game;
 import scrabble.model.Player;
 
 public class ScrabbleJeuxEssais {

@@ -1,5 +1,7 @@
-package scrabble.model;
+package scrabble.controller;
 
+import scrabble.model.Bag;
+import scrabble.model.Player;
 import scrabble.model.board.Board;
 
 public class Game {

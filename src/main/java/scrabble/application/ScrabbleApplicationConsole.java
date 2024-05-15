@@ -1,7 +1,7 @@
 package scrabble.application;
 
+import scrabble.controller.Game;
 import scrabble.gui.console.Console;
-import scrabble.model.Game;
 
 public class ScrabbleApplicationConsole {
 	public static String SEPARATOR = "-------------------------------------------------------";

@@ -1,5 +1,6 @@
 package scrabble.model;
 
+import scrabble.controller.Game;
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
 

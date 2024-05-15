@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import scrabble.model.Rack;
-import scrabble.model.Game;
+import scrabble.controller.Game;
 import scrabble.model.Player;
 
 class EaselTest {
