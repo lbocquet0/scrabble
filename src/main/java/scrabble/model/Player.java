@@ -31,7 +31,7 @@ public class Player {
 		this.rack.display();
 	}
 
-	public Token removeTokenFromRack(int i) {
+	public Token removeTokenFromRack(int i) throws IndexOutOfBoundsException {
 		return this.rack.removeToken(i-1);
 	}
 }

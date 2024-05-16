@@ -28,7 +28,11 @@ public class Rack {
 		return this.tokens.get(index);
 	}
 	
-	public Token removeToken(int index) {
+	public Token removeToken(int index) throws IndexOutOfBoundsException {
+		if (index < 0 || index >= this.tokens.size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		
 		return this.tokens.remove(index);
 	}
 
