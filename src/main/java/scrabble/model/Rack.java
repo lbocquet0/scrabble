@@ -51,6 +51,7 @@ public class Rack {
 			}
 		}else {
 			String retour = "|  ";
+			// TODO :  to refactor with a for each loop
 			for(int i=0;i < DEFAULT_TOKENS_AMOUNT; i++) {
 				if (this.getToken(i) != null) {
 					if (this.getToken(i).display().length() == 3) {
