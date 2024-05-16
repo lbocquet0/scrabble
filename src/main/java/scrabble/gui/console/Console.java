@@ -1,27 +1,37 @@
 package scrabble.gui.console;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Console {
+	private static final Scanner scanner = new Scanner(System.in);
+
 	public static void message(String message) {
 		System.out.println(message);
 	}
 
 	public static Integer askInt(String question, Integer min, Integer max) {
-		Scanner scanner = new Scanner(System.in);
 		Console.message(question);
 
 		Integer response = null;
 		while (response == null) {
-			response = scanner.nextInt();
+			try {
+				response = scanner.nextInt();
+			} catch (InputMismatchException e) {
+				Console.message("Veuillez saisir un nombre");
+				scanner.next();
+			} catch (NoSuchElementException e) {
+				Console.message("Veuillez saisir un nombre");
+				scanner.next();
+			}
+
 			if (response < min || response > max) {
 				Console.message("Veuillez saisir un nombre entre " + min + " et " + max);
 				response = null;
 			}
 		}
-
-		scanner.close();
-
+		
 		return response;
 	}
 }
