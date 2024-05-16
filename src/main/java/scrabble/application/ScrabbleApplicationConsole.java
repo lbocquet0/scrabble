@@ -2,20 +2,14 @@ package scrabble.application;
 
 import scrabble.controller.Game;
 import scrabble.gui.console.Console;
+import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.board.Board;
 import scrabble.utils.EmptyBagException;
 
 public class ScrabbleApplicationConsole {
-	public static String SEPARATOR = "-------------------------------------------------------";
-
 	public static void main(String[] args) {
-		Console.message(SEPARATOR);
-		Console.message("-- Bienvenue dans notre magnifique jeu de scrabble ! --");
-		Console.message("-- développé par Hugo                                --");
-		Console.message("-- et par Eliott                                     --");
-		Console.message("-- et par Lucas                                      --");
-		Console.message(SEPARATOR);
+		Console.welcomeMessage();
 
 		Game game = new Game();
 
@@ -28,21 +22,41 @@ public class ScrabbleApplicationConsole {
 		
 		Player player = game.getPlayer();
 		Board board = game.getBoard();
+		Bag bag = game.getBag();
 
-		Console.message("Voici le plateau du jeu: ");
-		board.display();
+		Boolean continueGame = true;
+		while (continueGame) {
+			Console.message("Plateau de jeu :");
+			board.display();
 
-		Console.message("Voici votre chevalet :");
-		player.displayRack();
+			Console.makeSeparator();
 
-		Console.message(SEPARATOR);
-
-		boolean tokenMooved = answerSwapToken(game, player);
-
-		if (tokenMooved) {
-
-			Console.message("Voici votre chevalet après l'échange :");
+			Console.message("Votre chevalet :");
 			player.displayRack();
+
+			Console.makeSeparator();
+			
+			Console.message("Que voulez-vous faire ?");
+			Console.message("1 - Jouer un mot");
+			Console.message("2 - Échanger un jeton");
+			Console.message("4 - Quitter la partie");
+
+			Integer choice = Console.askInt("Votre choix ?", 1, 3);
+			Console.message(choice.toString());
+
+			switch (choice) {
+				case 1:
+					continueGame = true;
+					// TODO : Implement playWord
+					break;
+				case 2:
+					continueGame = true;
+					// TODO : Implement swapToken
+					break;
+				case 3:
+					continueGame = false;
+					break;
+			}
 		}
 	}
 
