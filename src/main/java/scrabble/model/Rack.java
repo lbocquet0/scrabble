@@ -50,12 +50,13 @@ public class Rack {
 		Console.message(HORIZONTAL_LINE);
 				
 		if(this.remainingTokens() == 0) {
-			for(int i=0;i < 7; i++) {
+			for(int i=0;i < DEFAULT_TOKENS_AMOUNT; i++) {
 				Console.message("   |");
 			}
 		}else {
 			String retour = "|  ";
-			for(int i=0;i < 7; i++) {
+			// TODO :  to refactor with a for each loop
+			for(int i=0;i < DEFAULT_TOKENS_AMOUNT; i++) {
 				if (this.getToken(i) != null) {
 					if (this.getToken(i).display().length() == 3) {
 						retour = retour + this.getToken(i).display() + "  |  ";
