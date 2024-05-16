@@ -11,6 +11,9 @@ public class Console {
 	public static void message(String message) {
 		System.out.println(message);
 	}
+	public static void makeSeparator() {
+		System.out.println("\n" + HORIZONTAL_LINE + "\n");
+	}
 
 	public static Integer askInt(String question, Integer min, Integer max) {
 		Console.message(question);
