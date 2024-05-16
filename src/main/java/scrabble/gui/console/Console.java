@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Console {
+	public static final String HORIZONTAL_LINE = "---------------------------------------------------------";
 	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void message(String message) {
@@ -31,7 +32,16 @@ public class Console {
 				response = null;
 			}
 		}
-		
+
 		return response;
+	}
+
+	public static void welcomeMessage() {
+		Console.message(Console.HORIZONTAL_LINE);
+		Console.message("-- Bienvenue dans notre magnifique jeu de scrabble ! --");
+		Console.message("-- développé par Hugo                                --");
+		Console.message("-- et par Eliott                                     --");
+		Console.message("-- et par Lucas                                      --");
+		Console.message(Console.HORIZONTAL_LINE);
 	}
 }
