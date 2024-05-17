@@ -71,4 +71,11 @@ public class Rack {
 		}
 		Console.message(HORIZONTAL_LINE);
 	}
+
+	public boolean isEmpty() {
+		if (this.remainingTokens() == 0) {
+			return true;
+		}
+		return false;
+	}
 }
