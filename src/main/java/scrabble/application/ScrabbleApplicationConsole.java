@@ -57,6 +57,14 @@ public class ScrabbleApplicationConsole {
 					continueGame = false;
 					break;
 			}
+
+			Console.makeSeparator();
+
+			try {
+				game.fullFillPlayerRack(player);
+			} catch (EmptyBagException e) {
+				Console.message("Le sac est vide, vous ne pouvez plus piocher de jeton.");
+			}
 		}
 	}
 

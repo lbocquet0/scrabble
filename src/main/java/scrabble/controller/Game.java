@@ -31,9 +31,7 @@ public class Game {
 	}
 
 	public void initialize() throws EmptyBagException {
-		while (this.player.remainingTokenInRack() < 7) {
-			fillUpPlayerRack(this.player);
-		}
+		this.fullFillPlayerRack(this.player);
 	}
 	
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
@@ -41,6 +39,12 @@ public class Game {
 			Token token = this.bag.pickToken();
 			
 			player.addTokenToRack(token);
+		}
+	}
+
+	public void fullFillPlayerRack(Player player) throws EmptyBagException {
+		while (player.remainingTokenInRack() < 7) {
+			fillUpPlayerRack(player);
 		}
 	}
 
