@@ -86,10 +86,16 @@ public class Board {
 	}
 
 
+	public Token getToken(Integer i, Integer j) {
+		Box box = this.boxes.get(i).get(j);
+
+		return box.getToken();
+	}
 	
-	public void setToken(Token token, Integer i, Integer j) {
+	public void setToken(Token token, Integer i, Integer j) throws EmptyBoxException {
 		Box box = this.boxes.get(i).get(j);
 		
 		box.setToken(token);
+		this.actionHistory.add(new Action(i, j, box));
 	}
 }
