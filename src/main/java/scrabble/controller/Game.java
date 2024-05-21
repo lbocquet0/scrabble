@@ -61,8 +61,10 @@ public class Game {
 		this.bag.putToken(token);
 	}
 
-	public void playWord() {
-		// TODO : Implement playWord
+	public void playWord(Token[] tokens, int x, int y) throws IndexOutOfBoundsException, OccupiedBoxException, EmptyBoxException {
+		for (int i = 0; i < tokens.length; i++) {
+			this.playLetter(tokens[i], x+i, y+i);
+		}
 	}
 
 	public void playLetter(Token token, int x, int y) throws  IndexOutOfBoundsException, OccupiedBoxException, EmptyBoxException {
