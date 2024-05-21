@@ -8,7 +8,7 @@ import scrabble.model.board.Action;
 import scrabble.model.board.Box;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBoxEception;
+import scrabble.utils.EmptyBoxException;
 
 public class ActionTest {
 	
@@ -20,7 +20,7 @@ public class ActionTest {
 	private Action action;
 
 	@BeforeEach
-	void initialize() throws EmptyBoxEception {
+	void initialize() throws EmptyBoxException {
 		token = new Token(FrenchLetter.A);
 		box = new Box(false, token);
 	
@@ -59,6 +59,6 @@ public class ActionTest {
 	void shouldThrowEmptyBoxExceptionWhenTokenIsNull() {
 		Box emptyBox = new Box(false, null);
 		
-		assertThrows(EmptyBoxEception.class, () -> new Action(ROW, COLUMN, emptyBox));
+		assertThrows(EmptyBoxException.class, () -> new Action(ROW, COLUMN, emptyBox));
 	}
 }

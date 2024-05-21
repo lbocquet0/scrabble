@@ -1,17 +1,17 @@
 package scrabble.model.board;
 
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBoxEception;
+import scrabble.utils.EmptyBoxException;
 
 public class Action {
 	private int rowPosition;
 	private int columnPosition;
 	private Box box;
 
-	public Action(int rowPosition, int columnPosition, Box box) throws EmptyBoxEception {
+	public Action(int rowPosition, int columnPosition, Box box) throws EmptyBoxException {
 		Token token = box.getToken();
 		if (token == null) {
-			throw new EmptyBoxEception();
+			throw new EmptyBoxException();
 		}
 
 		this.rowPosition = rowPosition;

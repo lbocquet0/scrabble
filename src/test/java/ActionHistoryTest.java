@@ -13,7 +13,7 @@ import scrabble.model.board.ActionHistory;
 import scrabble.model.board.Box;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBoxEception;
+import scrabble.utils.EmptyBoxException;
 
 public class ActionHistoryTest {
 
@@ -23,7 +23,7 @@ public class ActionHistoryTest {
 	private Token token;
 
 	@BeforeEach
-	void initialize() throws EmptyBoxEception {
+	void initialize() throws EmptyBoxException {
 		this.actionHistory = new ActionHistory();
 		token = new Token(FrenchLetter.A);
 
@@ -71,7 +71,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldUndoAllActions() throws EmptyBoxEception {
+	void shouldUndoAllActions() throws EmptyBoxException {
 		Token token2 = new Token(FrenchLetter.B);
 		Box box2 = new Box(false, token2);
 
