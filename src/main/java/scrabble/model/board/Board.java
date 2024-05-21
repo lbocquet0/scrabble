@@ -2,7 +2,6 @@ package scrabble.model.board;
 
 import java.util.ArrayList;
 import scrabble.model.token.Token;
-import scrabble.model.board.Action;
 import scrabble.utils.EmptyBoxException;
 
 public class Board {
@@ -98,5 +97,9 @@ public class Board {
 		
 		box.setToken(token);
 		this.actionHistory.add(new Action(i, j, box));
+	}
+
+	public ArrayList<Token> cancelLastAction() {
+		return this.actionHistory.undoAllActions();
 	}
 }
