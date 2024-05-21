@@ -60,4 +60,18 @@ public class Game {
 		fillUpPlayerRack(player);
 		this.bag.putToken(token);
 	}
+
+	public void playWord() {
+		// TODO : Implement playWord
+	}
+
+	public void playLetter(Token token, int x, int y) throws  IndexOutOfBoundsException, OccupiedBoxException, EmptyBoxException {
+		if (this.board.getToken(x, y) != null) {
+			throw new OccupiedBoxException();
+        }
+		if (x < 1 || x > Board.SIZE || y < 1 || y > Board.SIZE) {
+			throw new IndexOutOfBoundsException();
+		}
+		this.board.setToken(token, x, y);
+	}
 }
