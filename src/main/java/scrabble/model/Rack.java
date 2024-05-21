@@ -78,4 +78,14 @@ public class Rack {
 		}
 		return false;
 	}
+
+	public Integer hasToken(Token token) {
+		for (int i = 0; i < this.tokens.size(); i++) {
+			if (this.tokens.get(i).equals(token)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
 }

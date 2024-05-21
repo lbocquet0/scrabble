@@ -36,4 +36,8 @@ public class Player {
 		return false;
 	}
 
+	public Integer hasToken(Token token) {
+		return this.rack.hasToken(token);
+	}
+
 }
