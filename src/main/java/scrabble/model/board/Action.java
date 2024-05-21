@@ -35,6 +35,13 @@ public class Action {
 		return box.getToken();
 	}
 
+	public Token undo() {
+		Token token = box.getToken();
+		box.setToken(null);
+	
+		return token;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

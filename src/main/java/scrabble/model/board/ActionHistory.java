@@ -29,11 +29,7 @@ public class ActionHistory {
 	}
 
 	public Token undoAction(Action action) {
-		Box box = action.getBox();
-		Token token = action.getToken();
-		
-		box.setToken(null);
-		
+		Token token = action.undo();
 		this.actions.remove(action);
 
 		return token;
@@ -44,7 +40,7 @@ public class ActionHistory {
 		ArrayList<Token> undidTokens = new ArrayList<Token>();
 		
 		for (Action action : this.actions) {
-			Token token = this.undoAction(action);
+			Token token = action.undo();
 
 			if (token != null) {
 				undidTokens.add(token);
