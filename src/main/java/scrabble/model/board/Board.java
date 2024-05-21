@@ -1,14 +1,17 @@
 package scrabble.model.board;
 
 import java.util.ArrayList;
-
 import scrabble.model.token.Token;
+import scrabble.model.board.Action;
+import scrabble.utils.EmptyBoxException;
 
 public class Board {
 	
-	private static int SIZE = 15;
+	public static int SIZE = 15;
 	
 	private ArrayList<ArrayList<Box>> boxes;
+
+	private ActionHistory actionHistory;
 	
 	public Board() {
 		this.boxes = new ArrayList<ArrayList<Box>>();
