@@ -25,7 +25,14 @@ public class ScrabbleApplicationConsole {
 		Bag bag = game.getBag();
 
 		Boolean continueGame = true;
+		
 		while (continueGame) {
+			
+			if (player.getRack().isEmpty() && bag.isEmpty()) {
+				continueGame = false;
+				break;
+			}
+			
 			Console.message("Plateau de jeu :");
 			board.display();
 
@@ -39,7 +46,7 @@ public class ScrabbleApplicationConsole {
 			Console.message("Que voulez-vous faire ?");
 			Console.message("1 - Jouer un mot");
 			Console.message("2 - Échanger un jeton");
-			Console.message("4 - Quitter la partie");
+			Console.message("3 - Quitter la partie");
 
 			Integer choice = Console.askInt("Votre choix ?", 1, 3);
 			Console.message(choice.toString());
