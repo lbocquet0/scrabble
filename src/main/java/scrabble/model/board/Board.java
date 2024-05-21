@@ -15,7 +15,8 @@ public class Board {
 	
 	public Board() {
 		this.boxes = new ArrayList<ArrayList<Box>>();
-		
+		this.actionHistory = new ActionHistory();
+
 		for (int i = 1; i <= SIZE; i++) {
 			ArrayList<Box> currentLine = new ArrayList<>();
 			
