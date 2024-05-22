@@ -81,8 +81,8 @@ public class Rack {
 
 	public Integer hasToken(Token token) {
 		for (int i = 0; i < this.tokens.size(); i++) {
-			if (this.tokens.get(i).equals(token)) {
-				return i;
+			if (this.tokens.get(i).getLetter() == token.getLetter()) {
+				return i + 1;
 			}
 		}
 
