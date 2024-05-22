@@ -34,4 +34,11 @@ public class Player {
 	public Token removeTokenFromRack(int i) throws IndexOutOfBoundsException {
 		return this.rack.removeToken(i-1);
 	}
+	
+	public boolean RackIsEmpty(){
+		if (this.getRack().remainingTokens() == 0) {
+			return true;
+		}
+		return false;
+	}
 }

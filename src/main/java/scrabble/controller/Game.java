@@ -5,6 +5,8 @@ import scrabble.model.Player;
 import scrabble.model.board.Board;
 import scrabble.model.token.Token;
 import scrabble.utils.EmptyBagException;
+import scrabble.utils.EmptyBoxException;
+import scrabble.utils.OccupiedBoxException;
 
 public class Game {
 	
