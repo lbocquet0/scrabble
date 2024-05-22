@@ -29,7 +29,7 @@ public class TokenTest {
 	@Test
 	public void testDescribeJoker() {
 		Token token = new Joker();
-		assertEquals(" ", token.display());
+		assertEquals("  0", token.display());
 	}
 
 	@Test
