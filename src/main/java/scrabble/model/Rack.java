@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
+import scrabble.utils.TokenIndexOutOfRack;
 
 public class Rack {
 
-	public int DEFAULT_TOKENS_AMOUNT = 7;
+	public static int MAX_TOKENS_AMOUNT = 7;
 
 	private ArrayList<Token> tokens;
 	private Player owner;
@@ -28,9 +29,9 @@ public class Rack {
 		return this.tokens.get(index);
 	}
 	
-	public Token removeToken(int index) throws IndexOutOfBoundsException {
+	public Token removeToken(int index) throws TokenIndexOutOfRack {
 		if (index < 0 || index >= this.tokens.size()) {
-			throw new IndexOutOfBoundsException();
+			throw new TokenIndexOutOfRack();
 		}
 		
 		return this.tokens.remove(index);
@@ -50,24 +51,29 @@ public class Rack {
 		Console.message(HORIZONTAL_LINE);
 				
 		if(this.remainingTokens() == 0) {
-			for(int i=0;i < DEFAULT_TOKENS_AMOUNT; i++) {
+			for(int i=0;i < MAX_TOKENS_AMOUNT; i++) {
 				Console.message("   |");
 			}
 		}else {
-			String retour = "|  ";
+			
+			String line = "|  ";
 			// TODO :  to refactor with a for each loop
-			for(int i=0;i < DEFAULT_TOKENS_AMOUNT; i++) {
-				if (this.getToken(i) != null) {
-					if (this.getToken(i).display().length() == 3) {
-						retour = retour + this.getToken(i).display() + "  |  ";
+			for(int i=0;i < MAX_TOKENS_AMOUNT; i++) {
+				Token token = this.getToken(i);
+				
+				if (token != null) {
+					String tokenDisplay = token.display();
+					
+					if (tokenDisplay.length() == 3) {
+						line = line + tokenDisplay + "  |  ";
 					} else {
-						retour = retour + this.getToken(i).display() + " |  ";
+						line = line + tokenDisplay + " |  ";
 					}
 				} else {
-					retour = "     |";
+					line = "     |";
 				}
 			}
-			Console.message(retour);
+			Console.message(line);
 		}
 		Console.message(HORIZONTAL_LINE);
 	}
@@ -79,7 +85,7 @@ public class Rack {
 		return false;
 	}
 
-	public Integer hasToken(Token token) {
+	public Integer getTokenIndex(Token token) {
 		for (int i = 0; i < this.tokens.size(); i++) {
 			if (this.tokens.get(i).getLetter() == token.getLetter()) {
 				return i + 1;

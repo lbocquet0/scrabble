@@ -7,13 +7,14 @@ import scrabble.model.Player;
 import scrabble.model.board.Board;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
+import scrabble.utils.BoxIndexOutOfBoard;
+import scrabble.utils.Direction;
 import scrabble.utils.EmptyBagException;
 import scrabble.utils.EmptyBoxException;
 import scrabble.utils.OccupiedBoxException;
 import scrabble.utils.UnpossesedTokenException;
 import scrabble.utils.PlayALetterOutOfBoard;
-
-import java.util.Locale;
+import scrabble.utils.TokenIndexOutOfRack;
 
 public class ScrabbleApplicationConsole {
 	public static void main(String[] args) {
@@ -83,7 +84,7 @@ public class ScrabbleApplicationConsole {
 
 
 					try {
-						game.playWord(tokens, x, y, direction);
+						game.playWord(tokens, x, y, direction == 1 ? Direction.HORIZONTAL : Direction.VERTICAL);
 					} catch (PlayALetterOutOfBoard e) {
 						Console.message("Position invalide.");
 						Console.message(e.getMessage());
@@ -97,6 +98,10 @@ public class ScrabbleApplicationConsole {
 					} catch (UnpossesedTokenException e) {
 						Console.message("Vous n'avez pas les jetons nécessaires pour jouer ce mot.");
 						game.cancelWord();
+					} catch (BoxIndexOutOfBoard e) {
+						Console.message("Les coordonnées que vous avez renseigner sont invalides.");
+					} catch (TokenIndexOutOfRack e) {
+						Console.message("Le jeton que vous avez renseigné n'existe pas.");
 					}
 
 					break;
@@ -131,7 +136,7 @@ public class ScrabbleApplicationConsole {
 
 			Console.message("Le sac est vide, impossible d'échanger un jeton.");
 			return false;
-		} catch (IndexOutOfBoundsException e) {
+		} catch (TokenIndexOutOfRack e) {
 
 			Console.message("Le jeton demandé n'existe pas.");
 			return false;

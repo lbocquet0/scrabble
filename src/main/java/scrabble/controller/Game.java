@@ -2,13 +2,17 @@ package scrabble.controller;
 
 import scrabble.model.Bag;
 import scrabble.model.Player;
+import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.token.Token;
+import scrabble.utils.BoxIndexOutOfBoard;
+import scrabble.utils.Direction;
 import scrabble.utils.EmptyBagException;
 import scrabble.utils.EmptyBoxException;
 import scrabble.utils.OccupiedBoxException;
 import scrabble.utils.UnpossesedTokenException;
 import scrabble.utils.PlayALetterOutOfBoard;
+import scrabble.utils.TokenIndexOutOfRack;
 
 import java.util.ArrayList;
 
@@ -41,7 +45,7 @@ public class Game {
 	}
 	
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
-		if (player.remainingTokenInRack() < 7) {
+		if (player.remainingTokenInRack() < Rack.MAX_TOKENS_AMOUNT) {
 			Token token = this.bag.pickToken();
 			
 			player.addTokenToRack(token);
@@ -49,12 +53,12 @@ public class Game {
 	}
 
 	public void fullFillPlayerRack(Player player) throws EmptyBagException {
-		while (player.remainingTokenInRack() < 7) {
+		while (player.remainingTokenInRack() < Rack.MAX_TOKENS_AMOUNT) {
 			fillUpPlayerRack(player);
 		}
 	}
 
-	public void switchTokenFromRack(Player player, int tokenIndex) throws EmptyBagException, IndexOutOfBoundsException {
+	public void switchTokenFromRack(Player player, int tokenIndex) throws EmptyBagException, TokenIndexOutOfRack {
 		if (this.bag.remainingTokens() == 0) {
 			throw new EmptyBagException();
 		}
@@ -65,34 +69,39 @@ public class Game {
 		this.bag.putToken(token);
 	}
 
-	public void playWord(Token[] tokens, int x, int y, int direction) throws PlayALetterOutOfBoard, OccupiedBoxException, EmptyBoxException, UnpossesedTokenException {
+	public void playWord(Token[] tokens, int row, int column, Direction direction) throws PlayALetterOutOfBoard, OccupiedBoxException, EmptyBoxException, UnpossesedTokenException, BoxIndexOutOfBoard, TokenIndexOutOfRack {
 		for (int i = 0; i < tokens.length; i++) {
 
-			if (direction == 1) {
-				this.playLetter(tokens[i], x, y+i);
+			if (direction == Direction.HORIZONTAL) {
+				this.playLetter(tokens[i], row, column+i);
 			} else {
-				this.playLetter(tokens[i], x+i, y);
+				this.playLetter(tokens[i], row+i, column);
 			}
 
 		}
 	}
 
-	public void playLetter(Token token, int x, int y) throws  PlayALetterOutOfBoard, OccupiedBoxException, EmptyBoxException, UnpossesedTokenException {
-		if (this.board.getToken(x, y) != null) {
-			if (this.board.getToken(x, y).getLetter() == token.getLetter()) {
+	public void playLetter(Token token, int row, int column) throws  PlayALetterOutOfBoard, OccupiedBoxException, EmptyBoxException, UnpossesedTokenException, BoxIndexOutOfBoard, TokenIndexOutOfRack {
+		Token currentToken = this.board.getToken(row, column);
+		if (currentToken != null) {
+			if (currentToken.getLetter() == token.getLetter()) {
 				return;
 			} else {
 				throw new OccupiedBoxException();
 			}
         }
-		if (x < 1 || x > Board.SIZE || y < 1 || y > Board.SIZE) {
-			throw new PlayALetterOutOfBoard(x, y);
+
+		if (row < 1 || row > Board.SIZE || column < 1 || column > Board.SIZE) {
+			throw new PlayALetterOutOfBoard(row, column);
 		}
-		if (this.player.hasToken(token) == -1) {
+
+		Integer tokenRackIndex = this.player.getTokenRackIndex(token);
+		if (tokenRackIndex == -1) {
 			throw new UnpossesedTokenException();
 		}
-		this.board.setToken(token, x, y);
-		this.player.removeTokenFromRack(this.player.hasToken(token));
+
+		this.board.setToken(token, row, column);
+		this.player.removeTokenFromRack(tokenRackIndex);
 	}
 
 	public void cancelWord() {

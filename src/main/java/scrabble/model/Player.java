@@ -1,6 +1,7 @@
 package scrabble.model;
 
 import scrabble.model.token.Token;
+import scrabble.utils.TokenIndexOutOfRack;
 
 public class Player {
 	private Rack rack;
@@ -25,7 +26,7 @@ public class Player {
 		this.rack.display();
 	}
 
-	public Token removeTokenFromRack(int i) throws IndexOutOfBoundsException {
+	public Token removeTokenFromRack(int i) throws TokenIndexOutOfRack {
 		return this.rack.removeToken(i-1);
 	}
 	
@@ -36,8 +37,8 @@ public class Player {
 		return false;
 	}
 
-	public Integer hasToken(Token token) {
-		return this.rack.hasToken(token);
+	public Integer getTokenRackIndex(Token token) {
+		return this.rack.getTokenIndex(token);
 	}
 
 }

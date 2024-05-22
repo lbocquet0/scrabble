@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
+import scrabble.utils.BoxIndexOutOfBoard;
 import scrabble.utils.EmptyBoxException;
 
 public class Board {
@@ -28,7 +29,36 @@ public class Board {
 			this.boxes.add(currentLine);
 		}
 	}
+
+	public Box getBox(Integer row, Integer column) throws BoxIndexOutOfBoard {
+		if (row < 1 || row > SIZE || column < 1 || column > SIZE) {
+			throw new BoxIndexOutOfBoard();
+		}
+
+		return this.boxes.get(row-1).get(column-1);
+	}
+
+	public Token getToken(Integer row, Integer column) throws BoxIndexOutOfBoard {
+		Box box = this.getBox(row, column);
+
+		return box.getToken();
+	}
 	
+	public void setToken(Token token, Integer row, Integer column) throws BoxIndexOutOfBoard, EmptyBoxException {
+		Box box = this.getBox(row, column);
+		
+		box.setToken(token);
+		this.actionHistory.add(new Action(row, column, box));
+	}
+
+	public ArrayList<Token> cancelLastAction() {
+		return this.actionHistory.undoAllActions();
+	}
+
+	public void clearHistory() {
+		this.actionHistory.clear();
+	}
+
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");
 	    for (int i = 0; i <= SIZE; i++) {
@@ -51,24 +81,28 @@ public class Board {
 	        		tokenDisplay = "  " + j.toString() + " ";
 	        		
 	        	} else {
-		            Box box = this.boxes.get(i-1).get(j-1);
-   
-		            if (box != null && box.getToken() != null) {
-		                tokenDisplay = box.getToken().display();
-		            } else {
-		            	if (box != null && box.isMiddle()) {
-		            		tokenDisplay = "  ⭐ ";
-		            	}
-		            }
-	        		
+
+					try {
+						Box box = this.getBox(i, j);
+	   
+						if (box != null && box.getToken() != null) {
+							tokenDisplay = box.getToken().display();
+						} else {
+							if (box != null && box.isMiddle()) {
+								tokenDisplay = "  ⭐ ";
+							}
+						}
+					} catch (BoxIndexOutOfBoard e) {
+						e.printStackTrace();
+					
+					}
 	        	}
-	        	
-	            
 
 	            if (tokenDisplay.length() == 4) {
 	                Console.message(tokenDisplay + " ┃");
 	            } else {
-	            	Console.message(tokenDisplay + "┃");	            }
+	            	Console.message(tokenDisplay + "┃");
+				}
 	        }
 
 	        Console.message("");
@@ -82,29 +116,8 @@ public class Board {
 	    for (int i = 0; i <= SIZE; i++) {
 	        bottomHorizontalLine.append("------");
 	    }
+		
 	    bottomHorizontalLine.append("-\n");
 	    Console.message(bottomHorizontalLine.toString());
-	}
-
-
-	public Token getToken(Integer i, Integer j) {
-		Box box = this.boxes.get(i-1).get(j-1);
-
-		return box.getToken();
-	}
-	
-	public void setToken(Token token, Integer i, Integer j) throws EmptyBoxException {
-		Box box = this.boxes.get(i-1).get(j-1);
-		
-		box.setToken(token);
-		this.actionHistory.add(new Action(i, j, box));
-	}
-
-	public ArrayList<Token> cancelLastAction() {
-		return this.actionHistory.undoAllActions();
-	}
-
-	public void clearHistory() {
-		this.actionHistory.clear();
 	}
 }
