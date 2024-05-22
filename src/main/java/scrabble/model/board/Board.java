@@ -61,18 +61,18 @@ public class Board {
 
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");
+		String line;
 	    for (int i = 0; i <= SIZE; i++) {
 	        horizontalLine.append("------");
 	    }
-	    horizontalLine.append("-\n");
 
 	    Console.message(horizontalLine.toString());
 
 	    for (Integer i = 0; i <= SIZE; i++) {
 	    	if (i < 10) {
-	    		Console.message(i + "   ┃");
+	    		line = i + "   ┃";
 	    	} else {
-	    		Console.message(i + "  ┃");
+	    		line = i + "  ┃";
 	    	}
 	       
 	        for (Integer j = 1; j <= SIZE; j++) {
@@ -99,13 +99,14 @@ public class Board {
 	        	}
 
 	            if (tokenDisplay.length() == 4) {
-	                Console.message(tokenDisplay + " ┃");
+					line = line + tokenDisplay + " ┃";
 	            } else {
-	            	Console.message(tokenDisplay + "┃");
+	            	line = line + tokenDisplay + "┃";
 				}
 	        }
 
-	        Console.message("");
+			Console.message(line);
+	        
 
 	        if (i != SIZE) {
 	            Console.message(horizontalLine.toString());
