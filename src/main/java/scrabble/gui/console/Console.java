@@ -39,6 +39,22 @@ public class Console {
 		return response;
 	}
 
+	public static String askString(String question) {
+		Console.message(question);
+		String response = null;
+
+		while (response == null) {
+			try {
+				response = scanner.next();
+			} catch (NoSuchElementException e) {
+				Console.message("Veuillez saisir une chaîne de caractères");
+				scanner.next();
+			}
+		}
+
+		return response;
+	}
+
 	public static void welcomeMessage() {
 		Console.message(Console.HORIZONTAL_LINE);
 		Console.message("-- Bienvenue dans notre magnifique jeu de scrabble ! --");

@@ -4,16 +4,20 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
+import scrabble.utils.EmptyBoxException;
 
 public class Board {
 	
-	private static int SIZE = 15;
+	public static int SIZE = 15;
 	
 	private ArrayList<ArrayList<Box>> boxes;
+
+	private ActionHistory actionHistory;
 	
 	public Board() {
 		this.boxes = new ArrayList<ArrayList<Box>>();
-		
+		this.actionHistory = new ActionHistory();
+
 		for (int i = 1; i <= SIZE; i++) {
 			ArrayList<Box> currentLine = new ArrayList<>();
 			
@@ -84,10 +88,24 @@ public class Board {
 	}
 
 
+	public Token getToken(Integer i, Integer j) {
+		Box box = this.boxes.get(i-1).get(j-1);
+
+		return box.getToken();
+	}
 	
-	public void setToken(Token token, Integer i, Integer j) {
-		Box box = this.boxes.get(i).get(j);
+	public void setToken(Token token, Integer i, Integer j) throws EmptyBoxException {
+		Box box = this.boxes.get(i-1).get(j-1);
 		
 		box.setToken(token);
+		this.actionHistory.add(new Action(i, j, box));
+	}
+
+	public ArrayList<Token> cancelLastAction() {
+		return this.actionHistory.undoAllActions();
+	}
+
+	public void clearHistory() {
+		this.actionHistory.clear();
 	}
 }

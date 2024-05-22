@@ -1,11 +1,9 @@
 package scrabble.model;
 
-import scrabble.controller.Game;
 import scrabble.model.token.Token;
 
 public class Player {
 	private Rack rack;
-	private Game game;
 
 	public Player() {
 		this.rack = new Rack();
@@ -23,10 +21,6 @@ public class Player {
 		this.rack.addToken(token);
 	}
 
-	public Game getGame() {
-		return this.game;
-	}
-
 	public void displayRack() {
 		this.rack.display();
 	}
@@ -41,4 +35,9 @@ public class Player {
 		}
 		return false;
 	}
+
+	public Integer hasToken(Token token) {
+		return this.rack.hasToken(token);
+	}
+
 }
