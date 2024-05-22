@@ -72,7 +72,7 @@ public class Board {
 	            }
 	        }
 
-	        Console.message(null);
+	        Console.message("");
 
 	        if (i != SIZE) {
 	            System.out.print(horizontalLine);
