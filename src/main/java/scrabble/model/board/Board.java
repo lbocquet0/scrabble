@@ -102,4 +102,8 @@ public class Board {
 	public ArrayList<Token> cancelLastAction() {
 		return this.actionHistory.undoAllActions();
 	}
+
+	public void clearHistory() {
+		this.actionHistory.clear();
+	}
 }
