@@ -9,10 +9,10 @@ public class Console {
 	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void message(String message) {
-		System.out.println(message);
+		Console.message(message);
 	}
 	public static void makeSeparator() {
-		System.out.println("\n" + HORIZONTAL_LINE + "\n");
+		Console.message("\n" + HORIZONTAL_LINE + "\n");
 	}
 
 	public static Integer askInt(String question, Integer min, Integer max) {

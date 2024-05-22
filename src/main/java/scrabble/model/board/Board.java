@@ -2,6 +2,7 @@ package scrabble.model.board;
 
 import java.util.ArrayList;
 
+import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
 
 public class Board {
@@ -67,7 +68,7 @@ public class Board {
 	            }
 	        }
 
-	        System.out.println();
+	        Console.message(null);
 
 	        if (i != SIZE) {
 	            System.out.print(horizontalLine);
