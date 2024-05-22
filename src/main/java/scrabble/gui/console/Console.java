@@ -9,7 +9,7 @@ public class Console {
 	private static final Scanner scanner = new Scanner(System.in);
 
 	public static void message(String message) {
-		Console.message(message);
+		System.out.println(message);
 	}
 	public static void makeSeparator() {
 		Console.message("\n" + HORIZONTAL_LINE + "\n");
