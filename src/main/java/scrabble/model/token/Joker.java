@@ -14,7 +14,7 @@ public class Joker extends Token {
 
 	@Override
 	public String display() {
-		return " ";
+		return "  0";
 	}
 
 	// TODO: Add a method to set the letter of the joker
