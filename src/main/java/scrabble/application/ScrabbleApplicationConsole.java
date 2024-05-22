@@ -5,7 +5,15 @@ import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.board.Board;
+import scrabble.model.token.FrenchLetter;
+import scrabble.model.token.Token;
 import scrabble.utils.EmptyBagException;
+import scrabble.utils.EmptyBoxException;
+import scrabble.utils.OccupiedBoxException;
+import scrabble.utils.UnpossesedTokenException;
+import scrabble.utils.PlayALetterOutOfBoard;
+
+import java.util.Locale;
 
 public class ScrabbleApplicationConsole {
 	public static void main(String[] args) {
@@ -54,7 +62,43 @@ public class ScrabbleApplicationConsole {
 			switch (choice) {
 				case 1:
 					continueGame = true;
-					// TODO : Implement playWord
+					Console.message("Jouer un mot");
+					Console.message("Choissisez votre position de départ :");
+					Integer x = Console.askInt("Ligne ?", 1, Board.SIZE);
+					Integer y = Console.askInt("Colonne ?", 1, Board.SIZE);
+
+					Console.message("Choissisez votre mot :");
+					String word = Console.askString("Mot à jouer :");
+
+					Token[] tokens = new Token[word.length()];
+					for (int i = 0; i < word.length(); i++) {
+						tokens[i] = new Token(FrenchLetter.valueOf(word.substring(i, i+1).toUpperCase()));
+					}
+
+					Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
+					Console.message("1 - Horizontal");
+					Console.message("2 - Vertical");
+
+					Integer direction = Console.askInt("Votre choix ?", 1, 2);
+
+
+					try {
+						game.playWord(tokens, x, y, direction);
+					} catch (PlayALetterOutOfBoard e) {
+						Console.message("Position invalide.");
+						Console.message(e.getMessage());
+						game.cancelWord();
+					} catch (OccupiedBoxException e) {
+						Console.message("La case est déjà occupée.");
+						game.cancelWord();
+					} catch (EmptyBoxException e) {
+						Console.message("La case n'a pas correctement été remplie.");
+						game.cancelWord();
+					} catch (UnpossesedTokenException e) {
+						Console.message("Vous n'avez pas les jetons nécessaires pour jouer ce mot.");
+						game.cancelWord();
+					}
+
 					break;
 				case 2:
 					continueGame = true;
@@ -67,6 +111,7 @@ public class ScrabbleApplicationConsole {
 
 			Console.makeSeparator();
 
+			game.clearRoundHistory();
 			try {
 				game.fullFillPlayerRack(player);
 			} catch (EmptyBagException e) {
