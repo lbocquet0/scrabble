@@ -36,13 +36,13 @@ public class Board {
 	    }
 	    horizontalLine.append("-\n");
 
-	    System.out.print(horizontalLine);
+	    Console.message(horizontalLine.toString());
 
 	    for (Integer i = 0; i <= SIZE; i++) {
 	    	if (i < 10) {
-	    		System.out.print(i + "   ┃");
+	    		Console.message(i + "   ┃");
 	    	} else {
-	    		System.out.print(i + "  ┃");
+	    		Console.message(i + "  ┃");
 	    	}
 	       
 	        for (Integer j = 1; j <= SIZE; j++) {
@@ -66,16 +66,15 @@ public class Board {
 	            
 
 	            if (tokenDisplay.length() == 4) {
-	                System.out.printf("%s ┃", tokenDisplay);
+	                Console.message(tokenDisplay + " ┃");
 	            } else {
-	                System.out.printf("%s┃", tokenDisplay);
-	            }
+	            	Console.message(tokenDisplay + "┃");	            }
 	        }
 
 	        Console.message("");
 
 	        if (i != SIZE) {
-	            System.out.print(horizontalLine);
+	            Console.message(horizontalLine.toString());
 	        }
 	    }
 
@@ -84,7 +83,7 @@ public class Board {
 	        bottomHorizontalLine.append("------");
 	    }
 	    bottomHorizontalLine.append("-\n");
-	    System.out.print(bottomHorizontalLine);
+	    Console.message(bottomHorizontalLine.toString());
 	}
 
 
