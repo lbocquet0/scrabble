@@ -69,19 +69,7 @@ public class Game {
 		this.bag.putToken(token);
 	}
 
-	public void playWord(Token[] tokens, int row, int column, Direction direction) throws PlayALetterOutOfBoard, OccupiedBoxException, EmptyBoxException, UnpossesedTokenException, BoxIndexOutOfBoard, TokenIndexOutOfRack {
-		for (int i = 0; i < tokens.length; i++) {
-
-			if (direction == Direction.HORIZONTAL) {
-				this.playLetter(tokens[i], row, column+i);
-			} else {
-				this.playLetter(tokens[i], row+i, column);
-			}
-
-		}
-	}
-
-	public void playLetter(Token token, int row, int column) throws  PlayALetterOutOfBoard, OccupiedBoxException, EmptyBoxException, UnpossesedTokenException, BoxIndexOutOfBoard, TokenIndexOutOfRack {
+	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, EmptyBoxException, UnpossesedTokenException, BoxIndexOutOfBoard, TokenIndexOutOfRack {
 		Token currentToken = this.board.getToken(row, column);
 		if (currentToken != null) {
 			if (currentToken.getLetter() == token.getLetter()) {
@@ -91,13 +79,9 @@ public class Game {
 			}
         }
 
-		if (row < 1 || row > Board.SIZE || column < 1 || column > Board.SIZE) {
-			throw new PlayALetterOutOfBoard(row, column);
-		}
-
 		Integer tokenRackIndex = this.player.getTokenRackIndex(token);
 		if (tokenRackIndex == -1) {
-			throw new UnpossesedTokenException();
+			throw new UnpossesedTokenException( token.display() );
 		}
 
 		this.board.setToken(token, row, column);
