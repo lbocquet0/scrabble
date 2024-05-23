@@ -37,7 +37,7 @@ public class ScrabbleApplicationConsole {
 		
 		while (continueGame) {
 			
-			if (player.getRack().isEmpty() && bag.isEmpty()) {
+			if (player.rackIsEmpty() && bag.isEmpty()) {
 				continueGame = false;
 				break;
 			}
