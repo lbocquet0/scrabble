@@ -9,8 +9,7 @@ import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.OccupiedBoxException;
-import scrabble.utils.exceptions.TokenIndexOutOfRack;
-import scrabble.utils.exceptions.UnpossesedTokenException;
+import scrabble.utils.exceptions.TokenDoesntExists;
 
 import java.util.ArrayList;
 
@@ -56,18 +55,7 @@ public class Game {
 		}
 	}
 
-	public void switchTokenFromRack(Player player, int tokenIndex) throws EmptyBagException, TokenIndexOutOfRack {
-		if (this.bag.remainingTokens() == 0) {
-			throw new EmptyBagException();
-		}
-
-		Token token = player.removeTokenFromRack(tokenIndex);
-		
-		fillUpPlayerRack(player);
-		this.bag.putToken(token);
-	}
-
-	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, EmptyBoxException, UnpossesedTokenException, BoxIndexOutOfBoard, TokenIndexOutOfRack {
+	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
 		Token currentToken = this.board.getToken(row, column);
 		if (currentToken != null) {
 			if (currentToken.getLetter() == token.getLetter()) {
@@ -77,13 +65,15 @@ public class Game {
 			}
         }
 
-		Integer tokenRackIndex = this.player.getTokenRackIndex(token);
-		if (tokenRackIndex == -1) {
-			throw new UnpossesedTokenException( token.display() );
-		}
+		this.player.removeTokenFromRack(token);
 
-		this.board.setToken(token, row, column);
-		this.player.removeTokenFromRack(tokenRackIndex);
+		try {
+			this.board.setToken(token, row, column);
+		} catch (Exception e) {
+			this.player.addTokenToRack(token);
+
+			throw e;
+		}
 	}
 
 	public void cancelWord() {

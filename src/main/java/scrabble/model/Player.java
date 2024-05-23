@@ -1,7 +1,7 @@
 package scrabble.model;
 
 import scrabble.model.token.Token;
-import scrabble.utils.exceptions.TokenIndexOutOfRack;
+import scrabble.utils.exceptions.TokenDoesntExists;
 
 public class Player {
 	private Rack rack;
@@ -26,8 +26,8 @@ public class Player {
 		this.rack.display();
 	}
 
-	public Token removeTokenFromRack(int i) throws TokenIndexOutOfRack {
-		return this.rack.removeToken(i-1);
+	public Boolean removeTokenFromRack(Token token) throws TokenDoesntExists {
+		return this.rack.removeToken(token);
 	}
 	
 	public boolean RackIsEmpty(){

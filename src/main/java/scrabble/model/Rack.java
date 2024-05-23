@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
-import scrabble.utils.exceptions.TokenIndexOutOfRack;
+import scrabble.utils.exceptions.TokenDoesntExists;
 
 public class Rack {
 
@@ -29,12 +29,13 @@ public class Rack {
 		return this.tokens.get(index);
 	}
 	
-	public Token removeToken(int index) throws TokenIndexOutOfRack {
-		if (index < 0 || index >= this.tokens.size()) {
-			throw new TokenIndexOutOfRack(index);
+	public boolean removeToken(Token token) throws TokenDoesntExists {
+		if (this.tokens.contains(token)) {
+			this.tokens.remove(token);
+			return true;
 		}
 		
-		return this.tokens.remove(index);
+		throw new TokenDoesntExists();
 	}
 
 	public Player getOwner() {

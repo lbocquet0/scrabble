@@ -1,9 +1,12 @@
 package scrabble.application;
 
+import java.util.ArrayList;
+
 import scrabble.controller.Game;
 import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Player;
+import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
@@ -12,10 +15,12 @@ import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.OccupiedBoxException;
-import scrabble.utils.exceptions.TokenIndexOutOfRack;
-import scrabble.utils.exceptions.UnpossesedTokenException;
+import scrabble.utils.exceptions.TokenDoesntExists;
 
 public class ScrabbleApplicationConsole {
+
+	private static String TEXT_INPUT_FOR_JOKER = "JOK";
+
 	public static void main(String[] args) {
 		Console.welcomeMessage();
 
@@ -31,12 +36,13 @@ public class ScrabbleApplicationConsole {
 		Player player = game.getPlayer();
 		Board board = game.getBoard();
 		Bag bag = game.getBag();
+		Rack rack = player.getRack();
 
 		Boolean continueGame = true;
 		
 		while (continueGame) {
 			
-			if (player.getRack().isEmpty() && bag.isEmpty()) {
+			if (rack.isEmpty() && bag.isEmpty()) {
 				continueGame = false;
 				break;
 			}
@@ -64,11 +70,12 @@ public class ScrabbleApplicationConsole {
 					continueGame = true;
 					Console.message("Jouer un mot");
 					Console.message("Choissisez votre position de départ :");
+
 					Integer x = Console.askInt("Ligne ?", 1, Board.SIZE);
 					Integer y = Console.askInt("Colonne ?", 1, Board.SIZE);
 
-					String letter = Console.askString("Quel lettre voulez-vous jouer ?");
-					Token token = new Token(FrenchLetter.valueOf(letter.toUpperCase()));
+					Token token = askToken(rack);
+					
 					Boolean continueWord = true;
 					Direction direction = Direction.HORIZONTAL;
 					Integer row = x;
@@ -84,20 +91,15 @@ public class ScrabbleApplicationConsole {
 						Console.message("La case n'a pas correctement été remplie.");
 						continueGame = false;
 						game.cancelWord();
-					} catch (UnpossesedTokenException e) {
-						Console.message("Vous n'avez pas le token [" + token.getLetter() + "] dans votre chevalet.");
-						continueGame = false;
-						game.cancelWord();
 					} catch (BoxIndexOutOfBoard e) {
 						Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseigner sont en dehors du plateau.");
 						continueGame = false;
 						game.cancelWord();
-					} catch (TokenIndexOutOfRack e) {
-						Console.message("Vous n'avez pas de jeton n°" + e.getIndex() + " dans votre chevalet.");
+					} catch (TokenDoesntExists e) {
+						Console.message("Vous ne possédez pas ce jeton dans votre rack");
 						continueGame = false;
 						game.cancelWord();
 					}
-
 
 					Console.message("Avez-vous d'autres lettres à jouer ?");
 					Console.message("1 - Oui");
@@ -126,8 +128,7 @@ public class ScrabbleApplicationConsole {
 								row += 1;
 							}
 
-							letter = Console.askString("Quel lettre voulez-vous jouer ?");
-							token = new Token(FrenchLetter.valueOf(letter.toUpperCase()));
+							token = askToken(rack);
 
 							try {
 								game.playLetter(token, row, column);
@@ -137,14 +138,12 @@ public class ScrabbleApplicationConsole {
 							} catch (EmptyBoxException e) {
 								Console.message("La case n'a pas correctement été remplie.");
 								game.cancelWord();
-							} catch (UnpossesedTokenException e) {
-								Console.message("Vous n'avez pas le token [" + token.getLetter() + "] dans votre chevalet.");
-								game.cancelWord();
 							} catch (BoxIndexOutOfBoard e) {
 								Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseigner sont en dehors du plateau.");
-							} catch (TokenIndexOutOfRack e) {
-								Console.message("Vous n'avez pas de jeton n°" + e.getIndex() + " dans votre chevalet.");
+							} catch (TokenDoesntExists e) {
+								Console.message("Le jeton n'existe pas");
 							}
+
 							Console.message("Avez-vous d'autres lettres à jouer ?");
 							Console.message("1 - Oui | Continuer le mot");
 							Console.message("2 - Non | Valider la saisie");
@@ -179,21 +178,77 @@ public class ScrabbleApplicationConsole {
 		}
 	}
 
-	private static boolean answerSwapToken(Game game, Player player) {
-		Integer remainingTokenInRack = player.remainingTokenInRack();
-		Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
+	private static Token askToken(Rack rack) {
+		Token token = null;
 		
-		try {
-			game.switchTokenFromRack(player, tokenToSwapIndex);
-			return true;
-		} catch (EmptyBagException e) {
+		while (token == null) {
+			String input = Console.askString("Quel lettre voulez-vous jouer (ou " + TEXT_INPUT_FOR_JOKER + " pour un joker) ?");
 
-			Console.message("Le sac est vide, impossible d'échanger un jeton.");
-			return false;
-		} catch (TokenIndexOutOfRack e) {
-
-			Console.message("Le jeton demandé n'existe pas.");
-			return false;
+			try {
+				token = getTokenFromInput(rack, input);
+			} catch (TokenDoesntExists e) {
+				Console.message("Vous ne possédez pas ce jeton dans votre rack");
+			}
 		}
+
+		return token;
 	}
+
+	private static Token getTokenFromInput(Rack rack, String input) throws TokenDoesntExists {
+		input = input.toUpperCase();
+
+		ArrayList<Token> tokens = rack.getTokens();
+
+		if (input == TEXT_INPUT_FOR_JOKER.toUpperCase()) {
+
+			for (Token token : tokens) {
+				if (token.isJoker()) {
+					return token;
+				}
+			}
+
+		} else {
+
+			try {
+				FrenchLetter letter = FrenchLetter.valueOf(input);
+			
+				if (letter != null) {
+	
+					for (Token token : tokens) {
+						if (token.getLetter() == letter) {
+							return token;
+						}
+					}
+				}
+				
+			} catch (IllegalArgumentException e) {
+
+				throw new TokenDoesntExists();
+			}
+		}
+
+		throw new TokenDoesntExists();		
+	}
+
+	// private static boolean answerSwapToken(Game game, Player player) {
+	// 	Integer remainingTokenInRack = player.remainingTokenInRack();
+	// 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
+		
+	// 	Rack playerRack = player.getRack();
+
+	// 	Token token = playerRack.getToken(tokenToSwapIndex);
+
+	// 	try {
+	// 		game.switchTokenFromRack(player, token);
+	// 		return true;
+	// 	} catch (EmptyBagException e) {
+
+	// 		Console.message("Le sac est vide, impossible d'échanger un jeton.");
+	// 		return false;
+	// 	} catch (TokenIndexOutOfRack e) {
+
+	// 		Console.message("Le jeton demandé n'existe pas.");
+	// 		return false;
+	// 	}
+	// }
 }
