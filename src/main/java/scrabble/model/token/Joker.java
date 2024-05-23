@@ -14,7 +14,7 @@ public class Joker extends Token {
 
 	@Override
 	public String display() {
-		return "  0";
+		return "JOK";
 	}
 
 	public void setLetter(FrenchLetter letter) {
