@@ -31,7 +31,7 @@ public class Rack {
 	
 	public Token removeToken(int index) throws TokenIndexOutOfRack {
 		if (index < 0 || index >= this.tokens.size()) {
-			throw new TokenIndexOutOfRack();
+			throw new TokenIndexOutOfRack(index);
 		}
 		
 		return this.tokens.remove(index);

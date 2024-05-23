@@ -32,7 +32,7 @@ public class Board {
 
 	public Box getBox(Integer row, Integer column) throws BoxIndexOutOfBoard {
 		if (row < 1 || row > SIZE || column < 1 || column > SIZE) {
-			throw new BoxIndexOutOfBoard();
+			throw new BoxIndexOutOfBoard(row, column);
 		}
 
 		return this.boxes.get(row-1).get(column-1);
