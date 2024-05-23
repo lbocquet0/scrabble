@@ -68,42 +68,97 @@ public class ScrabbleApplicationConsole {
 					Integer x = Console.askInt("Ligne ?", 1, Board.SIZE);
 					Integer y = Console.askInt("Colonne ?", 1, Board.SIZE);
 
-					Console.message("Choissisez votre mot :");
-					String word = Console.askString("Mot à jouer :");
-
-					Token[] tokens = new Token[word.length()];
-					for (int i = 0; i < word.length(); i++) {
-						tokens[i] = new Token(FrenchLetter.valueOf(word.substring(i, i+1).toUpperCase()));
-					}
-
-					Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
-					Console.message("1 - Horizontal");
-					Console.message("2 - Vertical");
-
-					Integer direction = Console.askInt("Votre choix ?", 1, 2);
-
+					String letter = Console.askString("Quel lettre voulez-vous jouer ?");
+					Token token = new Token(FrenchLetter.valueOf(letter.toUpperCase()));
+					Boolean continueWord = true;
+					Direction direction = Direction.HORIZONTAL;
+					Integer row = x;
+					Integer column = y;
 
 					try {
-						game.playWord(tokens, x, y, direction == 1 ? Direction.HORIZONTAL : Direction.VERTICAL);
-					} catch (PlayALetterOutOfBoard e) {
-						Console.message("Position invalide.");
-						Console.message(e.getMessage());
-						game.cancelWord();
+						game.playLetter(token, x, y);
 					} catch (OccupiedBoxException e) {
 						Console.message("La case est déjà occupée.");
+						continueWord = false;
 						game.cancelWord();
 					} catch (EmptyBoxException e) {
 						Console.message("La case n'a pas correctement été remplie.");
+						continueGame = false;
 						game.cancelWord();
 					} catch (UnpossesedTokenException e) {
-						Console.message("Vous n'avez pas les jetons nécessaires pour jouer ce mot.");
+						Console.message("Vous n'avez pas le token [" + token.getLetter() + "] dans votre chevalet.");
+						continueGame = false;
 						game.cancelWord();
 					} catch (BoxIndexOutOfBoard e) {
-						Console.message("Les coordonnées que vous avez renseigner sont invalides.");
+						Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseigner sont en dehors du plateau.");
+						continueGame = false;
+						game.cancelWord();
 					} catch (TokenIndexOutOfRack e) {
-						Console.message("Le jeton que vous avez renseigné n'existe pas.");
+						Console.message("Vous n'avez pas de jeton n°" + e.getIndex() + " dans votre chevalet.");
+						continueGame = false;
+						game.cancelWord();
 					}
 
+
+					Console.message("Avez-vous d'autres lettres à jouer ?");
+					Console.message("1 - Oui");
+					Console.message("2 - Non");
+
+					Integer response = Console.askInt("Votre choix ?", 1, 2);
+					if (response == 1) {
+						Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
+						Console.message("1 - Horizontal");
+						Console.message("2 - Vertical");
+
+						Integer directionChoice = Console.askInt("Votre choix ?", 1, 2);
+						if (directionChoice == 2) {
+							direction = Direction.VERTICAL;
+						}
+					} else {
+						continueWord = false;
+					}
+
+					response = 1;
+					while (continueWord) {
+						if (response == 1) {
+							if (direction == Direction.HORIZONTAL) {
+								column += 1;
+							} else {
+								row += 1;
+							}
+
+							letter = Console.askString("Quel lettre voulez-vous jouer ?");
+							token = new Token(FrenchLetter.valueOf(letter.toUpperCase()));
+
+							try {
+								game.playLetter(token, row, column);
+							} catch (OccupiedBoxException e) {
+								Console.message("La case est déjà occupée.");
+								game.cancelWord();
+							} catch (EmptyBoxException e) {
+								Console.message("La case n'a pas correctement été remplie.");
+								game.cancelWord();
+							} catch (UnpossesedTokenException e) {
+								Console.message("Vous n'avez pas le token [" + token.getLetter() + "] dans votre chevalet.");
+								game.cancelWord();
+							} catch (BoxIndexOutOfBoard e) {
+								Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseigner sont en dehors du plateau.");
+							} catch (TokenIndexOutOfRack e) {
+								Console.message("Vous n'avez pas de jeton n°" + e.getIndex() + " dans votre chevalet.");
+							}
+							Console.message("Avez-vous d'autres lettres à jouer ?");
+							Console.message("1 - Oui | Continuer le mot");
+							Console.message("2 - Non | Valider la saisie");
+
+							response = Console.askInt("Votre choix ?", 1, 2);
+						} else {
+							continueWord = false;
+						}
+
+
+
+					}
+					game.clearRoundHistory();
 					break;
 				case 2:
 					continueGame = true;
