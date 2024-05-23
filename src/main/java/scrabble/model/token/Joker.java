@@ -20,5 +20,8 @@ public class Joker extends Token {
 	public void setLetter(FrenchLetter letter) {
 		this.letter = letter;
 	}
-	// TODO: Add a method to check if the joker has a letter
+
+	public boolean haveLetter() {
+		return (this.letter != null);
+	}
 }
