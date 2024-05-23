@@ -30,7 +30,7 @@ public class Player {
 		return this.rack.removeToken(i-1);
 	}
 	
-	public boolean RackIsEmpty(){
+	public boolean rackIsEmpty(){
 		if (this.getRack().remainingTokens() == 0) {
 			return true;
 		}
