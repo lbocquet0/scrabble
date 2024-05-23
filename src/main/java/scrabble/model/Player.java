@@ -31,7 +31,7 @@ public class Player {
 	}
 	
 	public boolean rackIsEmpty(){
-		if (this.getRack().remainingTokens() == 0) {
+		if (this.rack.remainingTokens() == 0) {
 			return true;
 		}
 		return false;
