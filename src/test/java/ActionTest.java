@@ -8,7 +8,7 @@ import scrabble.model.board.Action;
 import scrabble.model.board.Box;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBoxException;
+import scrabble.utils.exceptions.EmptyBoxException;
 
 public class ActionTest {
 	

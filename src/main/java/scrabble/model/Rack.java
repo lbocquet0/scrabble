@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
-import scrabble.utils.TokenIndexOutOfRack;
+import scrabble.utils.exceptions.TokenIndexOutOfRack;
 
 public class Rack {
 

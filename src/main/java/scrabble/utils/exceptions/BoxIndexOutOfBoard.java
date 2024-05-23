@@ -1,4 +1,4 @@
-package scrabble.utils;
+package scrabble.utils.exceptions;
 
 public class BoxIndexOutOfBoard extends Exception {
 	private Integer row;

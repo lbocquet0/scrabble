@@ -6,7 +6,7 @@ import java.util.Collections;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBagException;
+import scrabble.utils.exceptions.EmptyBagException;
 
 public class Bag {
     private ArrayList<Token> tokens;

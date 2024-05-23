@@ -1,7 +1,7 @@
 package scrabble.model;
 
 import scrabble.model.token.Token;
-import scrabble.utils.TokenIndexOutOfRack;
+import scrabble.utils.exceptions.TokenIndexOutOfRack;
 
 public class Player {
 	private Rack rack;

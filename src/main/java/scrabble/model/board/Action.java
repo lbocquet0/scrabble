@@ -1,7 +1,7 @@
 package scrabble.model.board;
 
 import scrabble.model.token.Token;
-import scrabble.utils.EmptyBoxException;
+import scrabble.utils.exceptions.EmptyBoxException;
 
 public class Action {
 	private int rowPosition;

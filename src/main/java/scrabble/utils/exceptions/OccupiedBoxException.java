@@ -1,4 +1,4 @@
-package scrabble.utils;
+package scrabble.utils.exceptions;
 
 public class OccupiedBoxException extends Exception {
 	public OccupiedBoxException() {

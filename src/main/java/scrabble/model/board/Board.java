@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
-import scrabble.utils.BoxIndexOutOfBoard;
-import scrabble.utils.EmptyBoxException;
+import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.EmptyBoxException;
 
 public class Board {
 	

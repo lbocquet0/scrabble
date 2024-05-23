@@ -5,14 +5,12 @@ import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.token.Token;
-import scrabble.utils.BoxIndexOutOfBoard;
-import scrabble.utils.Direction;
-import scrabble.utils.EmptyBagException;
-import scrabble.utils.EmptyBoxException;
-import scrabble.utils.OccupiedBoxException;
-import scrabble.utils.UnpossesedTokenException;
-import scrabble.utils.PlayALetterOutOfBoard;
-import scrabble.utils.TokenIndexOutOfRack;
+import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.EmptyBagException;
+import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.OccupiedBoxException;
+import scrabble.utils.exceptions.TokenIndexOutOfRack;
+import scrabble.utils.exceptions.UnpossesedTokenException;
 
 import java.util.ArrayList;
 

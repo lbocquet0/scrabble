@@ -1,6 +1,5 @@
 package scrabble.model.board;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import scrabble.model.token.Token;

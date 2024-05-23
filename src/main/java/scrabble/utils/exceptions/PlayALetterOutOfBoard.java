@@ -1,4 +1,4 @@
-package scrabble.utils;
+package scrabble.utils.exceptions;
 
 public class PlayALetterOutOfBoard extends Exception {
 	public PlayALetterOutOfBoard( Integer x, Integer y) {

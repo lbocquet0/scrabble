@@ -1,4 +1,4 @@
-package scrabble.utils;
+package scrabble.utils.exceptions;
 
 public class UnpossesedTokenException extends Exception {
 	private String letter;
