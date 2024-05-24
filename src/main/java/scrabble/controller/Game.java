@@ -3,8 +3,11 @@ package scrabble.controller;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
+import scrabble.model.board.Action;
 import scrabble.model.board.Board;
 import scrabble.model.token.Token;
+import scrabble.utils.Direction;
+import scrabble.utils.ScoreCounter;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
@@ -86,5 +89,16 @@ public class Game {
 	
 	public void clearRoundHistory() {
 		this.board.clearHistory();
+	}
+
+	public Integer validateWord(Direction direction) {
+		ArrayList<Action> actions = this.board.getActionsHistory();
+
+		Integer score = ScoreCounter.countScore(this.board, actions, direction);
+		Integer newScore = this.player.addScore(score);
+
+		this.clearRoundHistory();
+
+		return newScore;
 	}
 }

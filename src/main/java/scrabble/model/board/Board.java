@@ -65,6 +65,10 @@ public class Board {
 		this.actionHistory.clear();
 	}
 
+	public ArrayList<Action> getActionsHistory() {
+		return this.actionHistory.actions();
+	}
+
 	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws BoxIndexOutOfBoard, WordNotFoundException {
 		Box currentBox = this.getBox(row, column);
 		if (currentBox.isEmpty()) {
