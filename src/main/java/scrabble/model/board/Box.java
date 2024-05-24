@@ -39,4 +39,12 @@ public class Box {
 	public boolean isEmpty() {
 		return this.token == null;
 	}
+
+	public Integer getScore() {
+		if (this.token == null) {
+			return 0;
+		}
+		
+		return this.token.getScore();
+	}
 }
