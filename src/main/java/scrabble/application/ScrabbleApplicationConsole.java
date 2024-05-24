@@ -42,7 +42,7 @@ public class ScrabbleApplicationConsole {
 		
 		while (continueGame) {
 			
-			if (rack.isEmpty() && bag.isEmpty()) {
+			if (player.rackIsEmpty() && bag.isEmpty()) {
 				continueGame = false;
 				break;
 			}
@@ -88,11 +88,11 @@ public class ScrabbleApplicationConsole {
 						continueWord = false;
 						game.cancelWord();
 					} catch (EmptyBoxException e) {
-						Console.message("La case n'a pas correctement été remplie.");
+						Console.message("La case n'a pas été correctement remplie.");
 						continueGame = false;
 						game.cancelWord();
 					} catch (BoxIndexOutOfBoard e) {
-						Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseigner sont en dehors du plateau.");
+						Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
 						continueGame = false;
 						game.cancelWord();
 					} catch (TokenDoesntExists e) {

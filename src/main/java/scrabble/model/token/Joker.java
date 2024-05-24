@@ -14,9 +14,14 @@ public class Joker extends Token {
 
 	@Override
 	public String display() {
-		return "  0";
+		return "JOK";
 	}
 
-	// TODO: Add a method to set the letter of the joker
-	// TODO: Add a method to check if the joker has a letter
+	public void setLetter(FrenchLetter letter) {
+		this.letter = letter;
+	}
+
+	public boolean haveLetter() {
+		return (this.letter != null);
+	}
 }
