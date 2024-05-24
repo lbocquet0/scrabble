@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
 import scrabble.model.token.Token;
+import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.WordNotFoundException;
 
 public class Board {
 	
@@ -61,6 +63,43 @@ public class Board {
 
 	public void clearHistory() {
 		this.actionHistory.clear();
+	}
+
+	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws BoxIndexOutOfBoard, WordNotFoundException {
+		Box currentBox = this.getBox(row, column);
+		if (currentBox.isEmpty()) {
+			throw new WordNotFoundException();
+		}
+		
+		ArrayList<Box> word = new ArrayList<>();
+
+		Integer currentPosition = direction == Direction.HORIZONTAL ? column : row;
+		Integer otherPosition = direction == Direction.HORIZONTAL ? row : column;
+		
+		while (currentPosition > 1) {
+			currentPosition--;
+			Box previousBox = direction == Direction.HORIZONTAL ? this.getBox(otherPosition, currentPosition) : this.getBox(currentPosition, otherPosition);
+			if (previousBox.isEmpty()) {
+				break;
+			}
+			word.add(previousBox);
+		}
+
+		word.add(currentBox);
+
+		currentPosition = direction == Direction.HORIZONTAL ? column : row;
+		otherPosition = direction == Direction.HORIZONTAL ? row : column;
+
+		while (currentPosition < SIZE) {
+			currentPosition++;
+			Box nextBox = direction == Direction.HORIZONTAL ? this.getBox(otherPosition, currentPosition) : this.getBox(currentPosition, otherPosition);
+			if (nextBox.isEmpty()) {
+				break;
+			}
+			word.add(nextBox);
+		}
+
+		return word;
 	}
 
 	public void display() {
