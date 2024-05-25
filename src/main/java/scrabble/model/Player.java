@@ -33,22 +33,17 @@ public class Player {
 	}
 	
 	public boolean rackIsEmpty(){
-		if (this.rack.remainingTokens() == 0) {
-			return true;
-		}
-		return false;
+		return this.rack.isEmpty();
 	}
 
 	public Integer getTokenRackPosition(Token token) {
 		return this.rack.getTokenPosition(token);
 	}
 
-	// TODO: JUnit test
 	public Integer getScore() {
 		return this.score;
 	}
 
-	// TODO: JUnit test
 	public Integer addScore(Integer score) {
 		this.score += score;
 
