@@ -2,6 +2,7 @@ package scrabble.utils;
 
 import java.util.ArrayList;
 
+import scrabble.model.Rack;
 import scrabble.model.board.Action;
 import scrabble.model.board.Board;
 import scrabble.model.board.Box;
@@ -9,6 +10,8 @@ import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
 public class ScoreCounter {
+	
+	private static int SCORE_BONUS_WHEN_ALL_TOKENS_USED = 50;
 
 	// TODO: JUnit test
 	public static Integer countWordScore(ArrayList<Box> wordLetters) {
@@ -23,7 +26,8 @@ public class ScoreCounter {
 
 	// TODO: JUnit test
 	public static Integer countScore(Board board, ArrayList<Action> actions, Direction direction) {
-		if (actions.size() == 0) {
+		int doneActionsAmount = actions.size();
+		if (doneActionsAmount == 0) {
 			return 0;
 		}
 		Integer score = 0;
@@ -50,8 +54,11 @@ public class ScoreCounter {
 			} catch (WordNotFoundException e) {
 				continue;
 			}
-
 			score += countWordScore(wordLetters);
+		}
+
+		if (doneActionsAmount == Rack.MAX_TOKENS_AMOUNT) {
+			score += SCORE_BONUS_WHEN_ALL_TOKENS_USED;
 		}
 
 		return score;
