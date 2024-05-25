@@ -9,6 +9,7 @@ import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.token.FrenchLetter;
+import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
@@ -230,6 +231,25 @@ public class ScrabbleApplicationConsole {
 		throw new TokenDoesntExists();		
 	}
 
+	private static Joker playJoker(Joker joker) {
+
+	    Console.message("Vous avez joué un Joker, par quelle lettre voulez vous le remplacer ?");
+	    Console.message("Votre choix : ");
+
+	    String letterInput = Console.askString("").toUpperCase();
+	    FrenchLetter letter;
+	    
+	    try {
+	        letter = FrenchLetter.valueOf(letterInput);
+	    } catch (IllegalArgumentException e) {
+	        Console.message("La lettre entrée est invalide.");
+	        return joker;
+	    }
+
+	    joker.setLetter(letter);
+	    return joker;
+	}
+	
 	// private static boolean answerSwapToken(Game game, Player player) {
 	// 	Integer remainingTokenInRack = player.remainingTokenInRack();
 	// 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
