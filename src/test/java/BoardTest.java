@@ -24,6 +24,8 @@ public class BoardTest {
 	Box box1_2;
 	Box box3_2;
 
+	Box box5_5;
+
 	@BeforeEach
 	public void init() {
 		board = new Board();
@@ -43,6 +45,10 @@ public class BoardTest {
 
 			board.setToken(token, 1, 2);
 			board.setToken(token, 3, 2);
+
+			box5_5 = board.getBox(5, 5);
+
+			board.setToken(token, 5, 5);
 
 		} catch (Exception e) {
 			fail(e);
@@ -109,5 +115,12 @@ public class BoardTest {
 		} catch (Exception e) {
 			fail(e);
 		}
+	}
+
+	@Test
+	public void shouldThrowErrorWhenSingleLetterWord() {
+		assertThrows(WordNotFoundException.class, () -> {
+			board.getWord(5, 5, Direction.HORIZONTAL);
+		});
 	}
 }

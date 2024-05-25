@@ -69,6 +69,7 @@ public class Board {
 		return this.actionHistory.actions();
 	}
 
+	// TODO: Assert throws
 	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws BoxIndexOutOfBoard, WordNotFoundException {
 		Box currentBox = this.getBox(row, column);
 		if (currentBox.isEmpty()) {
@@ -101,6 +102,10 @@ public class Board {
 				break;
 			}
 			word.add(nextBox);
+		}
+
+		if (word.size() == 1) {
+			throw new WordNotFoundException();
 		}
 
 		return word;
