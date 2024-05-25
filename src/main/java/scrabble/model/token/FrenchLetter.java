@@ -24,4 +24,8 @@ public enum FrenchLetter {
 	public int getOccurencesAmount() {
 		return occurencesAmount;
 	}
+	
+	public String display() {
+        return this.name() + " " + this.getPoint();
+    }
 }

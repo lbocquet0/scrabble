@@ -14,7 +14,11 @@ public class Joker extends Token {
 
 	@Override
 	public String display() {
-		return "JOK";
+		if(this.haveLetter()) {
+			return letter.display();
+		}else {
+			return "JOK";
+		}
 	}
 
 	@Override

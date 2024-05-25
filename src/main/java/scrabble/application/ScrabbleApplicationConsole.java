@@ -10,6 +10,7 @@ import scrabble.model.Rack;
 import scrabble.model.board.Action;
 import scrabble.model.board.Board;
 import scrabble.model.token.FrenchLetter;
+import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
@@ -79,6 +80,10 @@ public class ScrabbleApplicationConsole {
 
 					Token token = askToken(rack);
 					
+					if(token.isJoker()) {
+						token = replaceJokerLetter((Joker) token);
+					}
+					
 					Boolean continueWord = true;
 					Direction direction = Direction.HORIZONTAL;
 					Integer row = x;
@@ -132,6 +137,10 @@ public class ScrabbleApplicationConsole {
 							}
 
 							token = askToken(rack);
+							
+							if(token.isJoker()) {
+								token = replaceJokerLetter((Joker) token);
+							}
 
 							try {
 								game.playLetter(token, row, column);
@@ -161,6 +170,7 @@ public class ScrabbleApplicationConsole {
 					Integer newScore = game.validateWord(direction);
 					Console.message("Vous avez maintenant " + newScore + " points.");
 
+					}
 					break;
 				case 2:
 					continueGame = true;
@@ -203,7 +213,7 @@ public class ScrabbleApplicationConsole {
 
 		ArrayList<Token> tokens = rack.getTokens();
 
-		if (input == TEXT_INPUT_FOR_JOKER.toUpperCase()) {
+		if (input.equals(TEXT_INPUT_FOR_JOKER.toUpperCase())) {
 
 			for (Token token : tokens) {
 				if (token.isJoker()) {
@@ -234,6 +244,29 @@ public class ScrabbleApplicationConsole {
 		throw new TokenDoesntExists();		
 	}
 
+	private static Joker replaceJokerLetter(Joker joker) {
+
+	    Console.message("Vous avez joué un Joker, par quelle lettre voulez vous le remplacer ?");
+	    Console.message("Votre choix : ");
+
+	    String letterInput = Console.askString("").toUpperCase();
+	    FrenchLetter letter;
+	    
+	    while(letterInput == null || letterInput.isEmpty()) {
+	    	Console.message("Veuillez saisir une lettre valide");
+	    }      
+ 
+	    try {
+	        letter = FrenchLetter.valueOf(letterInput);
+	    } catch (IllegalArgumentException e) {
+	        Console.message("La lettre entrée est invalide.");
+	        return joker;
+	    }
+
+	    joker.setLetter(letter);
+	    return joker;
+	}
+	
 	// private static boolean answerSwapToken(Game game, Player player) {
 	// 	Integer remainingTokenInRack = player.remainingTokenInRack();
 	// 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
