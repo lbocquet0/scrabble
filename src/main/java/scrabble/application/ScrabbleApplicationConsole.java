@@ -200,7 +200,7 @@ public class ScrabbleApplicationConsole {
 
 		ArrayList<Token> tokens = rack.getTokens();
 
-		if (input == TEXT_INPUT_FOR_JOKER.toUpperCase()) {
+		if (input.equals(TEXT_INPUT_FOR_JOKER.toUpperCase())) {
 
 			for (Token token : tokens) {
 				if (token.isJoker()) {
