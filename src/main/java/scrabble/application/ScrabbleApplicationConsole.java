@@ -41,6 +41,8 @@ public class ScrabbleApplicationConsole {
 
 		Boolean continueGame = true;
 		
+		// TODO: Don't be able to play a letter if the middle box is not filled
+		// TODO: Don't be able to play a single letter word
 		while (continueGame) {
 			
 			if (rack.isEmpty() && bag.isEmpty()) {
@@ -155,6 +157,7 @@ public class ScrabbleApplicationConsole {
 						}
 					}
 					
+
 					Integer newScore = game.validateWord(direction);
 					Console.message("Vous avez maintenant " + newScore + " points.");
 
