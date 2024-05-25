@@ -245,6 +245,10 @@ public class ScrabbleApplicationConsole {
 	    String letterInput = Console.askString("").toUpperCase();
 	    FrenchLetter letter;
 	    
+	    while(letterInput == null || letterInput.isEmpty()) {
+	    	Console.message("Veuillez saisir une lettre valide");
+	    }      
+ 
 	    try {
 	        letter = FrenchLetter.valueOf(letterInput);
 	    } catch (IllegalArgumentException e) {
