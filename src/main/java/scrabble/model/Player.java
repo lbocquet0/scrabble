@@ -39,8 +39,8 @@ public class Player {
 		return false;
 	}
 
-	public Integer getTokenRackIndex(Token token) {
-		return this.rack.getTokenIndex(token);
+	public Integer getTokenRackPosition(Token token) {
+		return this.rack.getTokenPosition(token);
 	}
 
 	// TODO: JUnit test
