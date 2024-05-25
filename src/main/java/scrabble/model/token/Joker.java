@@ -17,6 +17,11 @@ public class Joker extends Token {
 		return "JOK";
 	}
 
+	@Override
+	public Integer getScore() {
+		return 0;
+	}
+
 	public void setLetter(FrenchLetter letter) {
 		this.letter = letter;
 	}

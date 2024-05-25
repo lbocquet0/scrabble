@@ -5,9 +5,11 @@ import scrabble.utils.exceptions.TokenDoesntExists;
 
 public class Player {
 	private Rack rack;
+	private Integer score;
 
 	public Player() {
 		this.rack = new Rack();
+		this.score = 0;
 	}
 
 	public Rack getRack() {
@@ -41,4 +43,15 @@ public class Player {
 		return this.rack.getTokenIndex(token);
 	}
 
+	// TODO: JUnit test
+	public Integer getScore() {
+		return this.score;
+	}
+
+	// TODO: JUnit test
+	public Integer addScore(Integer score) {
+		this.score += score;
+
+		return this.score;
+	}
 }

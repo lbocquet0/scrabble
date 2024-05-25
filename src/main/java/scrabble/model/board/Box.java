@@ -19,7 +19,7 @@ public class Box {
 	public Token getToken() {
 		return this.token;
 	}
-	
+
 	public String describe() {
 		if (token == null) {
 			if (this.middle) {
@@ -34,5 +34,17 @@ public class Box {
 	
 	public boolean isMiddle() {
 		return this.middle;
+	}
+
+	public boolean isEmpty() {
+		return this.token == null;
+	}
+
+	public Integer getScore() {
+		if (this.token == null) {
+			return 0;
+		}
+		
+		return this.token.getScore();
 	}
 }

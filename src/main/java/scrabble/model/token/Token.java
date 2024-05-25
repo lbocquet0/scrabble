@@ -18,4 +18,8 @@ public class Token {
 	public String display() {
 		return this.getLetter()+ " "+ this.getLetter().getPoint();
 	}
+
+	public Integer getScore() {
+		return this.getLetter().getPoint();
+	}
 }

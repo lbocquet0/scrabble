@@ -7,6 +7,7 @@ import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
+import scrabble.model.board.Action;
 import scrabble.model.board.Board;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
@@ -40,6 +41,8 @@ public class ScrabbleApplicationConsole {
 
 		Boolean continueGame = true;
 		
+		// TODO: Don't be able to play a letter if the middle box is not filled
+		// TODO: Don't be able to play a single letter word
 		while (continueGame) {
 			
 			if (player.rackIsEmpty() && bag.isEmpty()) {
@@ -152,11 +155,12 @@ public class ScrabbleApplicationConsole {
 						} else {
 							continueWord = false;
 						}
-
-
-
 					}
-					game.clearRoundHistory();
+					
+
+					Integer newScore = game.validateWord(direction);
+					Console.message("Vous avez maintenant " + newScore + " points.");
+
 					break;
 				case 2:
 					continueGame = true;

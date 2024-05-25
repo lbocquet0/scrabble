@@ -9,7 +9,7 @@ import scrabble.model.token.Token;
 class BoxTest {
 
     @Test
-    void testDescribeWhenTokenIsNull() {
+    void testDescribeWhenIsEmpty() {
         Box box = new Box(false, null);
 
         String describeResult = box.describe();
@@ -28,4 +28,12 @@ class BoxTest {
         assertEquals(exceptedResult, describeResult);
     }
 
+    @Test
+    void testIsEmtpyWhenTokenIsNull() {
+        Box box = new Box(false, null);
+
+        boolean isEmptyResult = box.isEmpty();
+
+        assertEquals(true, isEmptyResult);
+    }
 }
