@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import scrabble.model.token.FrenchLetter;
-import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 
 public class TokenTest {
@@ -11,30 +10,28 @@ public class TokenTest {
 	@Test
 	public void testIsJokerFalse() {
 		Token token = new Token(FrenchLetter.A);
+		
 		assertEquals(false, token.isJoker());
-	}
-
-	@Test
-	public void testIsJokerTrue() {
-		Token token = new Joker();
-		assertEquals(true, token.isJoker());
 	}
 
 	@Test
 	public void testDescribeNoJoker() {
 		Token token = new Token(FrenchLetter.A);
-		assertEquals("A 1", token.display());
-	}
 
-	@Test
-	public void testDescribeJoker() {
-		Token token = new Joker();
-		assertEquals("  0", token.display());
+		assertEquals("A 1", token.display());
 	}
 
 	@Test
 	public void testGetLetter() {
 		Token token = new Token(FrenchLetter.A);
+		
 		assertEquals(FrenchLetter.A, token.getLetter());
+	}
+
+	@Test
+	public void testGetScore() {
+		Token token = new Token(FrenchLetter.A);
+	
+		assertEquals(1, token.getScore());
 	}
 }
