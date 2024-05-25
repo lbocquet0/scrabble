@@ -14,4 +14,8 @@ public class Token {
 	public boolean isJoker() {
 		return false;
 	}
+	
+	public String display() {
+		return this.letter.display();
+	}
 }
