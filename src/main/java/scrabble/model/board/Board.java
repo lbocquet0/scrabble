@@ -36,6 +36,10 @@ public class Board {
 		}
 	}
 
+	public ArrayList<ArrayList<Box>> getBoxes() {
+		return this.boxes;
+	}
+
 	public Box getBox(Integer row, Integer column) throws BoxIndexOutOfBoard {
 		if (row < 1 || row > SIZE || column < 1 || column > SIZE) {
 			throw new BoxIndexOutOfBoard(row, column);

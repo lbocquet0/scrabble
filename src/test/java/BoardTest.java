@@ -1,5 +1,8 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import scrabble.model.board.Box;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
+import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
 public class BoardTest {
@@ -50,6 +54,75 @@ public class BoardTest {
 
 			board.setToken(token, 5, 5);
 
+		} catch (Exception e) {
+			fail(e);
+		}
+	}
+
+	@Test
+	public void shouldContainsBoxesAtInialize() {
+		ArrayList<ArrayList<Box>> boxes = board.getBoxes();
+
+		assertThat(boxes).hasSize(Board.SIZE);
+
+		for (ArrayList<Box> line : boxes) {
+			assertThat(line).hasSize(Board.SIZE);
+		}
+	}
+
+	@Test
+	public void shouldGetBox() {
+		try {
+			Box box = board.getBox(1, 1);
+
+			assertThat(box).isNotNull();
+		} catch (Exception e) {
+			fail(e);
+		}
+	}
+
+	@Test
+	public void shouldThrowExceptionWhenRowIsOutOfBoard() {
+
+		assertThrows(BoxIndexOutOfBoard.class, () -> {
+			board.getBox(Board.SIZE + 1, 1);
+		});
+
+		assertThrows(BoxIndexOutOfBoard.class, () -> {
+			board.getBox(0, 1);
+		});
+	}
+
+	@Test
+	public void shouldThrowExceptionWhenColumnIsOutOfBoard() {
+
+		assertThrows(BoxIndexOutOfBoard.class, () -> {
+			board.getBox(1, Board.SIZE + 1);
+		});
+
+		assertThrows(BoxIndexOutOfBoard.class, () -> {
+			board.getBox(1, 0);
+		});
+	}
+
+	@Test
+	public void shouldReturnTokenWhenBoxIsNotEmpty() {
+		try {
+			Token boxToken = board.getToken(2, 2);
+
+			assertEquals(token, boxToken);
+		} catch (Exception e) {
+			fail(e);
+		}
+	}
+
+	@Test
+	public void shouldReturnNullWhenBoxIsEmpty() {
+
+		try {
+			Token boxToken = board.getToken(5, 5);
+
+			assertEquals(null, boxToken);
 		} catch (Exception e) {
 			fail(e);
 		}
