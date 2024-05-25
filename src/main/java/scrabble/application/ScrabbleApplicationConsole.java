@@ -231,7 +231,7 @@ public class ScrabbleApplicationConsole {
 		throw new TokenDoesntExists();		
 	}
 
-	private static Joker playJoker(Joker joker) {
+	private static Joker replaceJokerLetter(Joker joker) {
 
 	    Console.message("Vous avez joué un Joker, par quelle lettre voulez vous le remplacer ?");
 	    Console.message("Votre choix : ");
