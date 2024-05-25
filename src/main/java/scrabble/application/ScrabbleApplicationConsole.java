@@ -77,6 +77,10 @@ public class ScrabbleApplicationConsole {
 
 					Token token = askToken(rack);
 					
+					if(token.isJoker()) {
+						token = replaceJokerLetter((Joker) token);
+					}
+					
 					Boolean continueWord = true;
 					Direction direction = Direction.HORIZONTAL;
 					Integer row = x;
@@ -130,6 +134,10 @@ public class ScrabbleApplicationConsole {
 							}
 
 							token = askToken(rack);
+							
+							if(token.isJoker()) {
+								token = replaceJokerLetter((Joker) token);
+							}
 
 							try {
 								game.playLetter(token, row, column);
@@ -153,8 +161,6 @@ public class ScrabbleApplicationConsole {
 						} else {
 							continueWord = false;
 						}
-
-
 
 					}
 					game.clearRoundHistory();
