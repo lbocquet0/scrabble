@@ -73,10 +73,33 @@ public class ScrabbleApplicationConsole {
 				case 1:
 					continueGame = true;
 					Console.message("Jouer un mot");
-					Console.message("Choissisez votre position de départ :");
+					Integer x;
+					Integer y;
 
-					Integer x = Console.askInt("Ligne ?", 1, Board.SIZE);
-					Integer y = Console.askInt("Colonne ?", 1, Board.SIZE);
+					Boolean isBoardEmpty;
+
+					try {
+						isBoardEmpty = board.gameHaveNotStarted();
+					} catch (Exception e) {
+						Console.message("Le plateau n'a pas été correctement initialisé.");
+						continueGame = false;
+						break;
+					}
+
+					if (isBoardEmpty) {
+						Console.message("Debut de la partie - Vous commencez automatiquement au centre du plateau.");
+						x = Board.SIZE / 2 + 1;
+						y = Board.SIZE / 2 + 1;
+					} else {
+						Console.message("Choissisez votre position de départ :");
+						x = Console.askInt("Ligne ?", 1, Board.SIZE);
+						y = Console.askInt("Colonne ?", 1, Board.SIZE);
+						while (!board.isLetterAround(x, y)) {
+							Console.message("Vous devez jouer à côté d'une lettre déjà posée.");
+							x = Console.askInt("Ligne ?", 1, Board.SIZE);
+							y = Console.askInt("Colonne ?", 1, Board.SIZE);
+						}
+					}
 
 					Token token = askToken(rack);
 					
