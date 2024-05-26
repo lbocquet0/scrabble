@@ -170,7 +170,6 @@ public class ScrabbleApplicationConsole {
 					Integer newScore = game.validateWord(direction);
 					Console.message("Vous avez maintenant " + newScore + " points.");
 
-					}
 					break;
 				case 2:
 					continueGame = true;
