@@ -196,4 +196,28 @@ public class BoardTest {
 			board.getWord(5, 5, Direction.HORIZONTAL);
 		});
 	}
+
+	@Test
+	public void shouldClearHistory() {
+		Token token = new Token(FrenchLetter.A);
+
+		try {
+			board.setToken(token, 6, 6);
+	 	} catch (Exception e) {
+			fail(e);
+		}
+		
+		board.clearHistory();
+
+		assertThat(board.getActionsHistory()).isEmpty();
+	}
+
+	@Test
+	public void shouldCancelLastAction() {
+
+		ArrayList<Token> tokens = board.cancelLastAction();
+
+		assertThat(tokens).hasSize(6);
+		assertThat(tokens.get(0)).isEqualTo(token);
+	}
 }
