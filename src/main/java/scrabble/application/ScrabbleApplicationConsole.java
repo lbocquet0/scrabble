@@ -196,7 +196,7 @@ public class ScrabbleApplicationConsole {
 					break;
 				case 2:
 					continueGame = true;
-					// TODO : Implement swapToken
+					answerSwapToken(game, player);
 					break;
 				case 3:
 					continueGame = false;
