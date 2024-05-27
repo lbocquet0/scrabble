@@ -14,7 +14,7 @@ public class ScrabbleJeuxEssais {
 		Bag bag = game.getBag();
 		Player player = game.getPlayer();
 		Board board = game.getBoard();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 
 		Console.message("Bag tokens amount (should be equals to 102) : " + bag.remainingTokens());
 		Console.message("Player easel tokens amount (should be equals to 7) : " + rack.remainingTokens());

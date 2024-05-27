@@ -12,7 +12,7 @@ public class Player {
 		this.score = 0;
 	}
 
-	public Rack getRack() {
+	public Rack rack() {
 		return this.rack;
 	}
 	
@@ -40,7 +40,7 @@ public class Player {
 		return this.rack.getTokenPosition(token);
 	}
 
-	public Integer getScore() {
+	public Integer score() {
 		return this.score;
 	}
 

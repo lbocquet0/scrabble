@@ -92,7 +92,7 @@ class GameTest {
     void should_throws_exception_on_playLetter_outside_of_board() throws EmptyBagException {
     	game.initialize();
     	Player player = game.getPlayer();
-    	Rack rack = player.getRack();
+    	Rack rack = player.rack();
     	
     	Token token = rack.token(0);
     	
@@ -105,7 +105,7 @@ class GameTest {
     void test_playLetter_in_general_condition() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
     	game.initialize();
     	Player player = game.getPlayer();
-    	Rack rack = player.getRack();
+    	Rack rack = player.rack();
     	
     	Token token = rack.token(0);	
 		game.playLetter(token, 8, 8);
@@ -119,7 +119,7 @@ class GameTest {
     void should_throws_exception_on_playLetter_on_already_occuped_position() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
     	game.initialize();
     	Player player = game.getPlayer();
-    	Rack rack = player.getRack();
+    	Rack rack = player.rack();
     	Token token = rack.token(0);
     	Token oToken = rack.token(1);
 		game.playLetter(token, 8, 8);		
@@ -135,7 +135,7 @@ class GameTest {
     	game.initialize();
     	
 		Player player = game.getPlayer();
-    	Rack rack = player.getRack();
+    	Rack rack = player.rack();
     	Token token = rack.token(0);
     	Token oToken = rack.token(0);
 
@@ -151,7 +151,7 @@ class GameTest {
 		game.initialize();
 
 		Player player = game.getPlayer();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 		Token token = rack.token(0);
 
 		game.playLetter(token, 8, 8);
@@ -167,7 +167,7 @@ class GameTest {
 
 		Board board = game.getBoard();
 		Player player = game.getPlayer();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 		Token token = rack.token(0);
 
 		game.playLetter(token, 8, 8);
@@ -182,7 +182,7 @@ class GameTest {
 		game.initialize();
 
 		Player player = game.getPlayer();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 		Token token = rack.token(0);
 		Board board = game.getBoard();
 
@@ -197,7 +197,7 @@ class GameTest {
 		game.initialize();
 
 		Player player = game.getPlayer();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
@@ -206,7 +206,7 @@ class GameTest {
 
 		game.validateWord(Direction.HORIZONTAL);
 
-		assertThat(player.getScore()).isGreaterThan(0);
+		assertThat(player.score()).isGreaterThan(0);
 	}
 
 	@Test
@@ -214,7 +214,7 @@ class GameTest {
 		game.initialize();
 
 		Player player = game.getPlayer();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
@@ -231,7 +231,7 @@ class GameTest {
 		game.initialize();
 
 		Player player = game.getPlayer();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 		Board board = game.getBoard();
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);

@@ -38,7 +38,7 @@ public class ScrabbleApplicationConsole {
 		Player player = game.getPlayer();
 		Board board = game.getBoard();
 		Bag bag = game.getBag();
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 
 		Boolean continueGame = true;
 		
@@ -294,7 +294,7 @@ public class ScrabbleApplicationConsole {
 	 	Integer remainingTokenInRack = player.remainingTokenInRack();	 	
 	 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ? (donner la position du jeton dans votre chevalet)", 1, remainingTokenInRack);
 	 	
-	 	Rack playerRack = player.getRack();
+	 	Rack playerRack = player.rack();
 
 	 	Token token = playerRack.token(tokenToSwapIndex - 1);
 

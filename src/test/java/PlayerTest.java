@@ -23,7 +23,7 @@ public class PlayerTest {
 
 	@Test
 	public void rackShouldBeEmptyAtInitialize() {
-		Rack rack = player.getRack();
+		Rack rack = player.rack();
 
 		assertTrue(rack.isEmpty());
 	}
@@ -93,7 +93,7 @@ public class PlayerTest {
 
 	@Test
 	public void shouldReturn0ScoreAtInitialize() {
-		assertEquals(0, player.getScore());
+		assertEquals(0, player.score());
 	}
 
 	@Test
