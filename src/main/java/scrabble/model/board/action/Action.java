@@ -10,8 +10,7 @@ public class Action {
 	private Box box;
 
 	public Action(int rowPosition, int columnPosition, Box box) throws EmptyBoxException {
-		Token token = box.getToken();
-		if (token == null) {
+		if (box.isEmpty()) {
 			throw new EmptyBoxException();
 		}
 
@@ -41,26 +40,5 @@ public class Action {
 		box.setToken(null);
 	
 		return token;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Action other = (Action) obj;
-		if (rowPosition != other.rowPosition)
-			return false;
-		if (columnPosition != other.columnPosition)
-			return false;
-		if (box == null) {
-			if (other.box != null)
-				return false;
-		} else if (!box.equals(other.box))
-			return false;
-		return true;
 	}
 }
