@@ -11,13 +11,12 @@ public class Rack {
 	public static int MAX_TOKENS_AMOUNT = 7;
 
 	private ArrayList<Token> tokens;
-	private Player owner;
 
 	public Rack() {
 		this.tokens = new ArrayList<Token>();
 	}
 
-	public ArrayList<Token> getTokens() {
+	public ArrayList<Token> tokens() {
 		return this.tokens;
 	}
 
@@ -25,7 +24,7 @@ public class Rack {
 		return this.tokens.size();
 	}
 
-	public Token getToken(int index) {
+	public Token token(int index) {
 		return this.tokens.get(index);
 	}
 	
@@ -36,10 +35,6 @@ public class Rack {
 		}
 		
 		throw new TokenDoesntExists();
-	}
-
-	public Player getOwner() {
-		return this.owner;
 	}
 
 	public void addToken(Token token) {
@@ -60,7 +55,7 @@ public class Rack {
 			String line = "|  ";
 			// TODO :  to refactor with a for each loop
 			for(int i=0;i < MAX_TOKENS_AMOUNT; i++) {
-				Token token = this.getToken(i);
+				Token token = this.token(i);
 				
 				if (token != null) {
 					String tokenDisplay = token.display();
@@ -83,6 +78,7 @@ public class Rack {
 		if (this.remainingTokens() == 0) {
 			return true;
 		}
+		
 		return false;
 	}
 

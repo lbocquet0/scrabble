@@ -94,7 +94,7 @@ class GameTest {
     	Player player = game.getPlayer();
     	Rack rack = player.getRack();
     	
-    	Token token = rack.getToken(0);
+    	Token token = rack.token(0);
     	
     	assertThrows(BoxIndexOutOfBoard.class, () -> {
     		game.playLetter(token, 20, 20);
@@ -107,7 +107,7 @@ class GameTest {
     	Player player = game.getPlayer();
     	Rack rack = player.getRack();
     	
-    	Token token = rack.getToken(0);	
+    	Token token = rack.token(0);	
 		game.playLetter(token, 8, 8);
 		Token placedToken = game.getBoard().getToken(8, 8); 
 		
@@ -120,8 +120,8 @@ class GameTest {
     	game.initialize();
     	Player player = game.getPlayer();
     	Rack rack = player.getRack();
-    	Token token = rack.getToken(0);
-    	Token oToken = rack.getToken(1);
+    	Token token = rack.token(0);
+    	Token oToken = rack.token(1);
 		game.playLetter(token, 8, 8);		
 		
 		
@@ -136,8 +136,8 @@ class GameTest {
     	
 		Player player = game.getPlayer();
     	Rack rack = player.getRack();
-    	Token token = rack.getToken(0);
-    	Token oToken = rack.getToken(0);
+    	Token token = rack.token(0);
+    	Token oToken = rack.token(0);
 
 		game.playLetter(token, 8, 8);		
 		game.playLetter(oToken, 8, 8);
@@ -152,13 +152,13 @@ class GameTest {
 
 		Player player = game.getPlayer();
 		Rack rack = player.getRack();
-		Token token = rack.getToken(0);
+		Token token = rack.token(0);
 
 		game.playLetter(token, 8, 8);
 
 		game.cancelWord();
 
-		assertThat(rack.getTokens()).containsOnlyOnce(token);
+		assertThat(rack.tokens()).containsOnlyOnce(token);
 	}
 
 	@Test
@@ -168,7 +168,7 @@ class GameTest {
 		Board board = game.getBoard();
 		Player player = game.getPlayer();
 		Rack rack = player.getRack();
-		Token token = rack.getToken(0);
+		Token token = rack.token(0);
 
 		game.playLetter(token, 8, 8);
 		game.cancelWord();
@@ -183,7 +183,7 @@ class GameTest {
 
 		Player player = game.getPlayer();
 		Rack rack = player.getRack();
-		Token token = rack.getToken(0);
+		Token token = rack.token(0);
 		Board board = game.getBoard();
 
 		game.playLetter(token, 8, 8);
@@ -198,8 +198,8 @@ class GameTest {
 
 		Player player = game.getPlayer();
 		Rack rack = player.getRack();
-		Token token = rack.getToken(0);
-		Token token2 = rack.getToken(1);
+		Token token = rack.token(0);
+		Token token2 = rack.token(1);
 
 		game.playLetter(token, 8, 8);
 		game.playLetter(token2, 8, 9);
@@ -215,8 +215,8 @@ class GameTest {
 
 		Player player = game.getPlayer();
 		Rack rack = player.getRack();
-		Token token = rack.getToken(0);
-		Token token2 = rack.getToken(1);
+		Token token = rack.token(0);
+		Token token2 = rack.token(1);
 
 		game.playLetter(token, 8, 8);
 		game.playLetter(token2, 8, 9);
@@ -233,8 +233,8 @@ class GameTest {
 		Player player = game.getPlayer();
 		Rack rack = player.getRack();
 		Board board = game.getBoard();
-		Token token = rack.getToken(0);
-		Token token2 = rack.getToken(1);
+		Token token = rack.token(0);
+		Token token2 = rack.token(1);
 
 		game.playLetter(token, 8, 8);
 		game.playLetter(token2, 8, 9);

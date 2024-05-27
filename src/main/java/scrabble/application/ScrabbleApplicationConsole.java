@@ -233,7 +233,7 @@ public class ScrabbleApplicationConsole {
 	private static Token getTokenFromInput(Rack rack, String input) throws TokenDoesntExists {
 		input = input.toUpperCase();
 
-		ArrayList<Token> tokens = rack.getTokens();
+		ArrayList<Token> tokens = rack.tokens();
 
 		if (input.equals(TEXT_INPUT_FOR_JOKER.toUpperCase())) {
 
@@ -296,7 +296,7 @@ public class ScrabbleApplicationConsole {
 	 	
 	 	Rack playerRack = player.getRack();
 
-	 	Token token = playerRack.getToken(tokenToSwapIndex - 1);
+	 	Token token = playerRack.token(tokenToSwapIndex - 1);
 
 	 	try {
 	 		game.switchTokenFromRack(player, token);

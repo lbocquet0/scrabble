@@ -23,7 +23,7 @@ public class RackTest {
 
 	@Test
 	public void tokensListShouldBeEmpty() {
-		assertThat(rack.getTokens()).isEmpty();
+		assertThat(rack.tokens()).isEmpty();
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class RackTest {
 
 		rack.addToken(token);
 		
-		Token rackToken = rack.getToken(0);
+		Token rackToken = rack.token(0);
 		assertEquals(token, rackToken);
 	}
 
@@ -80,7 +80,7 @@ public class RackTest {
 
 		rack.addToken(token);
 		
-		assertThat(rack.getTokens()).containsExactly(token);
+		assertThat(rack.tokens()).containsExactly(token);
 	}
 
 	@Test
