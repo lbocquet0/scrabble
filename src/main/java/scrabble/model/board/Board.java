@@ -38,7 +38,7 @@ public class Board {
 		}
 	}
 
-	public ArrayList<ArrayList<Box>> getBoxes() {
+	public ArrayList<ArrayList<Box>> boxes() {
 		return this.boxes;
 	}
 

@@ -61,7 +61,7 @@ public class BoardTest {
 
 	@Test
 	public void shouldContainsBoxesAtInialize() {
-		ArrayList<ArrayList<Box>> boxes = board.getBoxes();
+		ArrayList<ArrayList<Box>> boxes = board.boxes();
 
 		assertThat(boxes).hasSize(Board.SIZE);
 
