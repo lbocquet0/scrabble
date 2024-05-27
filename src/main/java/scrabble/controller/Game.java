@@ -1,5 +1,8 @@
 package scrabble.controller;
 
+import java.util.ArrayList;
+
+import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
@@ -13,8 +16,6 @@ import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.OccupiedBoxException;
 import scrabble.utils.exceptions.TokenDoesntExists;
-
-import java.util.ArrayList;
 
 public class Game {
 	
@@ -101,4 +102,20 @@ public class Game {
 
 		return newScore;
 	}
+
+	public void switchTokenFromRack(Player player, Token token) throws EmptyBagException {
+		
+        if (this.bag.remainingTokens() == 0) {
+            throw new EmptyBagException();
+        }
+
+        try {
+			player.removeTokenFromRack(token);
+		} catch (TokenDoesntExists e) {
+			Console.message("Le jeton demandé n'existe pas.");
+		}
+        
+        this.fillUpPlayerRack(player);
+        this.bag.putToken(token);
+    }
 }
