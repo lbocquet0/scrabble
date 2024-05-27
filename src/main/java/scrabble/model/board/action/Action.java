@@ -1,5 +1,6 @@
-package scrabble.model.board;
+package scrabble.model.board.action;
 
+import scrabble.model.board.Box;
 import scrabble.model.token.Token;
 import scrabble.utils.exceptions.EmptyBoxException;
 

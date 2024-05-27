@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import scrabble.model.board.Action;
-import scrabble.model.board.ActionHistory;
 import scrabble.model.board.Box;
+import scrabble.model.board.action.Action;
+import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.exceptions.EmptyBoxException;

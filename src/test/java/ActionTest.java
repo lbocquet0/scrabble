@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import scrabble.model.board.Action;
 import scrabble.model.board.Box;
+import scrabble.model.board.action.Action;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.exceptions.EmptyBoxException;

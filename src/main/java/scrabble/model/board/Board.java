@@ -3,6 +3,8 @@ package scrabble.model.board;
 import java.util.ArrayList;
 
 import scrabble.gui.console.Console;
+import scrabble.model.board.action.Action;
+import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;

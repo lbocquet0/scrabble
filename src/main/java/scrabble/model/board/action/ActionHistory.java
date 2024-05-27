@@ -1,4 +1,4 @@
-package scrabble.model.board;
+package scrabble.model.board.action;
 
 import java.util.ArrayList;
 

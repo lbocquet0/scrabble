@@ -3,9 +3,9 @@ package scrabble.utils;
 import java.util.ArrayList;
 
 import scrabble.model.Rack;
-import scrabble.model.board.Action;
 import scrabble.model.board.Board;
 import scrabble.model.board.Box;
+import scrabble.model.board.action.Action;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
