@@ -291,8 +291,8 @@ public class ScrabbleApplicationConsole {
 	
 	private static boolean answerSwapToken(Game game, Player player) {
 		
-	 	Integer remainingTokenInRack = player.remainingTokenInRack();
-	 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
+	 	Integer remainingTokenInRack = player.remainingTokenInRack();	 	
+	 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ? (donner la position du jeton dans votre chevalet)", 1, remainingTokenInRack);
 		
 	 	Rack playerRack = player.getRack();
 
@@ -301,13 +301,9 @@ public class ScrabbleApplicationConsole {
 	 	try {
 	 		game.switchTokenFromRack(player, token);
 	 		return true;
+	 		
 	 	} catch (EmptyBagException e) {
-
 	 		Console.message("Le sac est vide, impossible d'échanger un jeton.");
-	 		return false;
-	 	} catch (TokenIndexOutOfRack e) {
-
-	 		Console.message("Le jeton demandé n'existe pas.");
 	 		return false;
 	 	}
 	}
