@@ -86,7 +86,7 @@ public class Rack {
 		return false;
 	}
 
-	public Integer getTokenIndex(Token token) {
+	public Integer getTokenPosition(Token token) {
 		for (int i = 0; i < this.tokens.size(); i++) {
 			if (this.tokens.get(i).getLetter() == token.getLetter()) {
 				return i + 1;

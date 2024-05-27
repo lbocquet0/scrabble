@@ -13,7 +13,6 @@ public class ScoreCounter {
 	
 	private static int SCORE_BONUS_WHEN_ALL_TOKENS_USED = 50;
 
-	// TODO: JUnit test
 	public static Integer countWordScore(ArrayList<Box> wordLetters) {
 		Integer score = 0;
 
@@ -24,7 +23,6 @@ public class ScoreCounter {
 		return score;
 	}
 
-	// TODO: JUnit test
 	public static Integer countScore(Board board, ArrayList<Action> actions, Direction direction) {
 		int doneActionsAmount = actions.size();
 		if (doneActionsAmount == 0) {

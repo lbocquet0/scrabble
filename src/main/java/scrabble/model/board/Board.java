@@ -36,6 +36,10 @@ public class Board {
 		}
 	}
 
+	public ArrayList<ArrayList<Box>> getBoxes() {
+		return this.boxes;
+	}
+
 	public Boolean gameHaveNotStarted() throws BoxIndexOutOfBoard {
         return this.getBox(8, 8).isEmpty();
 	}
