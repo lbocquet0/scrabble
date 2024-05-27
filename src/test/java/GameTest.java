@@ -29,10 +29,10 @@ class GameTest {
     }
 
     @Test
-    void should_return_empty_board_on_new_object_creation() {
+    void should_return_empty_board_on_new_object_creation() throws BoxIndexOutOfBoard {
     	Board board = game.getBoard();
     	
-    	Boolean boardIsEmpty = true; //board.gameHaveNotStarted();
+    	Boolean boardIsEmpty = board.gameHaveNotStarted();
     	
     	assertTrue(boardIsEmpty);
     }
