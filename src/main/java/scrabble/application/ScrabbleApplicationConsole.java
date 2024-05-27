@@ -17,7 +17,6 @@ import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.OccupiedBoxException;
 import scrabble.utils.exceptions.TokenDoesntExists;
-import scrabble.utils.exceptions.TokenIndexOutOfRack;
 
 public class ScrabbleApplicationConsole {
 
