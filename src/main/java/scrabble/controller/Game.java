@@ -103,17 +103,13 @@ public class Game {
 		return newScore;
 	}
 
-	public void switchTokenFromRack(Player player, Token token) throws EmptyBagException {
+	public void switchTokenFromRack(Player player, Token token) throws EmptyBagException, TokenDoesntExists {
 		
         if (this.bag.remainingTokens() == 0) {
             throw new EmptyBagException();
         }
 
-        try {
-			player.removeTokenFromRack(token);
-		} catch (TokenDoesntExists e) {
-			Console.message("Le jeton demandé n'existe pas.");
-		}
+		player.removeTokenFromRack(token);
         
         this.fillUpPlayerRack(player);
         this.bag.putToken(token);
