@@ -120,7 +120,7 @@ public class BoardTest {
 	public void shouldReturnNullWhenBoxIsEmpty() {
 
 		try {
-			Token boxToken = board.getToken(5, 5);
+			Token boxToken = board.getToken(6, 6);
 
 			assertEquals(null, boxToken);
 		} catch (Exception e) {
