@@ -2,7 +2,6 @@ package scrabble.controller;
 
 import java.util.ArrayList;
 
-import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
