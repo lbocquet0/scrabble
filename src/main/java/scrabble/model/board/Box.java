@@ -21,7 +21,7 @@ public class Box {
 	}
 
 	public String describe() {
-		if (token == null) {
+		if (this.isEmpty()) {
 			if (this.middle) {
 				return "⭐";
 			} else {
@@ -41,7 +41,7 @@ public class Box {
 	}
 
 	public Integer getScore() {
-		if (this.token == null) {
+		if (this.isEmpty()) {
 			return 0;
 		}
 		
