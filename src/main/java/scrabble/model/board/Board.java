@@ -57,7 +57,7 @@ public class Board {
 	public Token getToken(Integer row, Integer column) throws BoxIndexOutOfBoard {
 		Box box = this.getBox(row, column);
 
-		return box.getToken();
+		return box.token();
 	}
 	
 	public void setToken(Token token, Integer row, Integer column) throws BoxIndexOutOfBoard, EmptyBoxException {
@@ -171,8 +171,8 @@ public class Board {
 					try {
 						Box box = this.getBox(i, j);
 	   
-						if (box != null && box.getToken() != null) {
-							tokenDisplay = box.getToken().display();
+						if (box != null && box.token() != null) {
+							tokenDisplay = box.token().display();
 						} else {
 							if (box != null && box.isMiddle()) {
 								tokenDisplay = "  ⭐ ";

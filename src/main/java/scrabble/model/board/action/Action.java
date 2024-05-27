@@ -32,11 +32,11 @@ public class Action {
 	}
 
 	public Token getToken() {
-		return box.getToken();
+		return box.token();
 	}
 
 	public Token undo() {
-		Token token = box.getToken();
+		Token token = box.token();
 		box.setToken(null);
 	
 		return token;

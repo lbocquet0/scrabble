@@ -16,7 +16,7 @@ public class Box {
 		this.token = token;
 	}
 	
-	public Token getToken() {
+	public Token token() {
 		return this.token;
 	}
 
