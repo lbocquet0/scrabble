@@ -289,22 +289,23 @@ public class ScrabbleApplicationConsole {
 	    return joker;
 	}
 	
-	private static boolean answerSwapToken(Game game, Player player) {
+	private static void answerSwapToken(Game game, Player player) {
 		
 	 	Integer remainingTokenInRack = player.remainingTokenInRack();	 	
 	 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ? (donner la position du jeton dans votre chevalet)", 1, remainingTokenInRack);
-		
+	 	
 	 	Rack playerRack = player.getRack();
 
-	 	Token token = playerRack.getToken(tokenToSwapIndex);
+	 	Token token = playerRack.getToken(tokenToSwapIndex - 1);
 
 	 	try {
 	 		game.switchTokenFromRack(player, token);
-	 		return true;
 	 		
 	 	} catch (EmptyBagException e) {
 	 		Console.message("Le sac est vide, impossible d'échanger un jeton.");
-	 		return false;
-	 	}
+	 		
+	 	} catch (TokenDoesntExists e) {
+			Console.message("Le jeton demandé n'existe pas.");
+		}
 	}
 }
