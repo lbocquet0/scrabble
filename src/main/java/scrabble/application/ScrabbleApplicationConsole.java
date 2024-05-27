@@ -7,7 +7,6 @@ import scrabble.gui.console.Console;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
-import scrabble.model.board.Action;
 import scrabble.model.board.Board;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Joker;
@@ -18,6 +17,7 @@ import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.OccupiedBoxException;
 import scrabble.utils.exceptions.TokenDoesntExists;
+import scrabble.utils.exceptions.TokenIndexOutOfRack;
 
 public class ScrabbleApplicationConsole {
 
@@ -289,25 +289,26 @@ public class ScrabbleApplicationConsole {
 	    return joker;
 	}
 	
-	// private static boolean answerSwapToken(Game game, Player player) {
-	// 	Integer remainingTokenInRack = player.remainingTokenInRack();
-	// 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
+	private static boolean answerSwapToken(Game game, Player player) {
 		
-	// 	Rack playerRack = player.getRack();
+	 	Integer remainingTokenInRack = player.remainingTokenInRack();
+	 	Integer tokenToSwapIndex = Console.askInt("Quel jeton voulez-vous échanger ?", 1, remainingTokenInRack);
+		
+	 	Rack playerRack = player.getRack();
 
-	// 	Token token = playerRack.getToken(tokenToSwapIndex);
+	 	Token token = playerRack.getToken(tokenToSwapIndex);
 
-	// 	try {
-	// 		game.switchTokenFromRack(player, token);
-	// 		return true;
-	// 	} catch (EmptyBagException e) {
+	 	try {
+	 		game.switchTokenFromRack(player, token);
+	 		return true;
+	 	} catch (EmptyBagException e) {
 
-	// 		Console.message("Le sac est vide, impossible d'échanger un jeton.");
-	// 		return false;
-	// 	} catch (TokenIndexOutOfRack e) {
+	 		Console.message("Le sac est vide, impossible d'échanger un jeton.");
+	 		return false;
+	 	} catch (TokenIndexOutOfRack e) {
 
-	// 		Console.message("Le jeton demandé n'existe pas.");
-	// 		return false;
-	// 	}
-	// }
+	 		Console.message("Le jeton demandé n'existe pas.");
+	 		return false;
+	 	}
+	}
 }
