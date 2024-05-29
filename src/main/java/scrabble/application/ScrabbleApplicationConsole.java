@@ -93,10 +93,23 @@ public class ScrabbleApplicationConsole {
 						Console.message("Choissisez votre position de départ :");
 						x = Console.askInt("Ligne ?", 1, Board.SIZE);
 						y = Console.askInt("Colonne ?", 1, Board.SIZE);
-						while (!board.isLetterAround(x, y)) {
+
+						Boolean isLetterAround = false;
+						try {
+							isLetterAround = board.isLetterAround(x, y);
+						} catch (BoxIndexOutOfBoard e) {
+                            Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+                        }
+
+                        while (!isLetterAround) {
 							Console.message("Vous devez jouer à côté d'une lettre déjà posée.");
 							x = Console.askInt("Ligne ?", 1, Board.SIZE);
 							y = Console.askInt("Colonne ?", 1, Board.SIZE);
+							try {
+								isLetterAround = board.isLetterAround(x, y);
+							} catch (BoxIndexOutOfBoard e) {
+								Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+							}
 						}
 					}
 
