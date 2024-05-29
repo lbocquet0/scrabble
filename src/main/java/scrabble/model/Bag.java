@@ -21,7 +21,7 @@ public class Bag {
     }
 
     public Token pickToken() throws EmptyBagException {
-        if (this.tokens.isEmpty()) {
+        if (this.isEmpty()) {
             throw new EmptyBagException();
         }
 
