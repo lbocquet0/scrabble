@@ -46,7 +46,7 @@ public class Rack {
 		
 		Console.message(HORIZONTAL_LINE);
 				
-		if(this.remainingTokens() == 0) {
+		if(this.isEmpty()) {
 			for(int i=0;i < MAX_TOKENS_AMOUNT; i++) {
 				Console.message("   |");
 			}
