@@ -31,7 +31,7 @@ public class Board {
 			ArrayList<Box> currentLine = new ArrayList<>();
 			
 			for (int j = 1; j <= SIZE; j++) {
-				boolean isMiddle = (i == 8 && j ==8);
+				boolean isMiddle = (i == SIZE/2 + 1 && j == SIZE/2 + 1);
 				currentLine.add(new Box(isMiddle, null));
 			}
 			this.boxes.add(currentLine);
