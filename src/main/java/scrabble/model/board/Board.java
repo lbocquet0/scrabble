@@ -103,47 +103,44 @@ public class Board {
 		return this.actionHistory.actions();
 	}
 
-	// TODO: Assert throws
 	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws BoxIndexOutOfBoard, WordNotFoundException {
+		if (row < 1 || row > SIZE || column < 1 || column > SIZE) {
+			throw new BoxIndexOutOfBoard(row, column);
+		}
+
 		Box currentBox = this.getBox(row, column);
 		if (currentBox.isEmpty()) {
 			throw new WordNotFoundException();
 		}
-		
+	
 		ArrayList<Box> word = new ArrayList<>();
-
+	
 		Integer currentPosition = direction == Direction.HORIZONTAL ? column : row;
 		Integer otherPosition = direction == Direction.HORIZONTAL ? row : column;
-		
-		while (currentPosition > 1) {
-			currentPosition--;
-			Box previousBox = direction == Direction.HORIZONTAL ? this.getBox(otherPosition, currentPosition) : this.getBox(currentPosition, otherPosition);
-			if (previousBox.isEmpty()) {
-				break;
-			}
-			word.add(previousBox);
-		}
+	
+		Integer tempPosition = currentPosition - 1;
 
+		// TODO : EXTRACT VARIABLE ON GETBOX
+		while (tempPosition >= 1 && !this.getBox(direction == Direction.HORIZONTAL ? otherPosition : tempPosition, direction == Direction.HORIZONTAL ? tempPosition : otherPosition).isEmpty()) {
+			word.add(0, this.getBox(direction == Direction.HORIZONTAL ? otherPosition : tempPosition, direction == Direction.HORIZONTAL ? tempPosition : otherPosition));
+			tempPosition--;
+		}
+	
 		word.add(currentBox);
-
-		currentPosition = direction == Direction.HORIZONTAL ? column : row;
-		otherPosition = direction == Direction.HORIZONTAL ? row : column;
-
-		while (currentPosition < SIZE) {
-			currentPosition++;
-			Box nextBox = direction == Direction.HORIZONTAL ? this.getBox(otherPosition, currentPosition) : this.getBox(currentPosition, otherPosition);
-			if (nextBox.isEmpty()) {
-				break;
-			}
-			word.add(nextBox);
+	
+		tempPosition = currentPosition + 1;
+		while (tempPosition <= SIZE && !this.getBox(direction == Direction.HORIZONTAL ? otherPosition : tempPosition, direction == Direction.HORIZONTAL ? tempPosition : otherPosition).isEmpty()) {
+			word.add(this.getBox(direction == Direction.HORIZONTAL ? otherPosition : tempPosition, direction == Direction.HORIZONTAL ? tempPosition : otherPosition));
+			tempPosition++;
 		}
-
+	
 		if (word.size() == 1) {
 			throw new WordNotFoundException();
 		}
-
+	
 		return word;
 	}
+	
 
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");
