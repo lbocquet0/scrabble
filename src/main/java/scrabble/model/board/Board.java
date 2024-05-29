@@ -91,6 +91,10 @@ public class Board {
 		return isLetterAround;
 	}
 
+	private static boolean isOnSide(Integer row, Integer column, int i, int j) {
+		return (i == row && j != column) || (i != row && j == column);
+	}
+
 	public ArrayList<Token> cancelLastAction() {
 		return this.actionHistory.undoAllActions();
 	}
