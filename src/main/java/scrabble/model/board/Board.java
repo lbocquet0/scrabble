@@ -67,20 +67,16 @@ public class Board {
 		this.actionHistory.add(new Action(row, column, box));
 	}
 
-	public Boolean isLetterAround(Integer row, Integer column) {
+	public Boolean isLetterAround(Integer row, Integer column) throws BoxIndexOutOfBoard{
 		Boolean isLetterAround = false;
 		// Check if there is a letter on side of boxes but not on diagonal and the boxes
 		for (int i = row - 1; i <= row + 1; i++) {
 			for (int j = column - 1; j <= column + 1; j++) {
 				if (i >= 1 && i <= SIZE && j >= 1 && j <= SIZE) {
 					if (i != row || j != column) {
-						if ((i == row && j != column) || (i != row && j == column)) {
-							try {
-								if (!this.getBox(i, j).isEmpty()) {
-									isLetterAround = true;
-								}
-							} catch (BoxIndexOutOfBoard e) {
-								e.printStackTrace();
+						if (isOnSide(row, column, i, j)) {
+							if (!this.getBox(i, j).isEmpty()) {
+								isLetterAround = true;
 							}
 						}
 					}
