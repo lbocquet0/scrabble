@@ -110,8 +110,6 @@ public class ScoreCounterTest {
 		Box box6 = new Box(false, tokenA);
 		Box box7 = new Box(false, tokenA);
 
-		board.setToken(tokenA, 6, 9);
-
 		board.setToken(tokenA, 7, 7);
 		board.setToken(tokenA, 7, 8);
 		board.setToken(tokenA, 7, 9);
