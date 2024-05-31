@@ -34,6 +34,18 @@ public class ActionHistory {
 		return token;
 	}
 
+	public Token undoLastAction() {
+		if (this.actions.isEmpty()) {
+			return null;
+		}
+
+		Action lastAction = this.actions.get(this.actions.size() - 1);
+		Token token = lastAction.undo();
+		this.actions.remove(lastAction);
+
+		return token;
+	}
+
 	public ArrayList<Token> undoAllActions() {
 		
 		ArrayList<Token> undidTokens = new ArrayList<Token>();

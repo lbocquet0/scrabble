@@ -12,11 +12,7 @@ import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
-import scrabble.utils.exceptions.EmptyBagException;
-import scrabble.utils.exceptions.EmptyBoxException;
-import scrabble.utils.exceptions.OccupiedBoxException;
-import scrabble.utils.exceptions.TokenDoesntExists;
+import scrabble.utils.exceptions.*;
 
 public class ScrabbleApplicationConsole {
 
@@ -41,8 +37,6 @@ public class ScrabbleApplicationConsole {
 
 		Boolean continueGame = true;
 		
-		// TODO: Don't be able to play a letter if the middle box is not filled
-		// TODO: Don't be able to play a single letter word
 		while (continueGame) {			
 			Console.message("Plateau de jeu :");
 			board.display();
@@ -87,24 +81,6 @@ public class ScrabbleApplicationConsole {
 						Console.message("Choissisez votre position de départ :");
 						x = Console.askInt("Ligne ?", 1, Board.SIZE);
 						y = Console.askInt("Colonne ?", 1, Board.SIZE);
-
-						Boolean isLetterAround = false;
-						try {
-							isLetterAround = board.isLetterAround(x, y);
-						} catch (BoxIndexOutOfBoard e) {
-                            Console.message(e.getMessage());
-                        }
-
-                        while (!isLetterAround) {
-							Console.message("Vous devez jouer à côté d'une lettre déjà posée.");
-							x = Console.askInt("Ligne ?", 1, Board.SIZE);
-							y = Console.askInt("Colonne ?", 1, Board.SIZE);
-							try {
-								isLetterAround = board.isLetterAround(x, y);
-							} catch (BoxIndexOutOfBoard e) {
-								Console.message(e.getMessage());
-							}
-						}
 					}
 
 					Token token = askToken(rack);
@@ -123,47 +99,48 @@ public class ScrabbleApplicationConsole {
 					} catch (OccupiedBoxException e) {
 						Console.message(e.getMessage());
 						continueWord = false;
-						game.cancelWord();
+						game.cancelLastAction();
+
 					} catch (EmptyBoxException e) {
 						Console.message(e.getMessage());
 						continueGame = false;
-						game.cancelWord();
+						game.cancelLastAction();
 					} catch (BoxIndexOutOfBoard e) {
 						Console.message(e.getMessage());
 						continueGame = false;
-						game.cancelWord();
+						game.cancelLastAction();
 					} catch (TokenDoesntExists e) {
 						Console.message(e.getMessage());
 						continueGame = false;
-						game.cancelWord();
+						game.cancelLastAction();
 					}
 
 					Integer response;
 					if (isBoardEmpty) {
 					
-						Console.message("En jouant en premier, vous n'avez pas le choix de poser au moins deux lettres");
-
-						continueWord = true;
-					} else {
-						
+						Console.message("En jouant en premier, vous êtes contraint de jouer plus d'une lettre durant ce tour.");
+						response = 1;
+					}  else {
 						Console.message("Avez-vous d'autres lettres à jouer ?");
 						Console.message("1 - Oui");
 						Console.message("2 - Non");
-	
+
 						response = Console.askInt("Votre choix ?", 1, 2);
-						if (response == 1) {
-							Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
-							Console.message("1 - Horizontal");
-							Console.message("2 - Vertical");
-	
-							Integer directionChoice = Console.askInt("Votre choix ?", 1, 2);
-							if (directionChoice == 2) {
-								direction = Direction.VERTICAL;
-							}
-						} else {
-							continueWord = false;
-						}
 					}
+
+					if (response == 1) {
+						Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
+						Console.message("1 - Horizontal");
+						Console.message("2 - Vertical");
+
+						Integer directionChoice = Console.askInt("Votre choix ?", 1, 2);
+						if (directionChoice == 2) {
+							direction = Direction.VERTICAL;
+						}
+					} else {
+						continueWord = false;
+					}
+				
 
 					response = 1;
 					while (continueWord) {
@@ -183,11 +160,21 @@ public class ScrabbleApplicationConsole {
 							try {
 								game.playLetter(token, row, column);
 							} catch (OccupiedBoxException e) {
-								Console.message(e.getMessage());
-								game.cancelWord();
+								Console.message("La case est déjà occupée.");
+								game.cancelLastAction();
+								if (direction == Direction.HORIZONTAL) {
+									column -= 1;
+								} else {
+									row -= 1;
+								}
 							} catch (EmptyBoxException e) {
-								Console.message(e.getMessage());
-								game.cancelWord();
+								Console.message("La case n'a pas correctement été remplie.");
+								game.cancelLastAction();
+								if (direction == Direction.HORIZONTAL) {
+									column -= 1;
+								} else {
+									row -= 1;
+								}
 							} catch (BoxIndexOutOfBoard e) {
 								Console.message(e.getMessage());
 							} catch (TokenDoesntExists e) {
@@ -203,10 +190,16 @@ public class ScrabbleApplicationConsole {
 							continueWord = false;
 						}
 					}
-					
 
-					Integer newScore = game.validateWord(direction);
-					Console.message("Vous avez maintenant " + newScore + " points.");
+                    try {
+                        Integer newScore = game.validateWord(direction);
+						Console.message("Vous avez maintenant " + newScore + " points.");
+                    } catch (BoxIndexOutOfBoard e) {
+                        Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+                    } catch (IllegalMoveException e) {
+                        Console.message("Le mot que avez joué n'a pas été validé : " + e.getMessage());
+						game.cancelLastWord();
+                    }
 
 					break;
 				case 2:

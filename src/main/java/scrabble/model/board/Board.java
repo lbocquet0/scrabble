@@ -91,8 +91,12 @@ public class Board {
 		return (i == row && j != column) || (i != row && j == column);
 	}
 
-	public ArrayList<Token> cancelLastAction() {
+	public ArrayList<Token> cancelLastWord() {
 		return this.actionHistory.undoAllActions();
+	}
+
+	public Token cancelLastAction() {
+		return this.actionHistory.undoLastAction();
 	}
 
 	public void clearHistory() {

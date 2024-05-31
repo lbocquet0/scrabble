@@ -10,11 +10,7 @@ import scrabble.model.board.action.Action;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.ScoreCounter;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
-import scrabble.utils.exceptions.EmptyBagException;
-import scrabble.utils.exceptions.EmptyBoxException;
-import scrabble.utils.exceptions.OccupiedBoxException;
-import scrabble.utils.exceptions.TokenDoesntExists;
+import scrabble.utils.exceptions.*;
 
 public class Game {
 	
@@ -79,20 +75,39 @@ public class Game {
 		}
 	}
 
-	public void cancelWord() {
-		ArrayList<Token> tokens = this.board.cancelLastAction();
+	public void cancelLastWord() {
+		ArrayList<Token> tokens = this.board.cancelLastWord();
 
 		for (Token token : tokens) {
 			this.player.addTokenToRack(token);
 		}
 	}
-	
+
+	public void cancelLastAction() {
+		Token token = this.board.cancelLastAction();
+		if (token != null) {
+			this.player.addTokenToRack(token);
+		}
+	}
+
 	public void clearRoundHistory() {
 		this.board.clearHistory();
 	}
 
-	public Integer validateWord(Direction direction) {
+	public Integer validateWord(Direction direction) throws BoxIndexOutOfBoard, IllegalMoveException {
 		ArrayList<Action> actions = this.board.getActionsHistory();
+
+		Boolean isLetterAround = false;
+		Integer i = 0;
+		while (!isLetterAround && i < actions.size()) {
+			Action action = actions.get(i);
+			isLetterAround = this.board.isLetterAround(action.getRowPosition(), action.getColumnPosition());
+			i++;
+		}
+
+		if (!isLetterAround) {
+			throw new IllegalMoveException();
+		}
 
 		Integer score = ScoreCounter.countScore(this.board, actions, direction);
 		Integer newScore = this.player.addScore(score);
