@@ -43,13 +43,7 @@ public class ScrabbleApplicationConsole {
 		
 		// TODO: Don't be able to play a letter if the middle box is not filled
 		// TODO: Don't be able to play a single letter word
-		while (continueGame) {
-			
-			if (player.rackIsEmpty() && bag.isEmpty()) {
-				continueGame = false;
-				break;
-			}
-			
+		while (continueGame) {			
 			Console.message("Plateau de jeu :");
 			board.display();
 
@@ -231,6 +225,10 @@ public class ScrabbleApplicationConsole {
 				game.fullFillPlayerRack(player);
 			} catch (EmptyBagException e) {
 				Console.message("Le sac est vide, vous ne pouvez plus piocher de jeton.");
+			}
+
+			if (player.rackIsEmpty() && bag.isEmpty()) {
+				continueGame = false;
 			}
 		}
 	}
