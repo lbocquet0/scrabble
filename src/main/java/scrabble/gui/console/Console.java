@@ -1,6 +1,5 @@
 package scrabble.gui.console;
 
-import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -25,8 +24,9 @@ public class Console {
 			} catch (NoSuchElementException | NullPointerException e) {
 				Console.message("Veuillez saisir un nombre");
 				scanner.next();
+				continue;
 			}
-
+			
             if (response < min || response > max) {
 				Console.message("Veuillez saisir un nombre entre " + min + " et " + max);
 				response = null;
