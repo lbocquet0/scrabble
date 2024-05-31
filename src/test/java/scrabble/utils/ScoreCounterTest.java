@@ -1,3 +1,4 @@
+package scrabble.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -10,8 +11,6 @@ import scrabble.model.board.Box;
 import scrabble.model.board.action.Action;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
-import scrabble.utils.Direction;
-import scrabble.utils.ScoreCounter;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
 

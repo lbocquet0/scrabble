@@ -1,3 +1,4 @@
+package scrabble.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import scrabble.controller.Game;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;

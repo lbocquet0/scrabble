@@ -1,8 +1,8 @@
+package scrabble.model.board;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import scrabble.model.board.Box;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 
