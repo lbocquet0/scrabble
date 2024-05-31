@@ -30,7 +30,7 @@ public class ScrabbleApplicationConsole {
 		try {
 			game.initialize();
 		} catch (EmptyBagException e) {
-			Console.message("Le sac est vide, impossible de commencer la partie.");
+			Console.message(e.getMessage());
 			return;
 		}
 		
@@ -73,8 +73,8 @@ public class ScrabbleApplicationConsole {
 
 					try {
 						isBoardEmpty = board.gameHaveNotStarted();
-					} catch (Exception e) {
-						Console.message("Le plateau n'a pas été correctement initialisé.");
+					} catch (BoxIndexOutOfBoard e) {
+						Console.message(e.getMessage());
 						continueGame = false;
 						break;
 					}
@@ -92,7 +92,7 @@ public class ScrabbleApplicationConsole {
 						try {
 							isLetterAround = board.isLetterAround(x, y);
 						} catch (BoxIndexOutOfBoard e) {
-                            Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+                            Console.message(e.getMessage());
                         }
 
                         while (!isLetterAround) {
@@ -102,7 +102,7 @@ public class ScrabbleApplicationConsole {
 							try {
 								isLetterAround = board.isLetterAround(x, y);
 							} catch (BoxIndexOutOfBoard e) {
-								Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+								Console.message(e.getMessage());
 							}
 						}
 					}
@@ -121,19 +121,19 @@ public class ScrabbleApplicationConsole {
 					try {
 						game.playLetter(token, x, y);
 					} catch (OccupiedBoxException e) {
-						Console.message("La case est déjà occupée.");
+						Console.message(e.getMessage());
 						continueWord = false;
 						game.cancelWord();
 					} catch (EmptyBoxException e) {
-						Console.message("La case n'a pas été correctement remplie.");
+						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelWord();
 					} catch (BoxIndexOutOfBoard e) {
-						Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelWord();
 					} catch (TokenDoesntExists e) {
-						Console.message("Vous ne possédez pas ce jeton dans votre rack");
+						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelWord();
 					}
@@ -183,15 +183,15 @@ public class ScrabbleApplicationConsole {
 							try {
 								game.playLetter(token, row, column);
 							} catch (OccupiedBoxException e) {
-								Console.message("La case est déjà occupée.");
+								Console.message(e.getMessage());
 								game.cancelWord();
 							} catch (EmptyBoxException e) {
-								Console.message("La case n'a pas correctement été remplie.");
+								Console.message(e.getMessage());
 								game.cancelWord();
 							} catch (BoxIndexOutOfBoard e) {
-								Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseigner sont en dehors du plateau.");
+								Console.message(e.getMessage());
 							} catch (TokenDoesntExists e) {
-								Console.message("Le jeton n'existe pas");
+								Console.message(e.getMessage());
 							}
 
 							Console.message("Avez-vous d'autres lettres à jouer ?");
@@ -224,7 +224,7 @@ public class ScrabbleApplicationConsole {
 			try {
 				game.fullFillPlayerRack(player);
 			} catch (EmptyBagException e) {
-				Console.message("Le sac est vide, vous ne pouvez plus piocher de jeton.");
+				Console.message(e.getMessage());
 			}
 
 			if (player.rackIsEmpty() && bag.isEmpty()) {
@@ -242,7 +242,7 @@ public class ScrabbleApplicationConsole {
 			try {
 				token = getTokenFromInput(rack, input);
 			} catch (TokenDoesntExists e) {
-				Console.message("Vous ne possédez pas ce jeton dans votre rack");
+				Console.message(e.getMessage());
 			}
 		}
 
@@ -300,7 +300,7 @@ public class ScrabbleApplicationConsole {
 	    try {
 	        letter = FrenchLetter.valueOf(letterInput);
 	    } catch (IllegalArgumentException e) {
-	        Console.message("La lettre entrée est invalide.");
+	        Console.message(e.getMessage());
 	        return joker;
 	    }
 
@@ -321,10 +321,10 @@ public class ScrabbleApplicationConsole {
 	 		game.switchTokenFromRack(player, token);
 	 		
 	 	} catch (EmptyBagException e) {
-	 		Console.message("Le sac est vide, impossible d'échanger un jeton.");
+	 		Console.message(e.getMessage());
 	 		
 	 	} catch (TokenDoesntExists e) {
-			Console.message("Le jeton demandé n'existe pas.");
+			Console.message(e.getMessage());
 		}
 	}
 }
