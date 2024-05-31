@@ -165,7 +165,11 @@ public class Board {
 	        for (Integer j = 1; j <= SIZE; j++) {
 	        	String tokenDisplay = "    ";
 	        	if (i == 0) {
-	        		tokenDisplay = "  " + j.toString() + " ";
+					if (j < 10) {
+						tokenDisplay = "  " + j.toString() + " ";
+					} else {
+						tokenDisplay = " " + j.toString() + " ";
+					}
 	        		
 	        	} else {
 
@@ -188,7 +192,7 @@ public class Board {
 	            if (tokenDisplay.length() == 4) {
 					line = line + tokenDisplay + " ┃";
 	            } else {
-	            	line = line + tokenDisplay + "┃";
+	            	line = line + " " +  tokenDisplay + " ┃";
 				}
 	        }
 
