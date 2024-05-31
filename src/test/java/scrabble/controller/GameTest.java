@@ -14,11 +14,7 @@ import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
-import scrabble.utils.exceptions.EmptyBagException;
-import scrabble.utils.exceptions.EmptyBoxException;
-import scrabble.utils.exceptions.OccupiedBoxException;
-import scrabble.utils.exceptions.TokenDoesntExists;
+import scrabble.utils.exceptions.*;
 
 class GameTest {
     Game game;
@@ -193,7 +189,7 @@ class GameTest {
 	}
 
 	@Test
-	void should_add_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	void should_add_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
 		Player player = game.getPlayer();
@@ -210,7 +206,7 @@ class GameTest {
 	}
 
 	@Test
-	void should_return_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	void should_return_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
 		Player player = game.getPlayer();
@@ -227,7 +223,7 @@ class GameTest {
 	}
 
 	@Test
-	void should_clear_history_on_validate_word() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	void should_clear_history_on_validate_word() throws EmptyBagException, OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
 		Player player = game.getPlayer();
