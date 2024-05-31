@@ -144,22 +144,31 @@ public class ScrabbleApplicationConsole {
 						game.cancelWord();
 					}
 
-					Console.message("Avez-vous d'autres lettres à jouer ?");
-					Console.message("1 - Oui");
-					Console.message("2 - Non");
+					Integer response;
+					if (isBoardEmpty) {
+					
+						Console.message("En jouant en premier, vous n'avez pas le choix de poser au moins deux lettres");
 
-					Integer response = Console.askInt("Votre choix ?", 1, 2);
-					if (response == 1) {
-						Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
-						Console.message("1 - Horizontal");
-						Console.message("2 - Vertical");
-
-						Integer directionChoice = Console.askInt("Votre choix ?", 1, 2);
-						if (directionChoice == 2) {
-							direction = Direction.VERTICAL;
-						}
+						continueWord = true;
 					} else {
-						continueWord = false;
+						
+						Console.message("Avez-vous d'autres lettres à jouer ?");
+						Console.message("1 - Oui");
+						Console.message("2 - Non");
+	
+						response = Console.askInt("Votre choix ?", 1, 2);
+						if (response == 1) {
+							Console.message("Dans quelle direction voulez-vous jouer votre mot ?");
+							Console.message("1 - Horizontal");
+							Console.message("2 - Vertical");
+	
+							Integer directionChoice = Console.askInt("Votre choix ?", 1, 2);
+							if (directionChoice == 2) {
+								direction = Direction.VERTICAL;
+							}
+						} else {
+							continueWord = false;
+						}
 					}
 
 					response = 1;
