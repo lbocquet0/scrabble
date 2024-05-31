@@ -22,15 +22,12 @@ public class Console {
 		while (response == null) {
 			try {
 				response = scanner.nextInt();
-			} catch (InputMismatchException e) {
-				Console.message("Veuillez saisir un nombre");
-				scanner.next();
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | NullPointerException e) {
 				Console.message("Veuillez saisir un nombre");
 				scanner.next();
 			}
 
-			if (response < min || response > max) {
+            if (response < min || response > max) {
 				Console.message("Veuillez saisir un nombre entre " + min + " et " + max);
 				response = null;
 			}
