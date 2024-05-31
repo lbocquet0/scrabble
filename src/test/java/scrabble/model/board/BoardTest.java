@@ -212,9 +212,9 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldCancelLastAction() {
+	public void shouldCancelLastWord() {
 
-		ArrayList<Token> tokens = board.cancelLastAction();
+		ArrayList<Token> tokens = board.cancelLastWord();
 
 		assertThat(tokens).hasSize(6);
 		assertThat(tokens.get(0)).isEqualTo(token);

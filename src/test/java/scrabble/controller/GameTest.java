@@ -156,7 +156,7 @@ class GameTest {
 
 		game.playLetter(token, 8, 8);
 
-		game.cancelWord();
+		game.cancelLastWord();
 
 		assertThat(rack.tokens()).containsOnlyOnce(token);
 	}
@@ -171,7 +171,7 @@ class GameTest {
 		Token token = rack.token(0);
 
 		game.playLetter(token, 8, 8);
-		game.cancelWord();
+		game.cancelLastWord();
 
 		Token placedToken = board.getToken(8, 8);
 		assertEquals(null, placedToken);
