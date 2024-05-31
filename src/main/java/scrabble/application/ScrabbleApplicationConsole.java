@@ -160,7 +160,7 @@ public class ScrabbleApplicationConsole {
 							try {
 								game.playLetter(token, row, column);
 							} catch (OccupiedBoxException e) {
-								Console.message("La case est déjà occupée.");
+								Console.message(e.getMessage());
 								game.cancelLastAction();
 								if (direction == Direction.HORIZONTAL) {
 									column -= 1;
@@ -168,7 +168,7 @@ public class ScrabbleApplicationConsole {
 									row -= 1;
 								}
 							} catch (EmptyBoxException e) {
-								Console.message("La case n'a pas correctement été remplie.");
+								Console.message(e.getMessage());
 								game.cancelLastAction();
 								if (direction == Direction.HORIZONTAL) {
 									column -= 1;
@@ -195,9 +195,9 @@ public class ScrabbleApplicationConsole {
                         Integer newScore = game.validateWord(direction);
 						Console.message("Vous avez maintenant " + newScore + " points.");
                     } catch (BoxIndexOutOfBoard e) {
-                        Console.message("Les coordonnées (" + e.getRow() + "," + e.getColumn() + ") que vous avez renseignées sont en dehors du plateau.");
+						Console.message(e.getMessage());
                     } catch (IllegalMoveException e) {
-                        Console.message("Le mot que avez joué n'a pas été validé : " + e.getMessage());
+						Console.message(e.getMessage());
 						game.cancelLastWord();
                     }
 
