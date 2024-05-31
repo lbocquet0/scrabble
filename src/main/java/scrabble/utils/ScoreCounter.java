@@ -43,7 +43,14 @@ public class ScoreCounter {
 
 		score += countWordScore(wordLetters);
 
-		Direction oppositeDirection = direction == Direction.HORIZONTAL ? Direction.VERTICAL : Direction.HORIZONTAL;
+		Direction oppositeDirection;
+		
+		if (direction == Direction.HORIZONTAL) {
+			oppositeDirection = Direction.VERTICAL;
+		} else {
+			oppositeDirection = Direction.HORIZONTAL;
+		}
+
 		for (Action action : actions) {
 			try {
 				wordLetters = board.getWord(action.getRowPosition(), action.getColumnPosition(), oppositeDirection);
