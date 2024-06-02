@@ -99,9 +99,17 @@ public class Game {
 
 		Boolean isLetterAround = false;
 		Integer i = 0;
+		
+		Action firstAction = actions.get(0);
+		
+		if (firstAction.getRowPosition() == 8 && firstAction.getColumnPosition() == 8) {
+			isLetterAround = true;
+		}
+		
+		
 		while (!isLetterAround && i < actions.size()) {
 			Action action = actions.get(i);
-			isLetterAround = this.board.isLetterAround(action.getRowPosition(), action.getColumnPosition());
+			isLetterAround = board.isLetterAround(action.getRowPosition(), action.getColumnPosition(), actions);
 			i++;
 		}
 
