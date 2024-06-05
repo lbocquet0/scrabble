@@ -3,7 +3,9 @@ package scrabble.application;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import scrabble.controller.Game;
 import scrabble.model.Player;
@@ -15,6 +17,21 @@ import scrabble.views.fx.RackFXView;
 
 public class ScrabbleApplicationFX extends Application {
 
+	private VBox getStatisticPane(Game game, Integer roundAmount) {
+		Player player = game.getPlayer();
+
+		VBox statisticPane = new VBox();
+
+		Label player1ScoreLabel = new Label("Player 1: " + player.score());
+		Label roundAmountLabel = new Label("Round: " + roundAmount);
+
+		statisticPane.getChildren().addAll(player1ScoreLabel, roundAmountLabel);
+		// Align all to the left
+		statisticPane.setAlignment(Pos.TOP_LEFT);
+
+		return statisticPane;
+	}
+
 	private void startGame(Stage primaryStage) throws EmptyBagException {
 		Game game = new Game();
 		Board board = game.getBoard();
@@ -24,6 +41,8 @@ public class ScrabbleApplicationFX extends Application {
 		game.initialize();
 
 		BoardFXView boardFXView = new BoardFXView(board);
+		boardFXView.setAlignment(Pos.CENTER);
+
 		RackFXView rackFXView = new RackFXView(rack);
 
 		rackFXView.setAlignment(Pos.CENTER);
@@ -31,6 +50,9 @@ public class ScrabbleApplicationFX extends Application {
 		BorderPane root = new BorderPane();
 		root.setCenter(boardFXView);
 		root.setBottom(rackFXView);
+		
+		VBox statisticPane = this.getStatisticPane(game, 1);
+		root.setRight(statisticPane);
 
 		primaryStage.setScene(new Scene(root, 1920, 1080));
 	}
