@@ -30,7 +30,6 @@ public class BoxFXView extends StackPane implements FXView {
 			this.getChildren().add(tokenFXView);
 		
 		} else if (this.box.isMiddle()) {
-			System.out.println("ok");
 
 			ImageView middleImageView = this.getMiddleImageView();
 			this.getChildren().add(middleImageView);
