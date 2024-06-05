@@ -26,7 +26,7 @@ public class ScrabbleApplicationFX extends Application {
 		root.getChildren().add(rackFXView);
 
 		primaryStage.setTitle("Scrabble");
-		primaryStage.setScene(new Scene(root, 300, 250));
+		primaryStage.setScene(new Scene(root, 400, 250));
 		primaryStage.show();
 	}
 

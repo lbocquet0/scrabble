@@ -9,7 +9,7 @@ import scrabble.model.token.Token;
 public class TokenFXView extends HBox {
 	private final Token token;
 
-	private static int TOKEN_SIZE = 20;
+	private static int TOKEN_SIZE = 50;
 	private static int LETTER_FONT_SIZE = 20;
 	private static int POINTS_FONT_SIZE = 15;
 
@@ -36,5 +36,7 @@ public class TokenFXView extends HBox {
 		
 		this.getChildren().add(label);
 		this.getChildren().add(pointsLabel);
+
+		this.setStyle("-fx-border-color: black; -fx-border-width: 1;");
 	}
 }
