@@ -3,6 +3,7 @@ package scrabble.application;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,14 @@ import scrabble.views.fx.BoardFXView;
 import scrabble.views.fx.RackFXView;
 
 public class ScrabbleApplicationFX extends Application {
+
+	private void displayError(String message) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
 
 	private VBox getStatisticPane(Game game, Integer roundAmount) {
 		Player player = game.getPlayer();
