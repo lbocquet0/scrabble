@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 import scrabble.model.Rack;
 import scrabble.model.token.Token;
 
-public class RackFXView extends HBox {
+public class RackFXView extends HBox implements FXView {
 	private final Rack rack;
 
 	private static int TOKEN_SPACING = 5;
@@ -16,10 +16,10 @@ public class RackFXView extends HBox {
 
 		this.setSpacing(TOKEN_SPACING);
 
-		updateView();
+		this.updateView();
 	}
 
-	private void updateView() {
+	public void updateView() {
 		this.getChildren().clear();
 
 		ArrayList<Token> tokens = rack.tokens();

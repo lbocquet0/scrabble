@@ -6,7 +6,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import scrabble.model.token.Token;
 
-public class TokenFXView extends HBox {
+public class TokenFXView extends HBox implements FXView {
 	private final Token token;
 
 	private static int TOKEN_SIZE = 50;
@@ -19,10 +19,10 @@ public class TokenFXView extends HBox {
 
 		this.setPrefSize(TOKEN_SIZE, TOKEN_SIZE);
 		
-		updateView();
+		this.updateView();
 	}
 
-	private void updateView() {
+	public void updateView() {
 		this.getChildren().clear();
 
 		Label label = new Label(token.getLetter().toString());
