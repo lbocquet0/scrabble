@@ -1,6 +1,7 @@
 package scrabble.model.token;
 
 public class Joker extends Token {
+	public static final String JOKER_TEXT = "JOK";
 	public static int OCCURRENCES_AMOUNT = 2;
 
 	public Joker() {
@@ -17,7 +18,7 @@ public class Joker extends Token {
 		if(this.haveLetter()) {
 			return letter.display();
 		}else {
-			return "JOK";
+			return JOKER_TEXT;
 		}
 	}
 

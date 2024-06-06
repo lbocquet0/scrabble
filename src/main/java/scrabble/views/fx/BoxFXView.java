@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import scrabble.model.board.Box;
+import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 
 public class BoxFXView extends StackPane implements FXView {
@@ -25,9 +26,17 @@ public class BoxFXView extends StackPane implements FXView {
 		if (!this.box.isEmpty()) {
 
 			Token token = this.box.token();
-			TokenFXView tokenFXView = new TokenFXView(token);
 
-			this.getChildren().add(tokenFXView);
+			if (token.isJoker()) {
+				Joker joker = (Joker) token;
+
+				JokerFXView jokerFXView = new JokerFXView(joker);
+				this.getChildren().add(jokerFXView);
+			} else {
+
+				TokenFXView tokenFXView = new TokenFXView(token);
+				this.getChildren().add(tokenFXView);
+			}
 		
 		} else if (this.box.isMiddle()) {
 

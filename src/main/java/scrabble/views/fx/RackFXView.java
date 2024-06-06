@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.layout.HBox;
 import scrabble.model.Rack;
+import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 
 public class RackFXView extends HBox implements FXView {
@@ -25,8 +26,17 @@ public class RackFXView extends HBox implements FXView {
 		ArrayList<Token> tokens = rack.tokens();
 
 		for (Token token : tokens) {
-			TokenFXView tokenFXView = new TokenFXView(token);
-			this.getChildren().add(tokenFXView);
+
+			if (token.isJoker()) {
+				Joker joker = (Joker) token;
+
+				JokerFXView jokerFXView = new JokerFXView(joker);
+				this.getChildren().add(jokerFXView);
+			} else {
+
+				TokenFXView tokenFXView = new TokenFXView(token);
+				this.getChildren().add(tokenFXView);
+			}
 		}
 	}
 }
