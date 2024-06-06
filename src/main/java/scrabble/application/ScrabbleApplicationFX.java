@@ -122,7 +122,7 @@ public class ScrabbleApplicationFX extends Application {
 		root.setRight(statisticPane);
 		root.setLeft(Buttons);
 
-		primaryStage.setScene(new Scene(root, 1920, 1080));
+		primaryStage.setScene(new Scene(root, 1900, 1000));
 	}
 
 	private static void playWord(Game game, Rack rack) throws BoxIndexOutOfBoard {
