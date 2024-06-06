@@ -106,6 +106,32 @@ public class ScrabbleApplicationFX extends Application {
 			Direction dir = direction.getValue() == Direction.HORIZONTAL ? Direction.HORIZONTAL : Direction.VERTICAL;
 		}
 	}
+	private static void continuePlayWord(Game game, Rack rack, Integer x, Integer y, Direction dir) {
+		Alert alert = new Alert(Alert.AlertType.NONE);
+		alert.setTitle("Jouer un mot");
+		alert.setHeaderText("Voulez-vous continuer à jouer ?");
+
+		alert.getDialogPane().getButtonTypes().add(ButtonType.YES);
+		alert.getDialogPane().getButtonTypes().add(ButtonType.NO);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent()) {
+			if (result.get() == ButtonType.YES) {
+				if (dir == Direction.HORIZONTAL) {
+					x++;
+				} else {
+					y++;
+				}
+				playLetter(game, rack, x, y, dir);
+			} else {
+				try {
+					game.validateWord(dir);
+				} catch (BoxIndexOutOfBoard | IllegalMoveException e) {
+					displayError(e.getMessage());
+				}
+			}
+		}
+	}
 	@Override
 	public void start(Stage primaryStage) throws EmptyBagException {
 		primaryStage.setTitle("Scrabble");
