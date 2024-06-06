@@ -3,6 +3,7 @@ package scrabble.application;
 import java.util.Optional;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,13 +45,14 @@ public class ScrabbleApplicationFX extends Application {
 		VBox statisticPane = new VBox();
 
 		IntegerProperty playerScore = player.scoreProperty();
-		Label player1ScoreLabel = new Label();
-		player1ScoreLabel.textProperty().bind(playerScore.asString());
+		Label playerScoreLabel = new Label();
+		playerScoreLabel.textProperty().bind(Bindings.concat("Score : ", playerScore));
 
-		// TODO: Use the round number from the game
-		Label roundAmountLabel = new Label("Round: 1");
+		IntegerProperty roundAmount = game.roundNumberProperty();
+		Label roundAmountLabel = new Label();
+		roundAmountLabel.textProperty().bind(Bindings.concat("Manche : ", roundAmount));
 
-		statisticPane.getChildren().addAll(player1ScoreLabel, roundAmountLabel);
+		statisticPane.getChildren().addAll(playerScoreLabel, roundAmountLabel);
 		statisticPane.setAlignment(Pos.TOP_LEFT);
 
 		return statisticPane;
@@ -245,6 +247,7 @@ public class ScrabbleApplicationFX extends Application {
 			} else {
 				try {
 					game.validateWord(dir);
+					game.nextRound();
 				} catch (Exception err) {
 					displayError(err.getMessage());
 					game.cancelLastWord();
