@@ -107,7 +107,7 @@ public class ScrabbleApplicationFX extends Application {
 			if (gameIsNotStarted) {
 				initialPlayWord(game, rack);
 			} else {
-				normalPlayWord();
+				normalPlayWord(game, rack);
 			}
 			try {
 				game.fullFillPlayerRack(player);
@@ -133,7 +133,7 @@ public class ScrabbleApplicationFX extends Application {
 		primaryStage.setScene(new Scene(root, 1920, 1080));
 	}
 
-	private static void normalPlayWord() {
+	private static void normalPlayWord(Game game, Rack rack) {
 		Alert alert = new Alert(Alert.AlertType.NONE);
 		alert.setTitle("Jouer un mot");
 		alert.setHeaderText("Entrez la position initiale");
@@ -167,6 +167,7 @@ public class ScrabbleApplicationFX extends Application {
 			int x = Integer.parseInt(line.getText());
 			int y = Integer.parseInt(column.getText());
 			Direction dir = direction.getValue() == Direction.HORIZONTAL ? Direction.HORIZONTAL : Direction.VERTICAL;
+			playLetter(game, rack, x, y, dir);
 		}
 	}
 
