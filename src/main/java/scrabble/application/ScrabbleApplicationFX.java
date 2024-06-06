@@ -25,10 +25,6 @@ import scrabble.model.board.Board;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
-import scrabble.utils.exceptions.EmptyBoxException;
-import scrabble.utils.exceptions.IllegalMoveException;
-import scrabble.utils.exceptions.OccupiedBoxException;
-import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
 import scrabble.views.fx.RackFXView;
 
@@ -90,8 +86,8 @@ public class ScrabbleApplicationFX extends Application {
 				try {
 					game.switchTokenFromRack(player, rack.token(index));
 					rackFXView.updateView();
-				} catch (EmptyBagException | TokenDoesntExists e1) {
-					displayError(e1.getMessage());
+				} catch (Exception err) {
+					displayError(err.getMessage());
 				} 
 			}
 		});
@@ -101,8 +97,8 @@ public class ScrabbleApplicationFX extends Application {
 			Boolean gameIsNotStarted = true;
 			try {
 				gameIsNotStarted = game.getBoard().gameHaveNotStarted();
-			} catch (BoxIndexOutOfBoard e1) {
-				displayError(e1.getMessage());
+			} catch (BoxIndexOutOfBoard err) {
+				displayError(err.getMessage());
 			}
 			if (gameIsNotStarted) {
 				initialPlayWord(game, rack);
@@ -111,8 +107,8 @@ public class ScrabbleApplicationFX extends Application {
 			}
 			try {
 				game.fullFillPlayerRack(player);
-			} catch (EmptyBagException e1) {
-				displayError(e1.getMessage());
+			} catch (EmptyBagException err) {
+				displayError(err.getMessage());
 			}
 			rackFXView.updateView();
 			boardFXView.updateView();
@@ -227,8 +223,9 @@ public class ScrabbleApplicationFX extends Application {
 				} else {
 					continuePlayWord(game, rack, x, y, dir);
 				}
-			} catch (EmptyBoxException | OccupiedBoxException | TokenDoesntExists | BoxIndexOutOfBoard e) {
-				displayError(e.getMessage());
+			} catch (Exception err) {
+				displayError(err.getMessage());
+				game.cancelLastWord();
 			}
         }
 	}
@@ -253,8 +250,9 @@ public class ScrabbleApplicationFX extends Application {
 			} else {
 				try {
 					game.validateWord(dir);
-				} catch (BoxIndexOutOfBoard | IllegalMoveException e) {
-					displayError(e.getMessage());
+				} catch (Exception err) {
+					displayError(err.getMessage());
+					game.cancelLastWord();
 				}
 			}
 		}
