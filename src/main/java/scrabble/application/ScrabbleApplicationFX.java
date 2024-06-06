@@ -97,21 +97,32 @@ public class ScrabbleApplicationFX extends Application {
 	}
 
 	private static Token answerToken(Rack rack, String title, String header) {
-		ArrayList<Token> tokens = rack.tokens();
-		ChoiceDialog<Token> dialog = new ChoiceDialog<Token>(tokens.get(0), tokens);
+		Alert alert = new Alert(Alert.AlertType.NONE);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
 
-		dialog.setTitle(title);
-		dialog.setHeaderText(header);
-		dialog.setContentText("Jeton: ");
+		for (int i = 0; i < rack.remainingTokens(); i++) {
+			Token token = rack.token(i);
 
-		Optional<Token> result = dialog.showAndWait();
-		if (result.isPresent()) {
-
-			return result.get();
-		} else {
-
-			return null;
+			ButtonType button = new ButtonType(token.display());
+			alert.getDialogPane().getButtonTypes().add(button);
 		}
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent()) {
+			ButtonType selectedButton = result.get();
+			int index = alert.getDialogPane().getButtonTypes().indexOf(selectedButton);
+			
+			try {
+				Token token = rack.token(index);
+				return token;
+
+			} catch (Exception err) {
+				displayError(err.getMessage());
+			} 
+		}
+
+		return null;
 	}
 
 	private static boolean createConfirmation(String title, String header) {
@@ -132,7 +143,7 @@ public class ScrabbleApplicationFX extends Application {
 
 		return false;
 	}
-		
+
 	private void swapTokens(Game game, Player player) {
 		Rack rack = player.rack();
 
