@@ -106,6 +106,35 @@ public class ScrabbleApplicationFX extends Application {
 			Direction dir = direction.getValue() == Direction.HORIZONTAL ? Direction.HORIZONTAL : Direction.VERTICAL;
 		}
 	}
+	private static void playLetter(Game game, Rack rack, Integer x, Integer y, Direction dir) {
+		Alert alert = new Alert(Alert.AlertType.NONE);
+		alert.setTitle("Jouer un mot");
+		alert.setHeaderText("Selectionnez la lettre à jouer");
+
+		for (int i = 0; i < rack.remainingTokens(); i++) {
+			alert.getDialogPane().getButtonTypes().add(new ButtonType(rack.token(i).display()));
+		}
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent()) {
+			int index = alert.getDialogPane().getButtonTypes().indexOf(result.get());
+			try {
+				game.playLetter(rack.token(index), x, y);
+				if (game.roundNumber() == 1 && x == 8 && y == 8) {
+					if (dir == Direction.HORIZONTAL) {
+						x++;
+					} else {
+						y++;
+					}
+					playLetter(game, rack, x, y, dir);
+				} else {
+					continuePlayWord(game, rack, x, y, dir);
+				}
+			} catch (EmptyBoxException | OccupiedBoxException | TokenDoesntExists | BoxIndexOutOfBoard e) {
+				displayError(e.getMessage());
+			}
+        }
+	}
 	private static void continuePlayWord(Game game, Rack rack, Integer x, Integer y, Direction dir) {
 		Alert alert = new Alert(Alert.AlertType.NONE);
 		alert.setTitle("Jouer un mot");
