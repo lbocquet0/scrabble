@@ -1,6 +1,7 @@
 package scrabble.application;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -9,16 +10,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import scrabble.controller.Game;
+import scrabble.gui.console.Console;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.model.token.Token;
 import scrabble.utils.exceptions.EmptyBagException;
+import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
 import scrabble.views.fx.RackFXView;
 
 public class ScrabbleApplicationFX extends Application {
 
-	private void displayError(String message) {
+	private static void displayError(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
@@ -35,7 +39,6 @@ public class ScrabbleApplicationFX extends Application {
 		Label roundAmountLabel = new Label("Round: " + roundAmount);
 
 		statisticPane.getChildren().addAll(player1ScoreLabel, roundAmountLabel);
-		// Align all to the left
 		statisticPane.setAlignment(Pos.TOP_LEFT);
 
 		return statisticPane;
@@ -65,10 +68,9 @@ public class ScrabbleApplicationFX extends Application {
 
 		primaryStage.setScene(new Scene(root, 1920, 1080));
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws EmptyBagException {
-
 		primaryStage.setTitle("Scrabble");
 		this.startGame(primaryStage);
 		primaryStage.show();
