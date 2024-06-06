@@ -72,6 +72,21 @@ public class ScrabbleApplicationFX extends Application {
 		RackFXView rackFXView = new RackFXView(rack);
 		rackFXView.setAlignment(Pos.CENTER);
 		
+		HBox buttonsPanel = getButtons(game, player, rack, boardFXView, rackFXView);
+
+		BorderPane root = new BorderPane();
+		root.setCenter(boardFXView);
+		root.setBottom(rackFXView);
+		BorderPane.setMargin(rackFXView, new Insets(0, 0, 20, 0));
+		
+		VBox statisticPane = this.getStatisticPane(game);
+		root.setRight(statisticPane);
+		root.setLeft(buttonsPanel);
+
+		primaryStage.setScene(new Scene(root, 1900, 1000));
+	}
+
+	private HBox getButtons(Game game, Player player, Rack rack, BoardFXView boardFXView, RackFXView rackFXView) {
 		Button swapTokenButton = new Button("Changer un jeton");
 		swapTokenButton.setOnAction(e -> {
 			Alert alert = new Alert(Alert.AlertType.NONE);
@@ -110,19 +125,9 @@ public class ScrabbleApplicationFX extends Application {
 			boardFXView.updateView();
 		});
 		
-		HBox Buttons = new HBox();
-		Buttons.getChildren().addAll(swapTokenButton, playButton);
-
-		BorderPane root = new BorderPane();
-		root.setCenter(boardFXView);
-		root.setBottom(rackFXView);
-		BorderPane.setMargin(rackFXView, new Insets(0, 0, 20, 0));
-		
-		VBox statisticPane = this.getStatisticPane(game);
-		root.setRight(statisticPane);
-		root.setLeft(Buttons);
-
-		primaryStage.setScene(new Scene(root, 1900, 1000));
+		HBox buttonsPanel = new HBox();
+		buttonsPanel.getChildren().addAll(swapTokenButton, playButton);
+		return buttonsPanel;
 	}
 
 	private static void playWord(Game game, Rack rack) throws BoxIndexOutOfBoard {
