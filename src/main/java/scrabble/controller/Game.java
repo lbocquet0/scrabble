@@ -2,6 +2,8 @@ package scrabble.controller;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
@@ -17,11 +19,14 @@ public class Game {
 	private Player player;
 	private Board board;
 	private Bag bag;
+	private IntegerProperty roundNumber;
 	
 	public Game() {
 		this.bag = new Bag();
 		this.player = new Player();
 		this.board = new Board();
+
+		this.roundNumber = new SimpleIntegerProperty(1);
 	}
 	
 	public Board getBoard() {
@@ -136,4 +141,19 @@ public class Game {
         this.fillUpPlayerRack(player);
         this.bag.putToken(token);
     }
+
+	public Integer roundNumber() {
+		return this.roundNumber.get();
+	}
+
+	public Integer nextRound() throws EmptyBagException {
+		this.roundNumber.set(this.roundNumber() + 1);
+		this.fullFillPlayerRack(this.player);
+
+		return this.roundNumber();
+	}
+
+	public IntegerProperty roundNumberProperty() {
+		return this.roundNumber;
+	}
 }

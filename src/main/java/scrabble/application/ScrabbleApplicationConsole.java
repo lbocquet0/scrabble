@@ -215,12 +215,12 @@ public class ScrabbleApplicationConsole {
 
 			game.clearRoundHistory();
 			try {
-				game.fullFillPlayerRack(player);
+				game.nextRound();
 			} catch (EmptyBagException e) {
-				Console.message(e.getMessage());
+				
 			}
 
-			if (player.rackIsEmpty() && bag.isEmpty()) {
+			if (player.rackIsEmpty()) {
 				continueGame = false;
 			}
 		}
