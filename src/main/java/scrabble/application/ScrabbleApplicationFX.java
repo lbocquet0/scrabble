@@ -1,5 +1,6 @@
 package scrabble.application;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import javafx.application.Application;
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +25,9 @@ import scrabble.controller.Game;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.model.token.FrenchLetter;
+import scrabble.model.token.FrenchLetterComparator;
+import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
@@ -197,6 +202,22 @@ public class ScrabbleApplicationFX extends Application {
 			playLetter(game, rack, row, column, direction);
 		}
 	}
+
+	private static void updateJokerLetter(Joker joker) {
+		FrenchLetter[] choices = FrenchLetter.values();
+		Arrays.sort(choices, new FrenchLetterComparator());
+		
+		ChoiceDialog<FrenchLetter> dialog = new ChoiceDialog<>(choices[0], choices);
+		dialog.setTitle("Changer la lettre du joker");
+		dialog.setHeaderText("Selectionnez la lettre à jouer");
+
+		Optional<FrenchLetter> result = dialog.showAndWait();
+		if (result.isPresent()) {
+
+			FrenchLetter selectedLetter = result.get();
+			joker.setLetter(selectedLetter);
+		}
+	}
 	
 	private static void playLetter(Game game, Rack rack, Integer row, Integer column, Direction direction) {
 		Alert alert = new Alert(Alert.AlertType.NONE);
@@ -214,7 +235,15 @@ public class ScrabbleApplicationFX extends Application {
 			ButtonType selectedButton = result.get();
 			int index = alert.getDialogPane().getButtonTypes().indexOf(selectedButton);
 			try {
-				game.playLetter(rack.token(index), row, column);
+				Token token = rack.token(index);
+
+				if (token.isJoker()) {
+					Joker joker = (Joker) token;
+
+					updateJokerLetter(joker);
+				}
+
+				game.playLetter(token, row, column);
 
 				if (game.roundNumber() == 1 && row == 8 && column == 8) {
 					if (direction == Direction.HORIZONTAL) {
