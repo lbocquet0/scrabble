@@ -1,19 +1,34 @@
 package scrabble.application;
 
+import java.util.Optional;
+
 import javafx.application.Application;
 import javafx.beans.property.IntegerProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import scrabble.controller.Game;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.utils.Direction;
+import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
+import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
+import scrabble.utils.exceptions.OccupiedBoxException;
+import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
 import scrabble.views.fx.RackFXView;
 
@@ -57,19 +72,67 @@ public class ScrabbleApplicationFX extends Application {
 		boardFXView.setAlignment(Pos.CENTER);
 
 		RackFXView rackFXView = new RackFXView(rack);
-
 		rackFXView.setAlignment(Pos.CENTER);
+		
+		Button swapTokenButton = new Button("Changer un jeton");
+		swapTokenButton.setOnAction(e -> {
+			Alert alert = new Alert(Alert.AlertType.NONE);
+			alert.setTitle("Changer un jeton");
+			alert.setHeaderText("Sélectionnez le jeton que vous voulez échanger");
+
+			for (int i = 0; i < rack.remainingTokens(); i++) {
+				alert.getDialogPane().getButtonTypes().add(new ButtonType(rack.token(i).display()));
+			}
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.isPresent()) {
+				int index = alert.getDialogPane().getButtonTypes().indexOf(result.get());
+				try {
+					game.switchTokenFromRack(player, rack.token(index));
+					rackFXView.updateView();
+				} catch (EmptyBagException | TokenDoesntExists e1) {
+					displayError(e1.getMessage());
+				} 
+			}
+		});
+
+		Button playButton = new Button("Jouer un mot");
+		playButton.setOnAction(e -> {
+			Boolean gameIsNotStarted = true;
+			try {
+				gameIsNotStarted = game.getBoard().gameHaveNotStarted();
+			} catch (BoxIndexOutOfBoard e1) {
+				displayError(e1.getMessage());
+			}
+			if (gameIsNotStarted) {
+				initialPlayWord(game, rack);
+			} else {
+				normalPlayWord();
+			}
+			try {
+				game.fullFillPlayerRack(player);
+			} catch (EmptyBagException e1) {
+				displayError(e1.getMessage());
+			}
+			rackFXView.updateView();
+			boardFXView.updateView();
+		});
+		
+		HBox Buttons = new HBox();
+		Buttons.getChildren().addAll(swapTokenButton, playButton);
 
 		BorderPane root = new BorderPane();
 		root.setCenter(boardFXView);
 		root.setBottom(rackFXView);
+		BorderPane.setMargin(rackFXView, new Insets(0, 0, 20, 0));
 		
 		VBox statisticPane = this.getStatisticPane(game);
 		root.setRight(statisticPane);
+		root.setLeft(Buttons);
 
 		primaryStage.setScene(new Scene(root, 1920, 1080));
 	}
-	
+
 	private static void normalPlayWord() {
 		Alert alert = new Alert(Alert.AlertType.NONE);
 		alert.setTitle("Jouer un mot");
@@ -168,6 +231,7 @@ public class ScrabbleApplicationFX extends Application {
 			}
         }
 	}
+
 	private static void continuePlayWord(Game game, Rack rack, Integer x, Integer y, Direction dir) {
 		Alert alert = new Alert(Alert.AlertType.NONE);
 		alert.setTitle("Jouer un mot");
@@ -194,6 +258,7 @@ public class ScrabbleApplicationFX extends Application {
 			}
 		}
 	}
+
 	@Override
 	public void start(Stage primaryStage) throws EmptyBagException {
 		primaryStage.setTitle("Scrabble");
