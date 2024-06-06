@@ -34,4 +34,9 @@ public class Joker extends Token {
 	public boolean haveLetter() {
 		return (this.letter != null);
 	}
+
+	@Override
+	public String toString() {
+		return this.display();
+	}
 }

@@ -1,5 +1,6 @@
 package scrabble.application;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -32,6 +33,9 @@ import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.BoxIndexOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
+import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.OccupiedBoxException;
+import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
 import scrabble.views.fx.RackFXView;
 
@@ -92,34 +96,62 @@ public class ScrabbleApplicationFX extends Application {
 		primaryStage.setScene(new Scene(root, 1900, 1000));
 	}
 
+	private static Token answerToken(Rack rack, String title, String header) {
+		ArrayList<Token> tokens = rack.tokens();
+		ChoiceDialog<Token> dialog = new ChoiceDialog<Token>(tokens.get(0), tokens);
+
+		dialog.setTitle(title);
+		dialog.setHeaderText(header);
+		dialog.setContentText("Jeton: ");
+
+		Optional<Token> result = dialog.showAndWait();
+		if (result.isPresent()) {
+
+			return result.get();
+		} else {
+
+			return null;
+		}
+	}
+
+	private static boolean createConfirmation(String title, String header) {
+		Alert alert = new Alert(Alert.AlertType.NONE);
+		alert.setTitle("Jouer un mot");
+		alert.setHeaderText("Voulez-vous continuer à jouer ?");
+
+		alert.getDialogPane().getButtonTypes().add(ButtonType.YES);
+		alert.getDialogPane().getButtonTypes().add(ButtonType.NO);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent()) {
+			ButtonType selectButton = result.get();
+			if (selectButton == ButtonType.YES) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+		
+	private void swapTokens(Game game, Player player) {
+		Rack rack = player.rack();
+
+		Token token = answerToken(rack, "Changer un jeton", "Sélectionnez le jeton que vous voulez échanger");
+		if (token != null) {
+			try {
+				game.switchTokenFromRack(player, token);
+			} catch (EmptyBagException | TokenDoesntExists e) {
+				displayError(e.getMessage());
+			}
+		}
+	}
+
 	private HBox getButtons(Game game, Player player, Rack rack, BoardFXView boardFXView, RackFXView rackFXView) {
 		Button swapTokenButton = new Button("Changer un jeton");
+		
 		swapTokenButton.setOnAction(e -> {
-			Alert alert = new Alert(Alert.AlertType.NONE);
-			alert.setTitle("Changer un jeton");
-			alert.setHeaderText("Sélectionnez le jeton que vous voulez échanger");
-
-			for (int i = 0; i < rack.remainingTokens(); i++) {
-				Token token = rack.token(i);
-
-				ButtonType button = new ButtonType(token.display());
-				alert.getDialogPane().getButtonTypes().add(button);
-			}
-
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.isPresent()) {
-				ButtonType selectedButton = result.get();
-				int index = alert.getDialogPane().getButtonTypes().indexOf(selectedButton);
-				
-				try {
-					Token token = rack.token(index);
-
-					game.switchTokenFromRack(player, token);
-					rackFXView.updateView();
-				} catch (Exception err) {
-					displayError(err.getMessage());
-				} 
-			}
+			swapTokens(game, player);
+			rackFXView.updateView();
 		});
 
 		Button playButton = new Button("Jouer un mot");
@@ -220,78 +252,57 @@ public class ScrabbleApplicationFX extends Application {
 	}
 	
 	private static void playLetter(Game game, Rack rack, Integer row, Integer column, Direction direction) {
-		Alert alert = new Alert(Alert.AlertType.NONE);
-		alert.setTitle("Jouer un mot");
-		alert.setHeaderText("Selectionnez la lettre à jouer");
+		Token token = answerToken(rack, "Jouer un mot", "Selectionnez la lettre à jouer");
 
-		for (int i = 0; i < rack.remainingTokens(); i++) {
-			Token token = rack.token(i);
-			
-			alert.getDialogPane().getButtonTypes().add(new ButtonType(token.display()));
-		}
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.isPresent()) {
-			ButtonType selectedButton = result.get();
-			int index = alert.getDialogPane().getButtonTypes().indexOf(selectedButton);
-			try {
-				Token token = rack.token(index);
-
-				if (token.isJoker()) {
-					Joker joker = (Joker) token;
-
-					updateJokerLetter(joker);
-				}
-
-				game.playLetter(token, row, column);
-
-				if (game.roundNumber() == 1 && row == 8 && column == 8) {
-					if (direction == Direction.HORIZONTAL) {
-						column++;
-					} else {
-						row++;
-					}
-
-					playLetter(game, rack, row, column, direction);
-				} else {
-
-					continuePlayWord(game, rack, row, column, direction);
-				}
-			} catch (Exception err) {
-				displayError(err.getMessage());
-				game.cancelLastWord();
+		if (token != null) {
+			if (token.isJoker()) {
+				Joker joker = (Joker) token;
+	
+				updateJokerLetter(joker);
 			}
-        }
-	}
-
-	private static void continuePlayWord(Game game, Rack rack, Integer row, Integer column, Direction direction) {
-		Alert alert = new Alert(Alert.AlertType.NONE);
-		alert.setTitle("Jouer un mot");
-		alert.setHeaderText("Voulez-vous continuer à jouer ?");
-
-		alert.getDialogPane().getButtonTypes().add(ButtonType.YES);
-		alert.getDialogPane().getButtonTypes().add(ButtonType.NO);
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.isPresent()) {
-			ButtonType selectButton = result.get();
-			if (selectButton == ButtonType.YES) {
+	
+			try {
+				game.playLetter(token, row, column);
+			} catch (OccupiedBoxException | BoxIndexOutOfBoard | TokenDoesntExists | EmptyBoxException e) {
+				displayError(e.getMessage());
+				game.cancelLastWord();
+				return;
+			}
+	
+			if (game.roundNumber() == 1 && row == 8 && column == 8) {
 				if (direction == Direction.HORIZONTAL) {
 					column++;
 				} else {
 					row++;
 				}
-
+	
 				playLetter(game, rack, row, column, direction);
 			} else {
-				
-				try {
-					game.validateWord(direction);
-					game.nextRound();
-				} catch (Exception err) {
-					displayError(err.getMessage());
-					game.cancelLastWord();
-				}
+	
+				continuePlayWord(game, rack, row, column, direction);
+			}
+		}
+	}
+
+	private static void continuePlayWord(Game game, Rack rack, Integer row, Integer column, Direction direction) {
+		boolean shouldContinue = createConfirmation("Jouer un mot", "Voulez-vous continuer à jouer ?");
+
+		if (shouldContinue) {
+			if (direction == Direction.HORIZONTAL) {
+				column++;
+			} else {
+				row++;
+			}
+
+			playLetter(game, rack, row, column, direction);
+		} else {
+			
+			try {
+				game.validateWord(direction);
+				game.nextRound();
+			} catch (Exception err) {
+				displayError(err.getMessage());
+				game.cancelLastWord();
 			}
 		}
 	}
