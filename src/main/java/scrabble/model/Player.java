@@ -1,15 +1,17 @@
 package scrabble.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import scrabble.model.token.Token;
 import scrabble.utils.exceptions.TokenDoesntExists;
 
 public class Player {
 	private Rack rack;
-	private Integer score;
+	private IntegerProperty score;
 
 	public Player() {
 		this.rack = new Rack();
-		this.score = 0;
+		this.score = new SimpleIntegerProperty(0);
 	}
 
 	public Rack rack() {
@@ -41,12 +43,16 @@ public class Player {
 	}
 
 	public Integer score() {
-		return this.score;
+		return this.score.get();
 	}
 
 	public Integer addScore(Integer score) {
-		this.score += score;
+		this.score.set(this.score() + score);
 
+		return this.score();
+	}
+
+	public IntegerProperty scoreProperty() {
 		return this.score;
 	}
 }

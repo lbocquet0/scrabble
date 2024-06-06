@@ -1,7 +1,7 @@
 package scrabble.application;
 
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,13 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import scrabble.controller.Game;
-import scrabble.gui.console.Console;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
-import scrabble.model.token.Token;
 import scrabble.utils.exceptions.EmptyBagException;
-import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
 import scrabble.views.fx.RackFXView;
 
@@ -30,13 +27,17 @@ public class ScrabbleApplicationFX extends Application {
 		alert.showAndWait();
 	}
 
-	private VBox getStatisticPane(Game game, Integer roundAmount) {
+	private VBox getStatisticPane(Game game) {
 		Player player = game.getPlayer();
 
 		VBox statisticPane = new VBox();
 
-		Label player1ScoreLabel = new Label("Player 1: " + player.score());
-		Label roundAmountLabel = new Label("Round: " + roundAmount);
+		IntegerProperty playerScore = player.scoreProperty();
+		Label player1ScoreLabel = new Label();
+		player1ScoreLabel.textProperty().bind(playerScore.asString());
+
+		// TODO: Use the round number from the game
+		Label roundAmountLabel = new Label("Round: 1");
 
 		statisticPane.getChildren().addAll(player1ScoreLabel, roundAmountLabel);
 		statisticPane.setAlignment(Pos.TOP_LEFT);
@@ -63,7 +64,7 @@ public class ScrabbleApplicationFX extends Application {
 		root.setCenter(boardFXView);
 		root.setBottom(rackFXView);
 		
-		VBox statisticPane = this.getStatisticPane(game, 1);
+		VBox statisticPane = this.getStatisticPane(game);
 		root.setRight(statisticPane);
 
 		primaryStage.setScene(new Scene(root, 1920, 1080));
