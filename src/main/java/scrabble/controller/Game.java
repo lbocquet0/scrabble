@@ -44,6 +44,14 @@ public class Game {
 	public void initialize() throws EmptyBagException {
 		this.fullFillPlayerRack(this.player);
 	}
+
+	public Boolean bagIsEmpty() {
+		return this.bag.remainingTokens() == 0;
+	}
+
+	public Boolean rackIsEmpty() {
+		return this.player.remainingTokenInRack() == 0;
+	}
 	
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
 		if (player.remainingTokenInRack() < Rack.MAX_TOKENS_AMOUNT) {
