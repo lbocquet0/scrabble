@@ -1,6 +1,5 @@
 package scrabble.application;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -49,7 +48,7 @@ public class ScrabbleApplicationFX extends Application {
 		alert.showAndWait();
 	}
 
-	private VBox getStatisticPane(Game game) {
+	private static VBox getStatisticPane(Game game) {
 		Player player = game.getPlayer();
 
 		VBox statisticPane = new VBox();
@@ -68,13 +67,17 @@ public class ScrabbleApplicationFX extends Application {
 		return statisticPane;
 	}
 
-	private void startGame(Stage primaryStage) throws EmptyBagException {
+	private static void startGame(Stage primaryStage) {
 		Game game = new Game();
 		Board board = game.getBoard();
 		Player player = game.getPlayer();
 		Rack rack = player.rack();
 
-		game.initialize();
+		try {
+			game.initialize();
+		} catch (EmptyBagException err) {
+			displayError(err.getMessage());
+		}
 
 		BoardFXView boardFXView = new BoardFXView(board);
 		boardFXView.setAlignment(Pos.CENTER);
@@ -82,14 +85,14 @@ public class ScrabbleApplicationFX extends Application {
 		RackFXView rackFXView = new RackFXView(rack);
 		rackFXView.setAlignment(Pos.CENTER);
 		
-		HBox buttonsPanel = getButtons(game, player, rack, boardFXView, rackFXView);
+		VBox buttonsPanel = getButtons(game, primaryStage, player, rack, boardFXView, rackFXView);
 
 		BorderPane root = new BorderPane();
 		root.setCenter(boardFXView);
 		root.setBottom(rackFXView);
 		BorderPane.setMargin(rackFXView, new Insets(0, 0, 20, 0));
 		
-		VBox statisticPane = this.getStatisticPane(game);
+		VBox statisticPane = getStatisticPane(game);
 		root.setRight(statisticPane);
 		root.setLeft(buttonsPanel);
 
@@ -144,7 +147,7 @@ public class ScrabbleApplicationFX extends Application {
 		return false;
 	}
 
-	private void swapTokens(Game game, Player player) {
+	private static void swapTokens(Game game, Player player) {
 		Rack rack = player.rack();
 
 		Token token = answerToken(rack, "Changer un jeton", "Sélectionnez le jeton que vous voulez échanger");
@@ -157,7 +160,7 @@ public class ScrabbleApplicationFX extends Application {
 		}
 	}
 
-	private HBox getButtons(Game game, Player player, Rack rack, BoardFXView boardFXView, RackFXView rackFXView) {
+	private static VBox getButtons(Game game, Stage primaryStage, Player player, Rack rack, BoardFXView boardFXView, RackFXView rackFXView) {
 		Button swapTokenButton = new Button("Changer un jeton");
 		
 		swapTokenButton.setOnAction(e -> {
@@ -175,11 +178,33 @@ public class ScrabbleApplicationFX extends Application {
 
 			rackFXView.updateView();
 			boardFXView.updateView();
+			
+			if (game.bagIsEmpty() && rack.isEmpty()) {
+				endGame(game, primaryStage);
+			}
+		});
+
+		Button exitButton = new Button("Quitter");
+		exitButton.setOnAction(e -> {
+			System.exit(0);
 		});
 		
-		HBox buttonsPanel = new HBox();
-		buttonsPanel.getChildren().addAll(swapTokenButton, playButton);
+		VBox buttonsPanel = new VBox();
+		buttonsPanel.getChildren().addAll(swapTokenButton, playButton, exitButton);
 		return buttonsPanel;
+	}
+
+	private static void endGame(Game game, Stage primaryStage) {
+		Player player = game.getPlayer();
+		String message = "La partie est terminée !\n";
+		message += "Votre score est de " + player.score() + " points.\n";
+		message += "Voulez-vous rejouer ?";
+
+		if(createConfirmation("Fin de la partie", message)) {
+			startGame(primaryStage);
+		} else {
+			System.exit(0);
+		}
 	}
 
 	private static void playWord(Game game, Rack rack) throws BoxIndexOutOfBoard {
