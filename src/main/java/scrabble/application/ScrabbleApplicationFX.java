@@ -129,8 +129,8 @@ public class ScrabbleApplicationFX extends Application {
 
 	private static boolean createConfirmation(String title, String header) {
 		Alert alert = new Alert(Alert.AlertType.NONE);
-		alert.setTitle("Jouer un mot");
-		alert.setHeaderText("Voulez-vous continuer à jouer ?");
+		alert.setTitle(title);
+		alert.setHeaderText(header);
 
 		alert.getDialogPane().getButtonTypes().add(ButtonType.YES);
 		alert.getDialogPane().getButtonTypes().add(ButtonType.NO);
