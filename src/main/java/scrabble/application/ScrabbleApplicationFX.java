@@ -329,13 +329,17 @@ public class ScrabbleApplicationFX extends Application {
 				row++;
 			}
 
-            while (!game.getBoard().getBox(row, column).isEmpty()) {
-                if (direction == Direction.HORIZONTAL) {
-                    column++;
-                } else {
-                    row++;
-                }
-            }
+            try {
+				while (row <= Board.SIZE && column <= Board.SIZE && !game.getBoard().getBox(row, column).isEmpty()) {
+				    if (direction == Direction.HORIZONTAL) {
+				        column++;
+				    } else {
+				        row++;
+				    }
+				}
+			} catch (PositionOutOfBoard e) {
+				displayError(e.getMessage());
+			}
 
 			playLetter(game, rack, row, column, direction);
 		} else {
