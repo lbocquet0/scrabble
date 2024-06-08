@@ -7,6 +7,10 @@ public class Box {
 	private final boolean middle;
 	private Token token;
 	private Effect effect;
+
+	public Box(boolean middle, Token token) {
+		this(middle, token, Effect.NORMAL);
+	}
 	
 	public Box(boolean middle, Token token, Effect effect) {
 		this.middle = middle;
