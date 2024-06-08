@@ -7,6 +7,7 @@ import scrabble.model.board.action.Action;
 import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
+import scrabble.utils.Position;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.WordNotFoundException;
@@ -14,6 +15,43 @@ import scrabble.utils.exceptions.WordNotFoundException;
 public class Board {
 	
 	public static int SIZE = 15;
+	private static Position[] TRIPLE_WORD_POSITIONS = {
+		new Position(1, 1), new Position(1, 8), new Position(1, 15),
+		new Position(8, 1), new Position(8, 15),
+		new Position(15, 1), new Position(15, 8), new Position(15, 15)
+	};
+
+	private static Position[] DOUBLE_WORD_POSITIONS = {
+		new Position(2, 2), new Position(2, 14),
+		new Position(3, 3), new Position(3, 13),
+		new Position(4, 4), new Position(4, 12),
+		new Position(5, 5), new Position(5, 11),
+		new Position(6, 6), new Position(6, 10),
+		new Position(7, 7),
+		new Position(10, 6), new Position(10, 10),
+		new Position(11, 5), new Position(11, 11),
+		new Position(12, 4), new Position(12, 12),
+		new Position(13, 3), new Position(13, 13),
+		new Position(14, 2), new Position(14, 14)
+	};
+
+	private static Position[] DOUBLE_LETTER_POSITIONS = {
+		new Position(1, 4), new Position(1, 12),
+		new Position(3, 7), new Position(3, 9),
+		new Position(4, 1), new Position(4, 8), new Position(4, 15),
+		new Position(7, 3), new Position(7, 7), new Position(7, 9), new Position(7, 13),
+		new Position(8, 4), new Position(8, 12),
+		new Position(9, 3), new Position(9, 7), new Position(9, 9), new Position(9, 13),
+		new Position(12, 1), new Position(12, 8), new Position(12, 15),
+		new Position(15, 4), new Position(15, 12)
+	};
+
+	private static Position[] TRIPLE_LETTER_POSITIONS = {
+		new Position(2, 6), new Position(2, 10),
+		new Position(6, 2), new Position(6, 6), new Position(6, 10), new Position(6, 14),
+		new Position(10, 2), new Position(10, 6), new Position(10, 10), new Position(10, 14),
+		new Position(14, 6), new Position(14, 10)
+	};
 	
 	private ArrayList<ArrayList<Box>> boxes;
 
@@ -33,7 +71,6 @@ public class Board {
 			for (int j = 1; j <= SIZE; j++) {
 				boolean isMiddle = (i == SIZE/2 + 1 && j == SIZE/2 + 1);
 				Effect effect = getEffectAtPosition(i, j);
-				
 
 				currentLine.add(new Box(isMiddle, null, effect));
 			}
@@ -104,8 +141,8 @@ public class Board {
 		return isOnCurrentRound;
 	}
 	
-	private boolean isOnBoard(int i, int j) {
-		return i >= 1 && i <= SIZE && j >= 1 && j <= SIZE;
+	private boolean isOnBoard(int row, int column) {
+		return row >= 1 && row <= SIZE && column >= 1 && column <= SIZE;
 	}
 
 	private static boolean isOnSide(Integer row, Integer column, int i, int j) {
@@ -166,10 +203,57 @@ public class Board {
 		return word;
 	}
 
+	private boolean isTripleWordPosition(Position position) {
+		for (Position tripleWordPosition : TRIPLE_WORD_POSITIONS) {
+			if (tripleWordPosition.equals(position)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isDoubleWordPosition(Position position) {
+		for (Position doubleWordPosition : DOUBLE_WORD_POSITIONS) {
+			if (doubleWordPosition.equals(position)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isTripleLetterPosition(Position position) {
+		for (Position tripleLetterPosition : TRIPLE_LETTER_POSITIONS) {
+			if (tripleLetterPosition.equals(position)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isDoubleLetterPosition(Position position) {
+		for (Position doubleLetterPosition : DOUBLE_LETTER_POSITIONS) {
+			if (doubleLetterPosition.equals(position)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public Effect getEffectAtPosition(Integer row, Integer column) {
-		
-		if ((row == 1 || row == SIZE) || (column == 1 || column == SIZE)) {
+		Position position = new Position(row, column);
+
+		if (isTripleWordPosition(position)) {
 			return Effect.TRIPLE_WORD;
+		} else if (isDoubleWordPosition(position)) {
+			return Effect.DOUBLE_WORD;
+		} else if (isTripleLetterPosition(position)) {
+			return Effect.TRIPLE_LETTER;
+		} else if (isDoubleLetterPosition(position)) {
+			return Effect.DOUBLE_LETTER;
 		}
 
 		return Effect.NORMAL;
