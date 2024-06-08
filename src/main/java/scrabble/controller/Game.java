@@ -108,8 +108,6 @@ public class Game {
 	}
 
 	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
-		ActionHistory actions = this.board.getActionsHistory();
-
 		if (!this.board.gameHaveNotStarted()) {
 			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
 			if (!isLetterAround) {
@@ -117,7 +115,7 @@ public class Game {
 			}
 		}
 
-		Integer score = ScoreCounter.countScore(this.board, actions, direction);
+		Integer score = ScoreCounter.countScore(this.board, direction);
 		Integer newScore = this.player.addScore(score);
 
 		this.clearRoundHistory();

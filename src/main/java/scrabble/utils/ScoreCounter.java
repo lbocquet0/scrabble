@@ -35,7 +35,9 @@ public class ScoreCounter {
 		return score;
 	}
 
-	public static Integer countScore(Board board, ActionHistory actionHistory, Direction direction) {
+	public static Integer countScore(Board board, Direction direction) {
+		ActionHistory actionHistory = board.getActionsHistory();
+		
 		if (actionHistory.isEmpty()) {
 			return 0;
 		}
