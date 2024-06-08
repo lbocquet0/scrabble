@@ -185,7 +185,7 @@ class GameTest {
 		game.playLetter(token, 8, 8);
 		game.clearRoundHistory();
 
-		assertThat(board.getActionsHistory()).isEmpty();
+		assertTrue(board.getActionsHistory().isEmpty());
 	}
 
 	@Test
@@ -237,6 +237,6 @@ class GameTest {
 
 		game.validateWord(Direction.HORIZONTAL);
 
-		assertThat(board.getActionsHistory()).isEmpty();
+		assertTrue(board.getActionsHistory().isEmpty());
 	}
 }
