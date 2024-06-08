@@ -50,7 +50,7 @@ public class Board {
 	}
 
 	public Box getBox(Integer row, Integer column) throws BoxIndexOutOfBoard {
-		if (row < 1 || row > SIZE || column < 1 || column > SIZE) {
+		if (!this.isOnBoard(row, column)) {
 			throw new BoxIndexOutOfBoard(row, column);
 		}
 
@@ -129,7 +129,7 @@ public class Board {
 	}
 
 	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws BoxIndexOutOfBoard, WordNotFoundException {
-		if (row < 1 || row > SIZE || column < 1 || column > SIZE) {
+		if (!this.isOnBoard(row, column)) {
 			throw new BoxIndexOutOfBoard(row, column);
 		}
 
