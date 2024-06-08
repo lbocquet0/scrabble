@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import scrabble.controller.Game;
 import scrabble.gui.console.Console;
-import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
@@ -32,7 +31,6 @@ public class ScrabbleApplicationConsole {
 		
 		Player player = game.getPlayer();
 		Board board = game.getBoard();
-		Bag bag = game.getBag();
 		Rack rack = player.rack();
 
 		Boolean continueGame = true;
