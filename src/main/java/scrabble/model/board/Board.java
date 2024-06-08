@@ -26,9 +26,6 @@ public class Board {
 		new Position(3, 3), new Position(3, 13),
 		new Position(4, 4), new Position(4, 12),
 		new Position(5, 5), new Position(5, 11),
-		new Position(6, 6), new Position(6, 10),
-		new Position(7, 7),
-		new Position(10, 6), new Position(10, 10),
 		new Position(11, 5), new Position(11, 11),
 		new Position(12, 4), new Position(12, 12),
 		new Position(13, 3), new Position(13, 13),
@@ -43,6 +40,7 @@ public class Board {
 		new Position(8, 4), new Position(8, 12),
 		new Position(9, 3), new Position(9, 7), new Position(9, 9), new Position(9, 13),
 		new Position(12, 1), new Position(12, 8), new Position(12, 15),
+		new Position(13, 7), new Position(13, 9),
 		new Position(15, 4), new Position(15, 12)
 	};
 
