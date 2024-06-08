@@ -254,11 +254,8 @@ public class Board {
 			Integer row = action.getRowPosition();
 			Integer column = action.getColumnPosition();
 
-			System.out.println(row);
-			System.out.println(column);
 			if (!result) {
 				result = this.hasAlreadyPlayedLetterAround(row, column);
-				System.out.println(result);
 			}
 		}
 
