@@ -83,7 +83,7 @@ public class Board {
 	}
 
 	public Boolean gameHaveNotStarted() throws PositionOutOfBoard {
-        return this.getBox(8, 8).isEmpty();
+        return this.getBox(8, 8).isEmpty() || this.actionHistory.positionIsInActions(8, 8);
 	}
 
 	public Box getBox(Integer row, Integer column) throws PositionOutOfBoard {
@@ -107,16 +107,17 @@ public class Board {
 		this.actionHistory.add(new Action(row, column, box));
 	}
 
-	public Boolean isLetterAround(Integer row, Integer column, ArrayList<Action> actions) throws PositionOutOfBoard{
-		Boolean isLetterAround = false;
+	public Boolean hasAlreadyPlayedLetterAround(Integer row, Integer column) throws PositionOutOfBoard{
+		Boolean result = false;
+
 		for (int i = row - 1; i <= row + 1; i++) {
 			for (int j = column - 1; j <= column + 1; j++) {
 				if (isOnBoard(i, j)) {
 					if (i != row || j != column) {
 						if (isOnSide(row, column, i, j)) {
-							if (!isCurrentRoundPosition(i, j, actions)) {
+							if (!this.actionHistory.positionIsInActions(i, j)) {
 								if (!this.getBox(i, j).isEmpty()) {
-									isLetterAround = true;
+									result = true;
 								}
 							}
 						}
@@ -125,22 +126,9 @@ public class Board {
 			}
 		}
 
-		return isLetterAround;
+		return result;
 	}
 
-	private boolean isCurrentRoundPosition(Integer row, Integer column, ArrayList<Action> actions) {
-		Boolean isOnCurrentRound = false;
-		Integer i = 0;
-		while (!isOnCurrentRound && i < actions.size()) {
-			Action action = actions.get(i);
-			if (row == action.getRowPosition() && column == action.getColumnPosition()) {
-				isOnCurrentRound = true;
-			}
-			i++;
-		}
-		return isOnCurrentRound;
-	}
-	
 	private boolean isOnBoard(int row, int column) {
 		return row >= 1 && row <= SIZE && column >= 1 && column <= SIZE;
 	}
@@ -161,8 +149,8 @@ public class Board {
 		this.actionHistory.clear();
 	}
 
-	public ArrayList<Action> getActionsHistory() {
-		return this.actionHistory.actions();
+	public ActionHistory getActionsHistory() {
+		return this.actionHistory;
 	}
 
 	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws PositionOutOfBoard, WordNotFoundException {
@@ -257,6 +245,24 @@ public class Board {
 		}
 
 		return Effect.NORMAL;
+	}
+
+	public boolean isAlreadyPlayedLetterAroundActions() throws PositionOutOfBoard {
+		Boolean result = false;
+
+		for (Action action : this.actionHistory.actions()) {
+			Integer row = action.getRowPosition();
+			Integer column = action.getColumnPosition();
+
+			System.out.println(row);
+			System.out.println(column);
+			if (!result) {
+				result = this.hasAlreadyPlayedLetterAround(row, column);
+				System.out.println(result);
+			}
+		}
+
+		return result;
 	}
 
 	public void display() {

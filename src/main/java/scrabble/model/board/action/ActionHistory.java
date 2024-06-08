@@ -61,4 +61,30 @@ public class ActionHistory {
 
 		return undidTokens;
 	}
+
+	public Action getFirstAction() {
+		if (this.actions.isEmpty()) {
+			return null;
+		}
+
+		return this.actions.get(0);
+	}
+
+	public Action getAction(int index) {
+		if (index < 0 || index >= this.actions.size()) {
+			return null;
+		}
+
+		return this.actions.get(index);
+	}
+
+	public boolean positionIsInActions(int row, int column) {
+		for (Action action : this.actions) {
+			if (action.getRowPosition() == row && action.getColumnPosition() == column) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

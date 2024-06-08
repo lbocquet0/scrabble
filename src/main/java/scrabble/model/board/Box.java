@@ -54,6 +54,16 @@ public class Box {
 		return this.token.getScore();
 	}
 
+	public Integer getLetterMultiplicator() {
+		if (this.effect == Effect.DOUBLE_LETTER) {
+			return 2;
+		} else if (this.effect == Effect.TRIPLE_LETTER) {
+			return 3;
+		}
+		
+		return 1;
+	}
+
 	public Effect effect() {
 		return this.effect;
 	}

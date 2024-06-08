@@ -8,7 +8,7 @@ import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
-import scrabble.model.board.action.Action;
+import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.ScoreCounter;
@@ -108,26 +108,13 @@ public class Game {
 	}
 
 	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
-		ArrayList<Action> actions = this.board.getActionsHistory();
+		ActionHistory actions = this.board.getActionsHistory();
 
-		Boolean isLetterAround = false;
-		Integer i = 0;
-		
-		Action firstAction = actions.get(0);
-		
-		if (firstAction.getRowPosition() == 8 && firstAction.getColumnPosition() == 8) {
-			isLetterAround = true;
-		}
-		
-		
-		while (!isLetterAround && i < actions.size()) {
-			Action action = actions.get(i);
-			isLetterAround = board.isLetterAround(action.getRowPosition(), action.getColumnPosition(), actions);
-			i++;
-		}
-
-		if (!isLetterAround) {
-			throw new IllegalMoveException();
+		if (!this.board.gameHaveNotStarted()) {
+			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
+			if (!isLetterAround) {
+				throw new IllegalMoveException();
+			}
 		}
 
 		Integer score = ScoreCounter.countScore(this.board, actions, direction);
