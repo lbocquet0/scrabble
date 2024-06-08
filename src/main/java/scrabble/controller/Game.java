@@ -67,7 +67,7 @@ public class Game {
 		}
 	}
 
-	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
 		Token currentToken = this.board.getToken(row, column);
 		if (currentToken != null) {
 			if (currentToken.getLetter() == token.getLetter()) {
@@ -107,7 +107,7 @@ public class Game {
 		this.board.clearHistory();
 	}
 
-	public Integer validateWord(Direction direction) throws BoxIndexOutOfBoard, IllegalMoveException {
+	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
 		ArrayList<Action> actions = this.board.getActionsHistory();
 
 		Boolean isLetterAround = false;

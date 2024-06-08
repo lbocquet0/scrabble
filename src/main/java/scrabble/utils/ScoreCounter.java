@@ -6,7 +6,7 @@ import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.board.Box;
 import scrabble.model.board.action.Action;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
 public class ScoreCounter {
@@ -35,7 +35,7 @@ public class ScoreCounter {
 		ArrayList<Box> wordLetters = null;
 		try {
 			wordLetters = board.getWord(firstAction.getRowPosition(), firstAction.getColumnPosition(), direction);
-		} catch (BoxIndexOutOfBoard e) {
+		} catch (PositionOutOfBoard e) {
 			return 0;
 		} catch (WordNotFoundException e) {
 			return 0;
@@ -54,7 +54,7 @@ public class ScoreCounter {
 		for (Action action : actions) {
 			try {
 				wordLetters = board.getWord(action.getRowPosition(), action.getColumnPosition(), oppositeDirection);
-			} catch (BoxIndexOutOfBoard e) {
+			} catch (PositionOutOfBoard e) {
 				continue;
 			} catch (WordNotFoundException e) {
 				continue;

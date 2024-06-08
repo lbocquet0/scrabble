@@ -29,7 +29,7 @@ import scrabble.model.token.FrenchLetterComparator;
 import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.OccupiedBoxException;
@@ -171,7 +171,7 @@ public class ScrabbleApplicationFX extends Application {
 		playButton.setOnAction(e -> {
 			try {
 				playWord(game, rack);
-			} catch (BoxIndexOutOfBoard err) {
+			} catch (PositionOutOfBoard err) {
 				displayError(err.getMessage());
 			}
 
@@ -206,7 +206,7 @@ public class ScrabbleApplicationFX extends Application {
 		}
 	}
 
-	private static void playWord(Game game, Rack rack) throws BoxIndexOutOfBoard {
+	private static void playWord(Game game, Rack rack) throws PositionOutOfBoard {
 		Boolean isFirstRound = false;
 
 		if (game.getBoard().gameHaveNotStarted()) {
@@ -298,7 +298,7 @@ public class ScrabbleApplicationFX extends Application {
 	
 			try {
 				game.playLetter(token, row, column);
-			} catch (OccupiedBoxException | BoxIndexOutOfBoard | TokenDoesntExists | EmptyBoxException e) {
+			} catch (OccupiedBoxException | PositionOutOfBoard | TokenDoesntExists | EmptyBoxException e) {
 				displayError(e.getMessage());
 				game.cancelLastWord();
 				return;

@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
 public class BoardTest {
@@ -83,11 +83,11 @@ public class BoardTest {
 	@Test
 	public void shouldThrowExceptionWhenRowIsOutOfBoard() {
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(Board.SIZE + 1, 1);
 		});
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(0, 1);
 		});
 	}
@@ -95,11 +95,11 @@ public class BoardTest {
 	@Test
 	public void shouldThrowExceptionWhenColumnIsOutOfBoard() {
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(1, Board.SIZE + 1);
 		});
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(1, 0);
 		});
 	}

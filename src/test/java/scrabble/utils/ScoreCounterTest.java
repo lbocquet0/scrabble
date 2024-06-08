@@ -11,7 +11,7 @@ import scrabble.model.board.Box;
 import scrabble.model.board.action.Action;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
 
 public class ScoreCounterTest {
@@ -54,7 +54,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_return_3_when_word_is_aaa() throws EmptyBoxException, BoxIndexOutOfBoard {
+	public void should_return_3_when_word_is_aaa() throws EmptyBoxException, PositionOutOfBoard {
 		Box box = new Box(false, tokenA);
 		Box box2 = new Box(false, tokenA);
 		Box box3 = new Box(false, tokenA);
@@ -73,7 +73,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_return_7_when_word_is_aaaa_and_completing_aa_vertically() throws EmptyBoxException, BoxIndexOutOfBoard {
+	public void should_return_7_when_word_is_aaaa_and_completing_aa_vertically() throws EmptyBoxException, PositionOutOfBoard {
 		Box box = new Box(false, tokenA);
 		Box box2 = new Box(false, tokenA);
 		Box box3 = new Box(false, tokenA);
@@ -100,7 +100,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_return_57_when_word_is_aaaaaaa() throws EmptyBoxException, BoxIndexOutOfBoard {
+	public void should_return_57_when_word_is_aaaaaaa() throws EmptyBoxException, PositionOutOfBoard {
 		Box box = new Box(false, tokenA);
 		Box box2 = new Box(false, tokenA);
 		Box box3 = new Box(false, tokenA);

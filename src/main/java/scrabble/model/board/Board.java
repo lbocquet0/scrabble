@@ -7,7 +7,7 @@ import scrabble.model.board.action.Action;
 import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.WordNotFoundException;
 
@@ -45,32 +45,32 @@ public class Board {
 		return this.boxes;
 	}
 
-	public Boolean gameHaveNotStarted() throws BoxIndexOutOfBoard {
+	public Boolean gameHaveNotStarted() throws PositionOutOfBoard {
         return this.getBox(8, 8).isEmpty();
 	}
 
-	public Box getBox(Integer row, Integer column) throws BoxIndexOutOfBoard {
+	public Box getBox(Integer row, Integer column) throws PositionOutOfBoard {
 		if (!this.isOnBoard(row, column)) {
-			throw new BoxIndexOutOfBoard(row, column);
+			throw new PositionOutOfBoard(row, column);
 		}
 
 		return this.boxes.get(row-1).get(column-1);
 	}
 
-	public Token getToken(Integer row, Integer column) throws BoxIndexOutOfBoard {
+	public Token getToken(Integer row, Integer column) throws PositionOutOfBoard {
 		Box box = this.getBox(row, column);
 
 		return box.token();
 	}
 	
-	public void setToken(Token token, Integer row, Integer column) throws BoxIndexOutOfBoard, EmptyBoxException {
+	public void setToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException {
 		Box box = this.getBox(row, column);
 		
 		box.setToken(token);
 		this.actionHistory.add(new Action(row, column, box));
 	}
 
-	public Boolean isLetterAround(Integer row, Integer column, ArrayList<Action> actions) throws BoxIndexOutOfBoard{
+	public Boolean isLetterAround(Integer row, Integer column, ArrayList<Action> actions) throws PositionOutOfBoard{
 		Boolean isLetterAround = false;
 		for (int i = row - 1; i <= row + 1; i++) {
 			for (int j = column - 1; j <= column + 1; j++) {
@@ -128,9 +128,9 @@ public class Board {
 		return this.actionHistory.actions();
 	}
 
-	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws BoxIndexOutOfBoard, WordNotFoundException {
+	public ArrayList<Box> getWord(Integer row, Integer column, Direction direction) throws PositionOutOfBoard, WordNotFoundException {
 		if (!this.isOnBoard(row, column)) {
-			throw new BoxIndexOutOfBoard(row, column);
+			throw new PositionOutOfBoard(row, column);
 		}
 
 		Box currentBox = this.getBox(row, column);
@@ -212,7 +212,7 @@ public class Board {
 								tokenDisplay = "  ⭐ ";
 							}
 						}
-					} catch (BoxIndexOutOfBoard e) {
+					} catch (PositionOutOfBoard e) {
 						e.printStackTrace();
 					
 					}

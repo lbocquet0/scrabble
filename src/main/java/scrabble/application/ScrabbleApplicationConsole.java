@@ -65,7 +65,7 @@ public class ScrabbleApplicationConsole {
 
 					try {
 						isBoardEmpty = board.gameHaveNotStarted();
-					} catch (BoxIndexOutOfBoard e) {
+					} catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
 						continueGame = false;
 						break;
@@ -103,7 +103,7 @@ public class ScrabbleApplicationConsole {
 						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelLastAction();
-					} catch (BoxIndexOutOfBoard e) {
+					} catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelLastAction();
@@ -173,7 +173,7 @@ public class ScrabbleApplicationConsole {
 								} else {
 									row -= 1;
 								}
-							} catch (BoxIndexOutOfBoard e) {
+							} catch (PositionOutOfBoard e) {
 								Console.message(e.getMessage());
 							} catch (TokenDoesntExists e) {
 								Console.message(e.getMessage());
@@ -192,7 +192,7 @@ public class ScrabbleApplicationConsole {
                     try {
                         Integer newScore = game.validateWord(direction);
 						Console.message("Vous avez maintenant " + newScore + " points.");
-                    } catch (BoxIndexOutOfBoard e) {
+                    } catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
                     } catch (IllegalMoveException e) {
 						Console.message(e.getMessage());
