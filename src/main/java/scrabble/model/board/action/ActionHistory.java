@@ -2,6 +2,7 @@ package scrabble.model.board.action;
 
 import java.util.ArrayList;
 
+import scrabble.model.board.Box;
 import scrabble.model.token.Token;
 
 public class ActionHistory {
@@ -21,6 +22,10 @@ public class ActionHistory {
 	
 	public void clear() {
 		this.actions.clear();
+	}
+	
+	public boolean isEmpty() {
+		return this.actions.isEmpty();
 	}
 
 	public ArrayList<Action> actions() {
@@ -81,6 +86,16 @@ public class ActionHistory {
 	public boolean positionIsInActions(int row, int column) {
 		for (Action action : this.actions) {
 			if (action.getRowPosition() == row && action.getColumnPosition() == column) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean boxIsInActions(Box box) {
+		for (Action action : this.actions) {
+			if (action.getBox().equals(box)) {
 				return true;
 			}
 		}
