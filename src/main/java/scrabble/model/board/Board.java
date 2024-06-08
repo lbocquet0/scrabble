@@ -32,7 +32,10 @@ public class Board {
 			
 			for (int j = 1; j <= SIZE; j++) {
 				boolean isMiddle = (i == SIZE/2 + 1 && j == SIZE/2 + 1);
-				currentLine.add(new Box(isMiddle, null));
+				Effect effect = getEffectAtPosition(i, j);
+				
+
+				currentLine.add(new Box(isMiddle, null, effect));
 			}
 			this.boxes.add(currentLine);
 		}
@@ -162,7 +165,15 @@ public class Board {
 	
 		return word;
 	}
-	
+
+	public Effect getEffectAtPosition(Integer row, Integer column) {
+		
+		if ((row == 1 || row == SIZE) || (column == 1 || column == SIZE)) {
+			return Effect.TRIPLE_WORD;
+		}
+
+		return Effect.NORMAL;
+	}
 
 	public void display() {
 	    StringBuilder horizontalLine = new StringBuilder("");

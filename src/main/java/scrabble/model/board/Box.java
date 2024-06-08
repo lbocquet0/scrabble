@@ -6,10 +6,12 @@ public class Box {
 
 	private final boolean middle;
 	private Token token;
+	private Effect effect;
 	
-	public Box(boolean middle, Token token) {
+	public Box(boolean middle, Token token, Effect effect) {
 		this.middle = middle;
 		this.token = token;
+		this.effect = effect;
 	}
 	
 	public void setToken(Token token) {
@@ -46,5 +48,9 @@ public class Box {
 		}
 		
 		return this.token.getScore();
+	}
+
+	public Effect effect() {
+		return this.effect;
 	}
 }
