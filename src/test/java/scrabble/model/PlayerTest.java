@@ -1,5 +1,6 @@
 package scrabble.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -7,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.IntegerProperty;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.exceptions.TokenDoesntExists;
@@ -101,5 +103,27 @@ public class PlayerTest {
 		Integer newScore = player.addScore(score);
 
 		assertEquals(10, newScore);
+	}
+	
+	@Test
+	public void shouldReturnScoreProperty() {
+		IntegerProperty scoreProperty = player.scoreProperty();
+
+		assertNotNull(scoreProperty);
+	}
+
+	@Test
+	public void shouldReturnInitialScoreValue() {
+		IntegerProperty scoreProperty = player.scoreProperty();
+
+		assertEquals(0, scoreProperty.get());
+	}
+
+	@Test
+	public void shouldUpdateScoreProperty() {
+		IntegerProperty scoreProperty = player.scoreProperty();
+		player.addScore(10);
+
+		assertEquals(10, scoreProperty.get());
 	}
 }
