@@ -291,8 +291,8 @@ public class ScrabbleApplicationFX extends Application {
 		columnInput.setPromptText("Colonne");
 
 		if (isFirstRound) {
-			grid.add(new Label("Ligne : 8 [CENTRE]"), 0, 0);
-			grid.add(new Label("Colonne : 8 [CENTRE]"), 0, 1);
+			grid.add(new Label("Ligne : " + Board.MIDDLE + " [CENTRE]"), 0, 0);
+			grid.add(new Label("Colonne : " + Board.MIDDLE + " [CENTRE]"), 0, 1);
 		} else {
 			grid.add(new Label("Ligne :"), 0, 0);
 			grid.add(rowInput, 1, 0);
@@ -326,8 +326,8 @@ public class ScrabbleApplicationFX extends Application {
 				column = Integer.parseInt(columnInput.getText());
 			} else {
 
-				row = 8;
-				column = 8;
+				row = Board.MIDDLE;
+				column = Board.MIDDLE;
 			}
 
 			playLetter(game, rack, row, column, direction);
@@ -368,7 +368,7 @@ public class ScrabbleApplicationFX extends Application {
 				return;
 			}
 	
-			if (game.roundNumber() == 1 && row == 8 && column == 8) {
+			if (game.roundNumber() == 1 && row == Board.MIDDLE && column == Board.MIDDLE) {
 				if (direction == Direction.HORIZONTAL) {
 					column++;
 				} else {

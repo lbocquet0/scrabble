@@ -16,6 +16,8 @@ import scrabble.utils.exceptions.WordNotFoundException;
 public class Board {
 	
 	public static int SIZE = 15;
+	public static int MIDDLE = SIZE / 2 + 1;
+
 	private static Position[] TRIPLE_WORD_POSITIONS = {
 		new Position(1, 1), new Position(1, 8), new Position(1, 15),
 		new Position(8, 1), new Position(8, 15),
@@ -82,11 +84,11 @@ public class Board {
 	}
 
 	public Boolean gameIsNotStarted() throws PositionOutOfBoard {
-        return this.getBox(8, 8).isEmpty();
+        return this.getBox(Board.MIDDLE, Board.MIDDLE).isEmpty();
 	}
 	
 	public Boolean isMiddleBoxInActionHistory() {
-		return this.actionHistory.positionIsInActions(8, 8);
+		return this.actionHistory.positionIsInActions(Board.MIDDLE, Board.MIDDLE);
 	}
 
 	public Box getBox(Integer row, Integer column) throws PositionOutOfBoard {

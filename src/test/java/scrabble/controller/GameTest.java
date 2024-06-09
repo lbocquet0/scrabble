@@ -110,8 +110,8 @@ class GameTest {
     	Rack rack = player.rack();
     	
     	Token token = rack.token(0);	
-		game.playLetter(token, 8, 8);
-		Token placedToken = game.getBoard().getToken(8, 8); 
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		Token placedToken = game.getBoard().getToken(Board.MIDDLE, Board.MIDDLE); 
 		
 		assertEquals(token, placedToken);
     }
@@ -125,12 +125,12 @@ class GameTest {
     	Token token = rack.token(0);
     	Token token2 = rack.token(2);
     	Token oToken = rack.token(1);
-		game.playLetter(token, 8, 8);	
-		game.playLetter(token2, 8, 9);	
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);	
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);	
 		game.validateWord(Direction.HORIZONTAL);
 		
     	assertThrows(OccupiedBoxException.class, () -> {
-    		game.playLetter(oToken, 8, 8);
+    		game.playLetter(oToken, Board.MIDDLE, Board.MIDDLE);
     	});	
     }
 
@@ -143,10 +143,10 @@ class GameTest {
     	Token token = rack.token(0);
     	Token oToken = rack.token(0);
 
-		game.playLetter(token, 8, 8);		
-		game.playLetter(oToken, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);		
+		game.playLetter(oToken, Board.MIDDLE, Board.MIDDLE);
 
-		Token placedToken = game.getBoard().getToken(8, 8); 
+		Token placedToken = game.getBoard().getToken(Board.MIDDLE, Board.MIDDLE); 
 		assertEquals(oToken, placedToken);
     }
 
@@ -158,7 +158,7 @@ class GameTest {
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 
 		game.cancelLastWord();
 
@@ -174,10 +174,10 @@ class GameTest {
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastWord();
 
-		Token placedToken = board.getToken(8, 8);
+		Token placedToken = board.getToken(Board.MIDDLE, Board.MIDDLE);
 		assertEquals(null, placedToken);
 	}
 
@@ -190,7 +190,7 @@ class GameTest {
 		Token token = rack.token(0);
 		Board board = game.getBoard();
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.clearRoundHistory();
 
 		assertTrue(board.getActionsHistory().isEmpty());
@@ -205,8 +205,8 @@ class GameTest {
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 
 		game.validateWord(Direction.HORIZONTAL);
 
@@ -222,8 +222,8 @@ class GameTest {
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 
 		Integer score = game.validateWord(Direction.HORIZONTAL);
 
@@ -240,8 +240,8 @@ class GameTest {
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 
 		game.validateWord(Direction.HORIZONTAL);
 
@@ -257,7 +257,7 @@ class GameTest {
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastAction();
 
 		assertThat(rack.tokens()).containsOnlyOnce(token);
@@ -272,10 +272,10 @@ class GameTest {
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastAction();
 
-		Token placedToken = board.getToken(8, 8);
+		Token placedToken = board.getToken(Board.MIDDLE, Board.MIDDLE);
 		assertEquals(null, placedToken);
 	}
 
@@ -288,7 +288,7 @@ class GameTest {
 		Board board = game.getBoard();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastAction();
 
 		assertTrue(board.getActionsHistory().isEmpty());
@@ -338,8 +338,8 @@ class GameTest {
 
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 		
 		game.validateWord(Direction.HORIZONTAL);
 		
@@ -359,7 +359,7 @@ class GameTest {
 		Rack rack = player.rack();
 
 		Token token = rack.token(0);
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 
 		assertThrows(CantPlaySingleLetterException.class, () -> {
 			game.validateWord(Direction.HORIZONTAL);
@@ -376,9 +376,9 @@ class GameTest {
 		Token token2 = rack.token(1);
 		Token token3 = rack.token(2);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 9, 8);
-		game.playLetter(token3, 8, 10);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE + 1, Board.MIDDLE);
+		game.playLetter(token3, Board.MIDDLE, Board.MIDDLE + 2);
 
 		assertThrows(IllegalMoveException.class, () -> {
 			game.validateWord(Direction.HORIZONTAL);
