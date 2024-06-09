@@ -120,6 +120,7 @@ class GameTest {
     	Token token = rack.token(0);
     	Token oToken = rack.token(1);
 		game.playLetter(token, 8, 8);	
+		game.playLetter(token, 8, 9);	
 		game.validateWord(Direction.HORIZONTAL);
 		
     	assertThrows(OccupiedBoxException.class, () -> {
@@ -331,6 +332,7 @@ class GameTest {
 
 		Token token = rack.token(0);
 		game.playLetter(token, 8, 8);
+		game.playLetter(token, 8, 9);
 		
 		game.validateWord(Direction.HORIZONTAL);
 		
