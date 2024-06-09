@@ -45,6 +45,10 @@ public class Bag {
         this.tokens.clear();
     }
 
+    public ArrayList<Token> tokens() {
+        return this.tokens;
+    }
+
     private void fillTokens() {
         // Default letters
         for (FrenchLetter letter : FrenchLetter.values()) {
