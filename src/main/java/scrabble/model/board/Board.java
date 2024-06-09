@@ -81,7 +81,7 @@ public class Board {
 		return this.boxes;
 	}
 
-	public Boolean gameHaveNotStarted() throws PositionOutOfBoard {
+	public Boolean gameIsNotStarted() throws PositionOutOfBoard {
         return this.getBox(8, 8).isEmpty();
 	}
 	
@@ -103,9 +103,9 @@ public class Board {
 		return box.token();
 	}
 	
-	public void setToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	public void placeToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box = this.getBox(row, column);
-		if (this.gameHaveNotStarted() && !box.isMiddle()) {
+		if (this.gameIsNotStarted() && !box.isMiddle()) {
 			throw new IllegalMoveException();
 		}
 		
@@ -149,6 +149,10 @@ public class Board {
 
 	public Token cancelLastAction() {
 		return this.actionHistory.undoLastAction();
+	}
+
+	public ArrayList<Action> getActions() {
+		return this.actionHistory.actions();
 	}
 
 	public void clearHistory() {
@@ -257,8 +261,8 @@ public class Board {
 		Boolean result = false;
 
 		for (Action action : this.actionHistory.actions()) {
-			Integer row = action.getRowPosition();
-			Integer column = action.getColumnPosition();
+			Integer row = action.row();
+			Integer column = action.column();
 
 			if (!result) {
 				result = this.hasAlreadyPlayedLetterAround(row, column);
@@ -333,5 +337,22 @@ public class Board {
 		
 	    bottomHorizontalLine.append("-\n");
 	    Console.message(bottomHorizontalLine.toString());
+	}
+
+	public Position getBoxPosition(Box box) {
+		Position position = null;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (this.boxes.get(i).get(j).equals(box)) {
+					position = new Position(i + 1, j + 1);
+				}
+			}
+		}
+		
+		if (position == null) {
+			throw new IllegalArgumentException("Box not found");
+		} else {
+			return position;
+		}
 	}
 }

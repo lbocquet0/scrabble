@@ -48,7 +48,7 @@ public class ScoreCounter {
 
 		ArrayList<Box> wordLetters = null;
 		try {
-			wordLetters = board.getWord(firstAction.getRowPosition(), firstAction.getColumnPosition(), direction);
+			wordLetters = board.getWord(firstAction.row(), firstAction.column(), direction);
 		} catch (PositionOutOfBoard e) {
 			return 0;
 		} catch (WordNotFoundException e) {
@@ -68,7 +68,7 @@ public class ScoreCounter {
 		List<Action> actions = actionHistory.actions();
 		for (Action action : actions) {
 			try {
-				wordLetters = board.getWord(action.getRowPosition(), action.getColumnPosition(), oppositeDirection);
+				wordLetters = board.getWord(action.row(), action.column(), oppositeDirection);
 			} catch (PositionOutOfBoard e) {
 				continue;
 			} catch (WordNotFoundException e) {

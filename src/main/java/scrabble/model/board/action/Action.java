@@ -5,8 +5,8 @@ import scrabble.model.token.Token;
 import scrabble.utils.exceptions.EmptyBoxException;
 
 public class Action {
-	private int rowPosition;
-	private int columnPosition;
+	private int row;
+	private int column;
 	private Box box;
 
 	public Action(int rowPosition, int columnPosition, Box box) throws EmptyBoxException {
@@ -14,24 +14,24 @@ public class Action {
 			throw new EmptyBoxException();
 		}
 
-		this.rowPosition = rowPosition;
-		this.columnPosition = columnPosition;
+		this.row = rowPosition;
+		this.column = columnPosition;
 		this.box = box;
 	}
 
-	public int getRowPosition() {
-		return rowPosition;
+	public int row() {
+		return row;
 	}
 
-	public int getColumnPosition() {
-		return columnPosition;
+	public int column() {
+		return column;
 	}
 
-	public Box getBox() {
+	public Box box() {
 		return box;
 	}
 
-	public Token getToken() {
+	public Token token() {
 		return box.token();
 	}
 

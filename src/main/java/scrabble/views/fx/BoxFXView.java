@@ -71,4 +71,8 @@ public class BoxFXView extends StackPane implements FXView {
 
 		return imageView;
 	}
+
+	public Box box() {
+		return this.box;
+	}
 }

@@ -31,28 +31,28 @@ public class ActionTest {
 
 	@Test
 	void testGetRowPosition() {
-		Integer rowPosition = action.getRowPosition();
+		Integer rowPosition = action.row();
 		
 		assertEquals(ROW, rowPosition);
 	}
 
 	@Test
 	void testGetColumnPosition() {
-		Integer columnPosition = action.getColumnPosition();
+		Integer columnPosition = action.column();
 		
 		assertEquals(COLUMN, columnPosition);
 	}
 
 	@Test
 	void testGetBox() {
-		Box box = action.getBox();
+		Box box = action.box();
 		
 		assertEquals(box, box);
 	}
 
 	@Test
 	void testGetToken() {
-		Token token = action.getToken();
+		Token token = action.token();
 		
 		assertEquals(token, token);
 	}

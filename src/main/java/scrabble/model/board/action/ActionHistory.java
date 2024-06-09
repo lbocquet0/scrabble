@@ -85,7 +85,7 @@ public class ActionHistory {
 
 	public boolean positionIsInActions(int row, int column) {
 		for (Action action : this.actions) {
-			if (action.getRowPosition() == row && action.getColumnPosition() == column) {
+			if (action.row() == row && action.column() == column) {
 				return true;
 			}
 		}
@@ -95,7 +95,7 @@ public class ActionHistory {
 
 	public boolean boxIsInActions(Box box) {
 		for (Action action : this.actions) {
-			if (action.getBox().equals(box)) {
+			if (action.box().equals(box)) {
 				return true;
 			}
 		}

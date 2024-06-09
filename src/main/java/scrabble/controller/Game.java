@@ -8,6 +8,7 @@ import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.model.board.action.Action;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.ScoreCounter;
@@ -79,7 +80,7 @@ public class Game {
 		this.player.removeTokenFromRack(token);
 
 		try {
-			this.board.setToken(token, row, column);
+			this.board.placeToken(token, row, column);
 		} catch (Exception e) {
 			this.player.addTokenToRack(token);
 
@@ -107,7 +108,7 @@ public class Game {
 	}
 
 	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
-		if (!this.board.gameHaveNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
+		if (!this.board.gameIsNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
 			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
 			if (!isLetterAround) {
 				throw new IllegalMoveException();
@@ -147,5 +148,9 @@ public class Game {
 
 	public IntegerProperty roundNumberProperty() {
 		return this.roundNumber;
+	}
+
+	public ArrayList<Action> getActions() {
+		return this.board.getActions();
 	}
 }

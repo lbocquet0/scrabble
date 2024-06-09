@@ -3,6 +3,7 @@ package scrabble.views.fx;
 import java.util.ArrayList;
 
 import javafx.scene.layout.HBox;
+import scrabble.controller.fx.TokenDragAndDropController;
 import scrabble.model.Rack;
 import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
@@ -27,16 +28,26 @@ public class RackFXView extends HBox implements FXView {
 
 		for (Token token : tokens) {
 
+			TokenFXView fxView;
 			if (token.isJoker()) {
 				Joker joker = (Joker) token;
 
-				JokerFXView jokerFXView = new JokerFXView(joker);
-				this.getChildren().add(jokerFXView);
-			} else {
+				fxView = new JokerFXView(joker);
+				this.getChildren().add(fxView);
 
-				TokenFXView tokenFXView = new TokenFXView(token);
-				this.getChildren().add(tokenFXView);
+			} else {
+					
+				fxView = new TokenFXView(token);
+				this.getChildren().add(fxView);
+
 			}
+
+			TokenDragAndDropController.manageSourceDragAndDrop(fxView);
+			TokenDragAndDropController.manageTokenUpdateOrderTargetDragAndDrop(fxView);
 		}
+	}
+
+	public Rack rack() {
+		return this.rack;
 	}
 }

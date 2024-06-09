@@ -58,7 +58,7 @@ public class TokenFXView extends StackPane implements FXView {
 		return pointsLabel;
 	}
 
-	public Token getToken() {
+	public Token token() {
 		return token;
 	}
 }

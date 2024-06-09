@@ -3,15 +3,19 @@ package scrabble.views.fx;
 import java.util.ArrayList;
 
 import javafx.scene.layout.GridPane;
+import scrabble.controller.Game;
+import scrabble.controller.fx.TokenDragAndDropController;
 import scrabble.model.board.Board;
 import scrabble.model.board.Box;
 
 public class BoardFXView extends GridPane implements FXView {
 	private final Board board;
+	private final Game game;
 
-	public BoardFXView(Board board) {
+	public BoardFXView(Game game, Board board) {
+		this.game = game;
 		this.board = board;
-
+	
 		this.updateView();
 	}
 
@@ -27,10 +31,16 @@ public class BoardFXView extends GridPane implements FXView {
 				BoxFXView boxFXView = new BoxFXView(box);
 				this.add(boxFXView, j, i);
 			
+				TokenDragAndDropController.manageBoardCellDragAndDrop(this.game, boxFXView);
+
 				j++;
 			}
 
 			i++;
 		}
+	}
+
+	public Board board() {
+		return this.board;
 	}
 }

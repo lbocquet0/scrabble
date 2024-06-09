@@ -1,11 +1,13 @@
 package scrabble.application;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -24,6 +27,7 @@ import scrabble.controller.Game;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.model.board.action.Action;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.FrenchLetterComparator;
 import scrabble.model.token.Joker;
@@ -79,7 +83,7 @@ public class ScrabbleApplicationFX extends Application {
 			displayError(err.getMessage());
 		}
 
-		BoardFXView boardFXView = new BoardFXView(board);
+		BoardFXView boardFXView = new BoardFXView(game, board);
 		boardFXView.setAlignment(Pos.CENTER);
 
 		RackFXView rackFXView = new RackFXView(rack);
@@ -188,9 +192,41 @@ public class ScrabbleApplicationFX extends Application {
 		exitButton.setOnAction(e -> {
 			System.exit(0);
 		});
-		
+
+		Button validateButton = new Button("Valider le mot");
+		// Mouse pressed filter
+		validateButton.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				ArrayList<Action> actions = game.getActions();
+				if (actions.size() == 0) {
+					displayError("Vous devez jouer un mot avant de valider");
+					event.consume();
+				}
+			}
+		});
+
+		validateButton.setOnAction(e -> {
+			try {
+				game.validateWord(Direction.HORIZONTAL);
+				game.nextRound();
+			} catch (Exception err) {
+				displayError(err.getMessage());
+				game.cancelLastWord();
+			}
+
+			rackFXView.updateView();
+			boardFXView.updateView();
+			
+			if (game.bagIsEmpty() && rack.isEmpty()) {
+				endGame(game, primaryStage);
+			}
+		});
+
+
 		VBox buttonsPanel = new VBox();
-		buttonsPanel.getChildren().addAll(swapTokenButton, playButton, exitButton);
+		buttonsPanel.getChildren().addAll(swapTokenButton, playButton, exitButton, validateButton);
+		
 		return buttonsPanel;
 	}
 
@@ -210,7 +246,7 @@ public class ScrabbleApplicationFX extends Application {
 	private static void playWord(Game game, Rack rack) throws PositionOutOfBoard {
 		Boolean isFirstRound = false;
 
-		if (game.getBoard().gameHaveNotStarted()) {
+		if (game.getBoard().gameIsNotStarted()) {
 			isFirstRound = true;
 		}
 		
@@ -271,7 +307,7 @@ public class ScrabbleApplicationFX extends Application {
 		}
 	}
 
-	private static void updateJokerLetter(Joker joker) {
+	public static void updateJokerLetter(Joker joker) {
 		FrenchLetter[] choices = FrenchLetter.values();
 		Arrays.sort(choices, new FrenchLetterComparator());
 		
