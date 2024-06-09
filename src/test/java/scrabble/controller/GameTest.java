@@ -114,14 +114,14 @@ class GameTest {
     
     
     @Test
-    void should_throws_exception_on_playLetter_on_already_occuped_position() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+    void should_throws_exception_on_playLetter_on_already_occuped_position() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
     	game.initialize();
     	Player player = game.getPlayer();
     	Rack rack = player.rack();
     	Token token = rack.token(0);
     	Token oToken = rack.token(1);
-		game.playLetter(token, 8, 8);		
-		
+		game.playLetter(token, 8, 8);	
+		game.validateWord(Direction.HORIZONTAL);
 		
     	assertThrows(OccupiedBoxException.class, () -> {
     		game.playLetter(oToken, 8, 8);
