@@ -15,6 +15,7 @@ import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
+import scrabble.utils.Position;
 import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.IllegalMoveException;
 import scrabble.utils.exceptions.PositionOutOfBoard;
@@ -290,5 +291,24 @@ public class BoardTest {
 		board.placeToken(token, 4, 5);
 
 		assertTrue(board.isAlreadyPlayedLetterAroundActions());
+	}
+
+	@Test
+	public void shouldGetBoxPosition() throws PositionOutOfBoard {
+		Board board = new Board();
+		Box box = board.getBox(2, 3);
+		Position position = board.getBoxPosition(box);
+
+		assertEquals(new Position(2, 3), position);
+	}
+
+	@Test
+	public void shouldThrowExceptionWhenBoxNotFound() {
+		Board board = new Board();
+		Box box = new Box(false, null, Effect.NORMAL);
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			board.getBoxPosition(box);
+		});
 	}
 }
