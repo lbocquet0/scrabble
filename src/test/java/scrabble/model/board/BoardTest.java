@@ -39,26 +39,26 @@ public class BoardTest {
 		token = new Token(FrenchLetter.A);
 
 		try {
-			board.setToken(token, 8, 8);
+			board.placeToken(token, 8, 8);
 			board.clearHistory();
 
 			box2_1 = board.getBox(2, 1);
 			box2_2 = board.getBox(2, 2);
 			box2_3 = board.getBox(2, 3);
 
-			board.setToken(token, 2, 1);
-			board.setToken(token, 2, 2);
-			board.setToken(token, 2, 3);
+			board.placeToken(token, 2, 1);
+			board.placeToken(token, 2, 2);
+			board.placeToken(token, 2, 3);
 	
 			box1_2 = board.getBox(1, 2);
 			box3_2 = board.getBox(3, 2);
 
-			board.setToken(token, 1, 2);
-			board.setToken(token, 3, 2);
+			board.placeToken(token, 1, 2);
+			board.placeToken(token, 3, 2);
 
 			box5_5 = board.getBox(5, 5);
 
-			board.setToken(token, 5, 5);
+			board.placeToken(token, 5, 5);
 
 		} catch (Exception e) {
 			fail(e);
@@ -208,7 +208,7 @@ public class BoardTest {
 		Token token = new Token(FrenchLetter.A);
 
 		try {
-			board.setToken(token, 6, 6);
+			board.placeToken(token, 6, 6);
 	 	} catch (Exception e) {
 			fail(e);
 		}
@@ -232,7 +232,7 @@ public class BoardTest {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
-		board.setToken(token, 4, 4);
+		board.placeToken(token, 4, 4);
 		actionHistory.clear();
 
 		assertTrue(board.hasAlreadyPlayedLetterAround(4, 5));
@@ -243,7 +243,7 @@ public class BoardTest {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
-		board.setToken(token, 4, 4);
+		board.placeToken(token, 4, 4);
 		actionHistory.clear();
 
 		assertTrue(board.hasAlreadyPlayedLetterAround(4, 3));
@@ -254,7 +254,7 @@ public class BoardTest {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
-		board.setToken(token, 4, 4);
+		board.placeToken(token, 4, 4);
 		actionHistory.clear();
 
 		assertTrue(board.hasAlreadyPlayedLetterAround(5, 4));
@@ -265,7 +265,7 @@ public class BoardTest {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
-		board.setToken(token, 4, 4);
+		board.placeToken(token, 4, 4);
 		actionHistory.clear();
 
 		assertTrue(board.hasAlreadyPlayedLetterAround(3, 4));
@@ -284,10 +284,10 @@ public class BoardTest {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
-		board.setToken(token, 4, 4);
+		board.placeToken(token, 4, 4);
 		actionHistory.clear();
 
-		board.setToken(token, 4, 5);
+		board.placeToken(token, 4, 5);
 
 		assertTrue(board.isAlreadyPlayedLetterAroundActions());
 	}

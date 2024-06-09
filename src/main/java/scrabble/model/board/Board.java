@@ -103,7 +103,7 @@ public class Board {
 		return box.token();
 	}
 	
-	public void setToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	public void placeToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box = this.getBox(row, column);
 		if (this.gameIsNotStarted() && !box.isMiddle()) {
 			throw new IllegalMoveException();

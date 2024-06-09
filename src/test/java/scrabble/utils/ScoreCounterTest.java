@@ -29,7 +29,7 @@ public class ScoreCounterTest {
 		tokenA = new Token(FrenchLetter.A);
 		
 		try {
-			board.setToken(tokenA, 8, 8);
+			board.placeToken(tokenA, 8, 8);
 		} catch (Exception e) {
 			fail(e);
 		}
@@ -46,9 +46,9 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_word_is_aaa_horizontal() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 8, 7);
-		board.setToken(tokenA, 8, 8);
-		board.setToken(tokenA, 8, 9);
+		board.placeToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 9);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(3, score);
@@ -56,9 +56,9 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_word_is_aaa_vertical() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 7, 8);
-		board.setToken(tokenA, 8, 8);
-		board.setToken(tokenA, 9, 8);
+		board.placeToken(tokenA, 7, 8);
+		board.placeToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 9, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(3, score);
@@ -68,9 +68,9 @@ public class ScoreCounterTest {
 	public void should_count_score_when_complete_word_horizontal() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box3 = new Box(false, tokenA);
 
-		board.setToken(tokenA, 7, 8);
-		board.setToken(tokenA, 8, 8);
-		board.setToken(tokenA, 9, 8);
+		board.placeToken(tokenA, 7, 8);
+		board.placeToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 9, 8);
 		actionHistory.clear();
 
 		actionHistory.add(new Action(9, 8, box3));
@@ -83,9 +83,9 @@ public class ScoreCounterTest {
 	public void should_count_score_when_complete_word_vertical() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box3 = new Box(false, tokenA);
 
-		board.setToken(tokenA, 8, 7);
-		board.setToken(tokenA, 8, 8);
-		board.setToken(tokenA, 8, 9);
+		board.placeToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 9);
 		actionHistory.clear();
 
 		actionHistory.add(new Action(8, 9, box3));
@@ -97,13 +97,13 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_add_horizontal_word_across_vertical_word()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 7, 7);
-		board.setToken(tokenA, 8, 7);
-		board.setToken(tokenA, 9, 7);
+		board.placeToken(tokenA, 7, 7);
+		board.placeToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 9, 7);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 8, 6);
-		board.setToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 6);
+		board.placeToken(tokenA, 8, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(3, score);
@@ -112,13 +112,13 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_add_vertical_word_across_horizontal_word()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 7, 7);
-		board.setToken(tokenA, 7, 8);
-		board.setToken(tokenA, 7, 9);
+		board.placeToken(tokenA, 7, 7);
+		board.placeToken(tokenA, 7, 8);
+		board.placeToken(tokenA, 7, 9);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 6, 8);
-		board.setToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 6, 8);
+		board.placeToken(tokenA, 8, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(3, score);
@@ -127,15 +127,15 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_create_new_words_with_vertical_and_horizontal_words()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 6, 8);
-		board.setToken(tokenA, 7, 8);
+		board.placeToken(tokenA, 6, 8);
+		board.placeToken(tokenA, 7, 8);
 
-		board.setToken(tokenA, 8, 6);
-		board.setToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 8, 6);
+		board.placeToken(tokenA, 8, 7);
 
 		actionHistory.clear();
 
-		board.setToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(6, score);
@@ -143,15 +143,15 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_for_two_words_both_horizontal() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 8, 6);
-		board.setToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 8, 6);
+		board.placeToken(tokenA, 8, 7);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 8, 9);
-		board.setToken(tokenA, 8, 10);
+		board.placeToken(tokenA, 8, 9);
+		board.placeToken(tokenA, 8, 10);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(5, score);
@@ -159,15 +159,15 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_for_two_words_both_vertical() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 6, 8);
-		board.setToken(tokenA, 7, 8);
+		board.placeToken(tokenA, 6, 8);
+		board.placeToken(tokenA, 7, 8);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 9, 8);
-		board.setToken(tokenA, 10, 8);
+		board.placeToken(tokenA, 9, 8);
+		board.placeToken(tokenA, 10, 8);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(5, score);
@@ -175,9 +175,9 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_with_double_letter_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 1, 4);
-		board.setToken(tokenA, 1, 5);
-		board.setToken(tokenA, 1, 6);
+		board.placeToken(tokenA, 1, 4);
+		board.placeToken(tokenA, 1, 5);
+		board.placeToken(tokenA, 1, 6);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(4, score);
@@ -185,9 +185,9 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_with_triple_letter_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 2, 6);
-		board.setToken(tokenA, 2, 7);
-		board.setToken(tokenA, 2, 8);
+		board.placeToken(tokenA, 2, 6);
+		board.placeToken(tokenA, 2, 7);
+		board.placeToken(tokenA, 2, 8);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(5, score);
@@ -195,9 +195,9 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_with_double_word_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 2, 2);
-		board.setToken(tokenA, 2, 3);
-		board.setToken(tokenA, 2, 4);
+		board.placeToken(tokenA, 2, 2);
+		board.placeToken(tokenA, 2, 3);
+		board.placeToken(tokenA, 2, 4);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(6, score);
@@ -205,9 +205,9 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_with_triple_word_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 1, 1);
-		board.setToken(tokenA, 1, 2);
-		board.setToken(tokenA, 1, 3);
+		board.placeToken(tokenA, 1, 1);
+		board.placeToken(tokenA, 1, 2);
+		board.placeToken(tokenA, 1, 3);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(9, score);
@@ -216,10 +216,10 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_with_double_letter_and_double_word_score()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 1, 4);
-		board.setToken(tokenA, 2, 4);
-		board.setToken(tokenA, 3, 4);
-		board.setToken(tokenA, 4, 4);
+		board.placeToken(tokenA, 1, 4);
+		board.placeToken(tokenA, 2, 4);
+		board.placeToken(tokenA, 3, 4);
+		board.placeToken(tokenA, 4, 4);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(10, score);
@@ -228,12 +228,12 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_complete_word_with_double_letter_effect()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 7, 7);
-		board.setToken(tokenA, 8, 7);
-		board.setToken(tokenA, 9, 7);
+		board.placeToken(tokenA, 7, 7);
+		board.placeToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 9, 7);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 10, 7);
+		board.placeToken(tokenA, 10, 7);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(4, score);
@@ -242,12 +242,12 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_complete_word_with_double_word_effect()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 1, 1);
-		board.setToken(tokenA, 2, 1);
+		board.placeToken(tokenA, 1, 1);
+		board.placeToken(tokenA, 2, 1);
 
 		actionHistory.clear();
 
-		board.setToken(tokenA, 3, 1);
+		board.placeToken(tokenA, 3, 1);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(3, score);
@@ -256,16 +256,16 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_complete_two_words_with_double_letter_effect()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 1, 1);
-		board.setToken(tokenA, 2, 1);
-		board.setToken(tokenA, 3, 1);
+		board.placeToken(tokenA, 1, 1);
+		board.placeToken(tokenA, 2, 1);
+		board.placeToken(tokenA, 3, 1);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 4, 2);
-		board.setToken(tokenA, 4, 3);
+		board.placeToken(tokenA, 4, 2);
+		board.placeToken(tokenA, 4, 3);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 4, 1);
+		board.placeToken(tokenA, 4, 1);
 
 		Integer score = ScoreCounter.countScore(board, Direction.VERTICAL);
 		assertEquals(9, score);
@@ -274,17 +274,17 @@ public class ScoreCounterTest {
 	@Test
 	public void should_count_score_when_complete_two_words_with_double_word_effect()
 			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 4, 1);
-		board.setToken(tokenA, 4, 2);
-		board.setToken(tokenA, 4, 3);
+		board.placeToken(tokenA, 4, 1);
+		board.placeToken(tokenA, 4, 2);
+		board.placeToken(tokenA, 4, 3);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 1, 4);
-		board.setToken(tokenA, 2, 4);
-		board.setToken(tokenA, 3, 4);
+		board.placeToken(tokenA, 1, 4);
+		board.placeToken(tokenA, 2, 4);
+		board.placeToken(tokenA, 3, 4);
 		actionHistory.clear();
 
-		board.setToken(tokenA, 4, 4);
+		board.placeToken(tokenA, 4, 4);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(16, score);
@@ -295,8 +295,8 @@ public class ScoreCounterTest {
 		Joker joker = new Joker();
 		joker.setLetter(FrenchLetter.A);
 
-		board.setToken(joker, 8, 8);
-		board.setToken(tokenA, 8, 7);
+		board.placeToken(joker, 8, 8);
+		board.placeToken(tokenA, 8, 7);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(1, score);
@@ -304,13 +304,13 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_play_all_rack_letters() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
-		board.setToken(tokenA, 8, 8);
-		board.setToken(tokenA, 8, 7);
-		board.setToken(tokenA, 8, 5);
-		board.setToken(tokenA, 8, 6);
-		board.setToken(tokenA, 8, 9);
-		board.setToken(tokenA, 8, 10);
-		board.setToken(tokenA, 8, 11);
+		board.placeToken(tokenA, 8, 8);
+		board.placeToken(tokenA, 8, 7);
+		board.placeToken(tokenA, 8, 5);
+		board.placeToken(tokenA, 8, 6);
+		board.placeToken(tokenA, 8, 9);
+		board.placeToken(tokenA, 8, 10);
+		board.placeToken(tokenA, 8, 11);
 
 		Integer score = ScoreCounter.countScore(board, Direction.HORIZONTAL);
 		assertEquals(57, score);

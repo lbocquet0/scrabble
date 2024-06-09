@@ -80,7 +80,7 @@ public class Game {
 		this.player.removeTokenFromRack(token);
 
 		try {
-			this.board.setToken(token, row, column);
+			this.board.placeToken(token, row, column);
 		} catch (Exception e) {
 			this.player.addTokenToRack(token);
 
