@@ -16,6 +16,8 @@ import scrabble.utils.exceptions.*;
 
 public class Game {
 
+	private static int MAX_PLAYERS = 2;
+
 	private Player currentPlayer;
 	private ArrayList<Player> players;
 	private Board board;
@@ -25,8 +27,10 @@ public class Game {
 	public Game() {
 		this.bag = new Bag();
 		this.players = new ArrayList<Player>();
-		this.players.add(new Player());
-		this.players.add(new Player());
+		for (int i = 0; i < MAX_PLAYERS; i++) {
+			this.players.add(new Player());
+		}
+
 		this.currentPlayer = this.players.get(0);
 		this.board = new Board();
 
@@ -49,6 +53,10 @@ public class Game {
 		for (Player player : this.players) {
 			this.fullFillPlayerRack(player);
 		}
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return this.players;
 	}
 
 	public Boolean bagIsEmpty() {
