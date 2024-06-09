@@ -151,6 +151,10 @@ public class Board {
 		return this.actionHistory.undoLastAction();
 	}
 
+	public ArrayList<Action> getActions() {
+		return this.actionHistory.actions();
+	}
+
 	public void clearHistory() {
 		this.actionHistory.clear();
 	}
@@ -333,5 +337,22 @@ public class Board {
 		
 	    bottomHorizontalLine.append("-\n");
 	    Console.message(bottomHorizontalLine.toString());
+	}
+
+	public Position getBoxPosition(Box box) {
+		Position position = null;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if (this.boxes.get(i).get(j).equals(box)) {
+					position = new Position(i + 1, j + 1);
+				}
+			}
+		}
+		
+		if (position == null) {
+			throw new IllegalArgumentException("Box not found");
+		} else {
+			return position;
+		}
 	}
 }
