@@ -17,13 +17,17 @@ import scrabble.utils.exceptions.*;
 public class Game {
 
 	private Player currentPlayer;
+	private ArrayList<Player> players;
 	private Board board;
 	private Bag bag;
 	private IntegerProperty roundNumber;
 
 	public Game() {
 		this.bag = new Bag();
-		this.currentPlayer = new Player();
+		this.players = new ArrayList<Player>();
+		this.players.add(new Player());
+		this.players.add(new Player());
+		this.currentPlayer = this.players.get(0);
 		this.board = new Board();
 
 		this.roundNumber = new SimpleIntegerProperty(1);
@@ -37,12 +41,14 @@ public class Game {
 		return this.bag;
 	}
 
-	public Player getPlayer() {
+	public Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 
 	public void initialize() throws EmptyBagException {
-		this.fullFillPlayerRack(this.currentPlayer);
+		for (Player player : this.players) {
+			this.fullFillPlayerRack(player);
+		}
 	}
 
 	public Boolean bagIsEmpty() {
@@ -142,6 +148,8 @@ public class Game {
 	public Integer nextRound() throws EmptyBagException {
 		this.roundNumber.set(this.roundNumber() + 1);
 		this.fullFillPlayerRack(this.currentPlayer);
+		
+		this.currentPlayer = this.players.get((this.roundNumber() - 1) % this.players.size());
 
 		return this.roundNumber();
 	}
