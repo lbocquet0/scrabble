@@ -16,6 +16,7 @@ import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
@@ -224,7 +225,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundLeft() throws PositionOutOfBoard, EmptyBoxException {
+	public void testHasAlreadyPlayedLetterAroundLeft() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -235,7 +236,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundRight() throws PositionOutOfBoard, EmptyBoxException {
+	public void testHasAlreadyPlayedLetterAroundRight() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -246,7 +247,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundTop() throws PositionOutOfBoard, EmptyBoxException {
+	public void testHasAlreadyPlayedLetterAroundTop() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -257,7 +258,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundBottom() throws PositionOutOfBoard, EmptyBoxException {
+	public void testHasAlreadyPlayedLetterAroundBottom() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -276,7 +277,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testIsAlreadyPlayedLetterAroundActions() throws PositionOutOfBoard, EmptyBoxException {
+	public void testIsAlreadyPlayedLetterAroundActions() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
