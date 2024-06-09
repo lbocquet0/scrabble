@@ -116,4 +116,25 @@ public class RackTest {
 		int tokenIndex = rack.getTokenPosition(token);
 		assertEquals(-1, tokenIndex);
 	}
+
+	@Test
+	public void shouldSwapTokens() throws TokenDoesntExists {
+		Token tokenA = new Token(FrenchLetter.A);
+		Token tokenB = new Token(FrenchLetter.B);
+
+		rack.addToken(tokenA);
+		rack.addToken(tokenB);
+
+		rack.swapTokens(tokenA, tokenB);
+
+		assertThat(rack.tokens()).containsExactly(tokenB, tokenA);
+	}
+
+	@Test
+	public void shouldThrowExceptionWhenSwapInvalidTokens() {
+		Token tokenA = new Token(FrenchLetter.A);
+		Token tokenB = new Token(FrenchLetter.B);
+
+		assertThrows(TokenDoesntExists.class, () -> rack.swapTokens(tokenA, tokenB));
+	}
 }
