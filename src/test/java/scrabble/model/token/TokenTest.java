@@ -3,31 +3,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class TokenTest {
+class TokenTest {
 
 	@Test
-	public void testIsJokerFalse() {
+	void test_is_joker_false() {
 		Token token = new Token(FrenchLetter.A);
 		
 		assertEquals(false, token.isJoker());
 	}
 
 	@Test
-	public void testDescribeNoJoker() {
+	void test_describe_no_joker() {
 		Token token = new Token(FrenchLetter.A);
 
 		assertEquals("A 1", token.display());
 	}
 
 	@Test
-	public void testGetLetter() {
+	void test_get_letter() {
 		Token token = new Token(FrenchLetter.A);
 		
 		assertEquals(FrenchLetter.A, token.getLetter());
 	}
 
 	@Test
-	public void testGetScore() {
+	void test_get_score() {
 		Token token = new Token(FrenchLetter.A);
 	
 		assertEquals(1, token.getScore());

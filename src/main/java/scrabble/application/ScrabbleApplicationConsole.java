@@ -29,7 +29,7 @@ public class ScrabbleApplicationConsole {
 			return;
 		}
 		
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Board board = game.getBoard();
 		Rack rack = player.rack();
 
@@ -206,7 +206,7 @@ public class ScrabbleApplicationConsole {
 						Console.message("Vous avez maintenant " + newScore + " points.");
                     } catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
-                    } catch (IllegalMoveException e) {
+                    } catch (IllegalMoveException | CantPlaySingleLetterException e) {
 						Console.message(e.getMessage());
 						game.cancelLastWord();
                     }
@@ -225,7 +225,7 @@ public class ScrabbleApplicationConsole {
 
 			game.clearRoundHistory();
 			try {
-				game.nextRound();
+				game.fillUpPlayerRack(player);
 			} catch (EmptyBagException e) {
 				
 			}

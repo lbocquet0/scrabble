@@ -23,21 +23,21 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void rackShouldBeEmptyAtInitialize() {
+	public void rack_should_be_empty_at_initialize() {
 		Rack rack = player.rack();
 
 		assertTrue(rack.isEmpty());
 	}
 
 	@Test
-	public void shouldReturn0WhenEmpty() {
+	public void should_return_zero_when_empty() {
 		Integer remainingTokens = player.remainingTokenInRack();
 
 		assertEquals(0, remainingTokens);
 	}
 
 	@Test
-	public void shouldAddTokenToRack() {
+	public void should_add_token_to_rack() {
 		Token token = new Token(FrenchLetter.A);
 
 		player.addTokenToRack(token);
@@ -47,7 +47,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void shouldRemoveTokenFromRack() {
+	void should_remove_token_from_rack() {
 		Token token = new Token(FrenchLetter.A);
 		
 		player.addTokenToRack(token);
@@ -63,7 +63,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void shouldThrowErrorWhenAttemptToRemoveNoExistingToken() throws TokenDoesntExists {
+	void should_throw_error_when_attempt_to_remove_no_existing_token() throws TokenDoesntExists {
 		Token token = new Token(FrenchLetter.A);
 		Token token2 = new Token(FrenchLetter.B);
 		
@@ -78,13 +78,13 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void shouldReturnTrueIfEmpty() {
+	void should_return_true_if_empty() {
 		boolean rackIsEmpty = player.rackIsEmpty();
 		assertTrue(rackIsEmpty);
 	}
 
 	@Test
-	public void shouldReturnTheTokenPosition() {
+	void should_return_the_token_position() {
 		Token token = new Token(FrenchLetter.A);
 		player.addTokenToRack(token);
 
@@ -93,12 +93,12 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void shouldReturn0ScoreAtInitialize() {
+	void should_return_0_score_at_initialize() {
 		assertEquals(0, player.score());
 	}
 
 	@Test
-	public void shouldAddScore() {
+	void should_add_score() {
 		Integer score = 10;
 		Integer newScore = player.addScore(score);
 
@@ -106,21 +106,21 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void shouldReturnScoreProperty() {
+	void should_return_score_property() {
 		IntegerProperty scoreProperty = player.scoreProperty();
 
 		assertNotNull(scoreProperty);
 	}
 
 	@Test
-	public void shouldReturnInitialScoreValue() {
+	void should_return_initial_score_value() {
 		IntegerProperty scoreProperty = player.scoreProperty();
 
 		assertEquals(0, scoreProperty.get());
 	}
 
 	@Test
-	public void shouldUpdateScoreProperty() {
+	void should_update_score_property() {
 		IntegerProperty scoreProperty = player.scoreProperty();
 		player.addScore(10);
 

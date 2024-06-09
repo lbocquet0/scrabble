@@ -16,14 +16,22 @@ import scrabble.utils.exceptions.*;
 
 public class Game {
 
-	private Player player;
+	public static int MAX_PLAYERS = 2;
+
+	private Player currentPlayer;
+	private ArrayList<Player> players;
 	private Board board;
 	private Bag bag;
 	private IntegerProperty roundNumber;
 
 	public Game() {
 		this.bag = new Bag();
-		this.player = new Player();
+		this.players = new ArrayList<Player>();
+		for (int i = 0; i < MAX_PLAYERS; i++) {
+			this.players.add(new Player());
+		}
+
+		this.currentPlayer = this.players.get(0);
 		this.board = new Board();
 
 		this.roundNumber = new SimpleIntegerProperty(1);
@@ -37,12 +45,18 @@ public class Game {
 		return this.bag;
 	}
 
-	public Player getPlayer() {
-		return this.player;
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
 	}
 
 	public void initialize() throws EmptyBagException {
-		this.fullFillPlayerRack(this.player);
+		for (Player player : this.players) {
+			this.fullFillPlayerRack(player);
+		}
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return this.players;
 	}
 
 	public Boolean bagIsEmpty() {
@@ -50,7 +64,7 @@ public class Game {
 	}
 
 	public Boolean rackIsEmpty() {
-		return this.player.remainingTokenInRack() == 0;
+		return this.currentPlayer.remainingTokenInRack() == 0;
 	}
 
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
@@ -77,12 +91,12 @@ public class Game {
 			}
 		}
 
-		this.player.removeTokenFromRack(token);
+		this.currentPlayer.removeTokenFromRack(token);
 
 		try {
 			this.board.placeToken(token, row, column);
 		} catch (Exception e) {
-			this.player.addTokenToRack(token);
+			this.currentPlayer.addTokenToRack(token);
 
 			throw e;
 		}
@@ -92,14 +106,14 @@ public class Game {
 		ArrayList<Token> tokens = this.board.cancelLastWord();
 
 		for (Token token : tokens) {
-			this.player.addTokenToRack(token);
+			this.currentPlayer.addTokenToRack(token);
 		}
 	}
 
 	public void cancelLastAction() {
 		Token token = this.board.cancelLastAction();
 		if (token != null) {
-			this.player.addTokenToRack(token);
+			this.currentPlayer.addTokenToRack(token);
 		}
 	}
 
@@ -107,7 +121,19 @@ public class Game {
 		this.board.clearHistory();
 	}
 
-	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
+	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException, CantPlaySingleLetterException {
+		if (this.board.isMiddleBoxInActionHistory()) {
+			ArrayList<Action> actions = this.board.getActions();
+			
+			if (actions.size() == 1) {
+				throw new CantPlaySingleLetterException();
+			}
+		}
+
+		if (!this.board.isAllActionsInSameDirection()) {
+			throw new IllegalMoveException();
+		}
+
 		if (!this.board.gameIsNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
 			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
 			if (!isLetterAround) {
@@ -116,7 +142,7 @@ public class Game {
 		}
 
 		Integer score = ScoreCounter.countScore(this.board, direction);
-		Integer newScore = this.player.addScore(score);
+		Integer newScore = this.currentPlayer.addScore(score);
 
 		this.clearRoundHistory();
 
@@ -141,7 +167,9 @@ public class Game {
 
 	public Integer nextRound() throws EmptyBagException {
 		this.roundNumber.set(this.roundNumber() + 1);
-		this.fullFillPlayerRack(this.player);
+		this.fullFillPlayerRack(this.currentPlayer);
+		
+		this.currentPlayer = this.players.get((this.roundNumber() - 1) % this.players.size());
 
 		return this.roundNumber();
 	}

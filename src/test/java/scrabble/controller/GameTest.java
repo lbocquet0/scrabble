@@ -45,17 +45,22 @@ class GameTest {
     
     @Test
     void should_return_a_player_with_empty_rack_on_new_object_creation() {
-    	Player player = game.getPlayer();
+    	Player player = game.getCurrentPlayer();
     	
     	Integer playerRackCount = player.remainingTokenInRack(); 
     	
     	assertEquals(0, playerRackCount);
     }
+
+	@Test
+	void should_contains_max_players_at_initialize() {
+		assertThat(game.getPlayers()).hasSize(Game.MAX_PLAYERS);
+	}
     
     @Test
     void should_return_a_player_with_full_rack_on_initialize() throws EmptyBagException {
     	game.initialize();
-    	Player player = game.getPlayer();
+    	Player player = game.getCurrentPlayer();
     	
     	Integer playerRackCount = player.remainingTokenInRack();
     	
@@ -64,7 +69,7 @@ class GameTest {
 
 	@Test
 	void should_return_a_player_with_full_rack_on_fillUpPlayerRack() throws EmptyBagException {
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 
 		game.fullFillPlayerRack(player);
 
@@ -75,7 +80,7 @@ class GameTest {
 
 	@Test
 	void should_dont_add_token_to_rack_on_fillUpPlayerRack() throws EmptyBagException {
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 
 		game.fullFillPlayerRack(player);
 		game.fillUpPlayerRack(player);
@@ -88,7 +93,7 @@ class GameTest {
     @Test
     void should_throws_exception_on_playLetter_outside_of_board() throws EmptyBagException {
     	game.initialize();
-    	Player player = game.getPlayer();
+    	Player player = game.getCurrentPlayer();
     	Rack rack = player.rack();
     	
     	Token token = rack.token(0);
@@ -101,29 +106,31 @@ class GameTest {
     @Test
     void test_playLetter_in_general_condition() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
     	game.initialize();
-    	Player player = game.getPlayer();
+    	Player player = game.getCurrentPlayer();
     	Rack rack = player.rack();
     	
     	Token token = rack.token(0);	
-		game.playLetter(token, 8, 8);
-		Token placedToken = game.getBoard().getToken(8, 8); 
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		Token placedToken = game.getBoard().getToken(Board.MIDDLE, Board.MIDDLE); 
 		
 		assertEquals(token, placedToken);
     }
     
     
     @Test
-    void should_throws_exception_on_playLetter_on_already_occuped_position() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+    void should_throws_exception_on_playLetter_on_already_occuped_position() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, CantPlaySingleLetterException {
     	game.initialize();
-    	Player player = game.getPlayer();
+    	Player player = game.getCurrentPlayer();
     	Rack rack = player.rack();
     	Token token = rack.token(0);
+    	Token token2 = rack.token(2);
     	Token oToken = rack.token(1);
-		game.playLetter(token, 8, 8);	
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);	
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);	
 		game.validateWord(Direction.HORIZONTAL);
 		
     	assertThrows(OccupiedBoxException.class, () -> {
-    		game.playLetter(oToken, 8, 8);
+    		game.playLetter(oToken, Board.MIDDLE, Board.MIDDLE);
     	});	
     }
 
@@ -131,15 +138,15 @@ class GameTest {
     void should_do_nothing_if_the_same_letter_is_placed() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
     	game.initialize();
     	
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
     	Rack rack = player.rack();
     	Token token = rack.token(0);
     	Token oToken = rack.token(0);
 
-		game.playLetter(token, 8, 8);		
-		game.playLetter(oToken, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);		
+		game.playLetter(oToken, Board.MIDDLE, Board.MIDDLE);
 
-		Token placedToken = game.getBoard().getToken(8, 8); 
+		Token placedToken = game.getBoard().getToken(Board.MIDDLE, Board.MIDDLE); 
 		assertEquals(oToken, placedToken);
     }
 
@@ -147,11 +154,11 @@ class GameTest {
 	void should_add_token_in_rack_on_cancel_world() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 
 		game.cancelLastWord();
 
@@ -163,14 +170,14 @@ class GameTest {
 		game.initialize();
 
 		Board board = game.getBoard();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastWord();
 
-		Token placedToken = board.getToken(8, 8);
+		Token placedToken = board.getToken(Board.MIDDLE, Board.MIDDLE);
 		assertEquals(null, placedToken);
 	}
 
@@ -178,28 +185,28 @@ class GameTest {
 	void should_clear_round_history() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 		Board board = game.getBoard();
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.clearRoundHistory();
 
 		assertTrue(board.getActionsHistory().isEmpty());
 	}
 
 	@Test
-	void should_add_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+	void should_add_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, CantPlaySingleLetterException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 
 		game.validateWord(Direction.HORIZONTAL);
 
@@ -207,16 +214,16 @@ class GameTest {
 	}
 
 	@Test
-	void should_return_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+	void should_return_score_on_validate_word() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, CantPlaySingleLetterException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 
 		Integer score = game.validateWord(Direction.HORIZONTAL);
 
@@ -224,17 +231,17 @@ class GameTest {
 	}
 
 	@Test
-	void should_clear_history_on_validate_word() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+	void should_clear_history_on_validate_word() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, CantPlaySingleLetterException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Board board = game.getBoard();
 		Token token = rack.token(0);
 		Token token2 = rack.token(1);
 
-		game.playLetter(token, 8, 8);
-		game.playLetter(token2, 8, 9);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 
 		game.validateWord(Direction.HORIZONTAL);
 
@@ -246,11 +253,11 @@ class GameTest {
 	void should_add_token_to_rack_on_cancel_last_action() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastAction();
 
 		assertThat(rack.tokens()).containsOnlyOnce(token);
@@ -261,14 +268,14 @@ class GameTest {
 		game.initialize();
 
 		Board board = game.getBoard();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastAction();
 
-		Token placedToken = board.getToken(8, 8);
+		Token placedToken = board.getToken(Board.MIDDLE, Board.MIDDLE);
 		assertEquals(null, placedToken);
 	}
 
@@ -276,12 +283,12 @@ class GameTest {
 	void should_clear_round_history_on_cancel_last_action() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Board board = game.getBoard();
 		Token token = rack.token(0);
 
-		game.playLetter(token, 8, 8);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
 		game.cancelLastAction();
 
 		assertTrue(board.getActionsHistory().isEmpty());
@@ -299,7 +306,7 @@ class GameTest {
 
 	@Test
 	void should_return_true_when_rack_is_empty() {
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		player.rack().tokens().clear();
 
 		Boolean rackIsEmpty = game.rackIsEmpty();
@@ -323,14 +330,16 @@ class GameTest {
 	}
 
 	@Test
-	void should_throw_exception_on_play_letter_without_any_around() throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, EmptyBagException {
+	void should_throw_exception_on_play_letter_without_any_around() throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, EmptyBagException, CantPlaySingleLetterException {
 		game.initialize();
 		
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 
 		Token token = rack.token(0);
-		game.playLetter(token, 8, 8);
+		Token token2 = rack.token(1);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE, Board.MIDDLE + 1);
 		
 		game.validateWord(Direction.HORIZONTAL);
 		
@@ -343,10 +352,44 @@ class GameTest {
 	}
 
 	@Test
+	void should_throw_exception_on_start_play_single_letter() throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, EmptyBagException {
+		game.initialize();
+
+		Player player = game.getCurrentPlayer();
+		Rack rack = player.rack();
+
+		Token token = rack.token(0);
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+
+		assertThrows(CantPlaySingleLetterException.class, () -> {
+			game.validateWord(Direction.HORIZONTAL);
+		});
+	}
+
+	@Test
+	void should_throw_exception_if_all_letters_are_not_in_same_direction() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+		game.initialize();
+
+		Player player = game.getCurrentPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+		Token token2 = rack.token(1);
+		Token token3 = rack.token(2);
+
+		game.playLetter(token, Board.MIDDLE, Board.MIDDLE);
+		game.playLetter(token2, Board.MIDDLE + 1, Board.MIDDLE);
+		game.playLetter(token3, Board.MIDDLE, Board.MIDDLE + 2);
+
+		assertThrows(IllegalMoveException.class, () -> {
+			game.validateWord(Direction.HORIZONTAL);
+		});
+	}
+
+	@Test
 	void should_throws_exception_on_switch_tokens_but_bag_is_empty() throws EmptyBagException {
 		game.initialize();
 		Bag bag = game.getBag();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 		bag.clear();
@@ -359,7 +402,7 @@ class GameTest {
 	@Test
 	void should_remove_token_from_rack_on_switch_tokens() throws EmptyBagException, TokenDoesntExists {
 		game.initialize();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
@@ -371,7 +414,7 @@ class GameTest {
 	@Test
 	void should_fill_rack_on_switch_tokens() throws EmptyBagException, TokenDoesntExists {
 		game.initialize();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
@@ -383,7 +426,7 @@ class GameTest {
 	@Test
 	void should_add_token_in_bag_on_switch_tokens() throws EmptyBagException, TokenDoesntExists {
 		game.initialize();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		Token token = rack.token(0);
 
@@ -405,7 +448,7 @@ class GameTest {
 	@Test
 	void should_full_fill_player_rack_on_nextRound() throws EmptyBagException {
 		Game game = new Game();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 		rack.tokens().clear();
 

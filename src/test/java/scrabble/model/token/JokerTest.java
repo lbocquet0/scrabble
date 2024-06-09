@@ -11,26 +11,26 @@ public class JokerTest {
 
 	Joker joker = new Joker();
 	@BeforeEach
-	public void initialize() {
+	void initialize() {
 		joker = new Joker();
 	}
 
 	@Test
-	public void shouldReturnTrueIfJoker() {		
+	void should_return_true_if_joker() {		
 		boolean isJoker = joker.isJoker();
 
 		assertTrue(isJoker);
 	}
 
 	@Test
-	public void testDescribeJokerWhenDoesntContainsLetter() {
+	void test_describe_joker_when_doesnt_contains_letter() {
 		String display = joker.display();
 
 		assertEquals("JOK", display);
 	}
 
 	@Test
-	public void testDescribeJokerWhenContainsLetter() {
+	void test_describe_joker_when_contains_letter() {
 		FrenchLetter letter = FrenchLetter.A;
 		joker.setLetter(letter);
 		
@@ -40,14 +40,14 @@ public class JokerTest {
 	}
 
 	@Test
-	public void testGetScoreJoker() {	
+		void test_get_score_joker() {	
 		Integer score = joker.getScore();
 
 		assertEquals(0, score);
 	}
 
 	@Test
-	public void testSetLetter() {
+	void test_set_letter() {
 		FrenchLetter letter = FrenchLetter.A;
 		
 		joker.setLetter(letter);
@@ -57,14 +57,14 @@ public class JokerTest {
 	}
 
 	@Test
-	public void shouldReturnFalseIfDoesntContainsLetter() {
+	void should_return_false_if_doesnt_contains_letter() {
 		
 		boolean haveLetter = joker.haveLetter();
 		assertFalse(haveLetter);
 	}
 	
 	@Test
-	public void shouldReturnTrueIfContainsLetter() {
+	void should_return_true_if_contains_letter() {
 		FrenchLetter letter = FrenchLetter.A;
 		joker.setLetter(letter);
 		
@@ -73,7 +73,7 @@ public class JokerTest {
 	}
 	
 	@Test
-	public void testGetLetterNull() {
+	void test_get_letter_null() {
 		
 		FrenchLetter letter = joker.getLetter();
 		assertNull(letter);

@@ -14,13 +14,13 @@ public class BagTest {
     Bag bag;
 
     @Test
-    void ShouldBeFullOnCreate() {
+    void should_be_full_on_create() {
         bag = new Bag();
         assertEquals(102, bag.remainingTokens());
     }
 
     @Test
-    void ShouldBeEmptyAfterClear() {
+    void should_be_empty_after_clear() {
         bag = new Bag();
         bag.clear();
         
@@ -28,7 +28,7 @@ public class BagTest {
     }
 
     @Test
-    void ShouldThrowExceptionWhenEmpty() {
+    void should_throw_exception_when_empty() {
         bag = new Bag();
         bag.clear();
 
@@ -36,7 +36,7 @@ public class BagTest {
     }
 
     @Test
-    void ShouldLoose1TokenAfterPick() {
+    void should_loose_token_after_one_pick() {
         bag = new Bag();
         int initialCount = bag.remainingTokens();
 
@@ -50,7 +50,7 @@ public class BagTest {
     }
 
     @Test
-    void ShouldGain1TokenAfterPut() {
+    void should_gain_one_token_after_put() {
         bag = new Bag();
         
         try {
