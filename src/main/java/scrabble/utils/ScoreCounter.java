@@ -50,7 +50,6 @@ public class ScoreCounter {
 		ArrayList<Box> wordLetters = null;
 		try {
 			wordLetters = board.getWord(firstAction.row(), firstAction.column(), direction);
-			System.out.println(wordLetters);
 		} catch (PositionOutOfBoard e) {
 			return 0;
 		} catch (WordNotFoundException e) {
