@@ -118,9 +118,10 @@ class GameTest {
     	Player player = game.getCurrentPlayer();
     	Rack rack = player.rack();
     	Token token = rack.token(0);
+    	Token token2 = rack.token(2);
     	Token oToken = rack.token(1);
 		game.playLetter(token, 8, 8);	
-		game.playLetter(token, 8, 9);	
+		game.playLetter(token2, 8, 9);	
 		game.validateWord(Direction.HORIZONTAL);
 		
     	assertThrows(OccupiedBoxException.class, () -> {
@@ -331,8 +332,9 @@ class GameTest {
 		Rack rack = player.rack();
 
 		Token token = rack.token(0);
+		Token token2 = rack.token(1);
 		game.playLetter(token, 8, 8);
-		game.playLetter(token, 8, 9);
+		game.playLetter(token2, 8, 9);
 		
 		game.validateWord(Direction.HORIZONTAL);
 		
