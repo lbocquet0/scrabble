@@ -8,10 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.IntegerProperty;
 import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.*;
@@ -127,7 +129,7 @@ class GameTest {
     }
 
     @Test
-    void should_do_nothing_if_the_same_letter_is_placed() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+    void should_do_nothing_if_the_same_letter_is_placed() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
     	game.initialize();
     	
 		Player player = game.getPlayer();
@@ -143,7 +145,7 @@ class GameTest {
     }
 
 	@Test
-	void should_add_token_in_rack_on_cancel_world() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	void should_add_token_in_rack_on_cancel_world() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
 		Player player = game.getPlayer();
@@ -158,7 +160,7 @@ class GameTest {
 	}
 
 	@Test
-	void should_remove_token_from_board_on_cancel_world() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	void should_remove_token_from_board_on_cancel_world() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
 		Board board = game.getBoard();
@@ -174,7 +176,7 @@ class GameTest {
 	}
 
 	@Test
-	void should_clear_round_history() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	void should_clear_round_history() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		game.initialize();
 
 		Player player = game.getPlayer();
