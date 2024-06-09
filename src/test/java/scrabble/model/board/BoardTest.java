@@ -39,6 +39,9 @@ public class BoardTest {
 		token = new Token(FrenchLetter.A);
 
 		try {
+			board.setToken(token, 8, 8);
+			board.clearHistory();
+
 			box2_1 = board.getBox(2, 1);
 			box2_2 = board.getBox(2, 2);
 			box2_3 = board.getBox(2, 3);
