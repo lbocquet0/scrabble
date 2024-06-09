@@ -12,7 +12,7 @@ public class ScrabbleJeuxEssais {
 	public static void main(String[] args) {
 		Game game = new Game();
 		Bag bag = game.getBag();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Board board = game.getBoard();
 		Rack rack = player.rack();
 
