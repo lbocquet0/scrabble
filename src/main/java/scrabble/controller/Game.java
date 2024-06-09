@@ -121,7 +121,15 @@ public class Game {
 		this.board.clearHistory();
 	}
 
-	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
+	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException, CantPlaySingleLetterException {
+		if (this.board.isMiddleBoxInActionHistory()) {
+			ArrayList<Action> actions = this.board.getActions();
+			
+			if (actions.size() == 1) {
+				throw new CantPlaySingleLetterException();
+			}
+		}
+
 		if (!this.board.gameIsNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
 			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
 			if (!isLetterAround) {

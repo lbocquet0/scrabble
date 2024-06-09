@@ -206,7 +206,7 @@ public class ScrabbleApplicationConsole {
 						Console.message("Vous avez maintenant " + newScore + " points.");
                     } catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
-                    } catch (IllegalMoveException e) {
+                    } catch (IllegalMoveException | CantPlaySingleLetterException e) {
 						Console.message(e.getMessage());
 						game.cancelLastWord();
                     }
