@@ -9,7 +9,7 @@ import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 
 public class RackFXView extends HBox implements FXView {
-	private final Rack rack;
+	private Rack rack;
 
 	private static int TOKEN_SPACING = 5;
 
@@ -49,5 +49,9 @@ public class RackFXView extends HBox implements FXView {
 
 	public Rack rack() {
 		return this.rack;
+	}
+
+	public void setRack(Rack rack) {
+		this.rack = rack;
 	}
 }
