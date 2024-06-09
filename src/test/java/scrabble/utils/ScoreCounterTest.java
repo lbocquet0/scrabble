@@ -1,6 +1,7 @@
 package scrabble.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
 
 public class ScoreCounterTest {
 
@@ -25,7 +27,15 @@ public class ScoreCounterTest {
 	public void initialize() {
 		board = new Board();
 		tokenA = new Token(FrenchLetter.A);
+		
+		try {
+			board.setToken(tokenA, 8, 8);
+		} catch (Exception e) {
+			fail(e);
+		}
+
 		actionHistory = board.getActionsHistory();
+		board.clearHistory();
 	}
 
 	@Test
@@ -35,7 +45,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_when_word_is_aaa_horizontal() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_when_word_is_aaa_horizontal() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 8, 7);
 		board.setToken(tokenA, 8, 8);
 		board.setToken(tokenA, 8, 9);
@@ -45,7 +55,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_when_word_is_aaa_vertical() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_when_word_is_aaa_vertical() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 7, 8);
 		board.setToken(tokenA, 8, 8);
 		board.setToken(tokenA, 9, 8);
@@ -55,7 +65,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_when_complete_word_horizontal() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_when_complete_word_horizontal() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box3 = new Box(false, tokenA);
 
 		board.setToken(tokenA, 7, 8);
@@ -70,7 +80,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_when_complete_word_vertical() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_when_complete_word_vertical() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box3 = new Box(false, tokenA);
 
 		board.setToken(tokenA, 8, 7);
@@ -86,7 +96,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_add_horizontal_word_across_vertical_word()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 7, 7);
 		board.setToken(tokenA, 8, 7);
 		board.setToken(tokenA, 9, 7);
@@ -101,7 +111,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_add_vertical_word_across_horizontal_word()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 7, 7);
 		board.setToken(tokenA, 7, 8);
 		board.setToken(tokenA, 7, 9);
@@ -116,7 +126,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_create_new_words_with_vertical_and_horizontal_words()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 6, 8);
 		board.setToken(tokenA, 7, 8);
 
@@ -132,7 +142,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_for_two_words_both_horizontal() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_for_two_words_both_horizontal() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 8, 6);
 		board.setToken(tokenA, 8, 7);
 		actionHistory.clear();
@@ -148,7 +158,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_for_two_words_both_vertical() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_for_two_words_both_vertical() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 6, 8);
 		board.setToken(tokenA, 7, 8);
 		actionHistory.clear();
@@ -164,7 +174,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_with_double_letter_score() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_with_double_letter_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 1, 4);
 		board.setToken(tokenA, 1, 5);
 		board.setToken(tokenA, 1, 6);
@@ -174,7 +184,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_with_triple_letter_score() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_with_triple_letter_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 2, 6);
 		board.setToken(tokenA, 2, 7);
 		board.setToken(tokenA, 2, 8);
@@ -184,7 +194,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_with_double_word_score() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_with_double_word_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 2, 2);
 		board.setToken(tokenA, 2, 3);
 		board.setToken(tokenA, 2, 4);
@@ -194,7 +204,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_with_triple_word_score() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_with_triple_word_score() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 1, 1);
 		board.setToken(tokenA, 1, 2);
 		board.setToken(tokenA, 1, 3);
@@ -205,7 +215,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_with_double_letter_and_double_word_score()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 1, 4);
 		board.setToken(tokenA, 2, 4);
 		board.setToken(tokenA, 3, 4);
@@ -217,7 +227,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_complete_word_with_double_letter_effect()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 7, 7);
 		board.setToken(tokenA, 8, 7);
 		board.setToken(tokenA, 9, 7);
@@ -231,7 +241,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_complete_word_with_double_word_effect()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 1, 1);
 		board.setToken(tokenA, 2, 1);
 
@@ -245,7 +255,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_complete_two_words_with_double_letter_effect()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 1, 1);
 		board.setToken(tokenA, 2, 1);
 		board.setToken(tokenA, 3, 1);
@@ -263,7 +273,7 @@ public class ScoreCounterTest {
 
 	@Test
 	public void should_count_score_when_complete_two_words_with_double_word_effect()
-			throws PositionOutOfBoard, EmptyBoxException {
+			throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 4, 1);
 		board.setToken(tokenA, 4, 2);
 		board.setToken(tokenA, 4, 3);
@@ -281,7 +291,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_when_play_joker() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_when_play_joker() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Joker joker = new Joker();
 		joker.setLetter(FrenchLetter.A);
 
@@ -293,7 +303,7 @@ public class ScoreCounterTest {
 	}
 
 	@Test
-	public void should_count_score_when_play_all_rack_letters() throws PositionOutOfBoard, EmptyBoxException {
+	public void should_count_score_when_play_all_rack_letters() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		board.setToken(tokenA, 8, 8);
 		board.setToken(tokenA, 8, 7);
 		board.setToken(tokenA, 8, 5);
