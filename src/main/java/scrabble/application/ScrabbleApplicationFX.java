@@ -53,19 +53,24 @@ public class ScrabbleApplicationFX extends Application {
 	}
 
 	private static VBox getStatisticPane(Game game) {
-		Player player = game.getCurrentPlayer();
-
 		VBox statisticPane = new VBox();
 
-		IntegerProperty playerScore = player.scoreProperty();
-		Label playerScoreLabel = new Label();
-		playerScoreLabel.textProperty().bind(Bindings.concat("Score : ", playerScore));
+		ArrayList<Player> players = game.getPlayers();
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			IntegerProperty playerScore = player.scoreProperty();
+			Label playerScoreLabel = new Label();
+			
+			playerScoreLabel.textProperty().bind(Bindings.concat("Score du joueur ", i + 1, " : ", playerScore));
+
+			statisticPane.getChildren().add(playerScoreLabel);
+		}
 
 		IntegerProperty roundAmount = game.roundNumberProperty();
 		Label roundAmountLabel = new Label();
 		roundAmountLabel.textProperty().bind(Bindings.concat("Manche : ", roundAmount));
 
-		statisticPane.getChildren().addAll(playerScoreLabel, roundAmountLabel);
+		statisticPane.getChildren().add(roundAmountLabel);
 		statisticPane.setAlignment(Pos.TOP_LEFT);
 
 		return statisticPane;
