@@ -21,7 +21,7 @@ import scrabble.utils.exceptions.IllegalMoveException;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
-public class BoardTest {
+class BoardTest {
 	Board board;
 	Token token;
 
@@ -50,7 +50,7 @@ public class BoardTest {
 			board.placeToken(token, 2, 1);
 			board.placeToken(token, 2, 2);
 			board.placeToken(token, 2, 3);
-	
+
 			box1_2 = board.getBox(1, 2);
 			box3_2 = board.getBox(3, 2);
 
@@ -67,7 +67,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldContainsBoxesAtInialize() {
+	void should_contains_boxes_at_initialize() {
 		ArrayList<ArrayList<Box>> boxes = board.boxes();
 
 		assertThat(boxes).hasSize(Board.SIZE);
@@ -78,7 +78,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldGetBox() {
+	void should_get_box() {
 		try {
 			Box box = board.getBox(1, 1);
 
@@ -89,7 +89,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionWhenRowIsOutOfBoard() {
+	void should_throw_exception_when_row_is_out_of_board() {
 
 		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(Board.SIZE + 1, 1);
@@ -101,7 +101,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionWhenColumnIsOutOfBoard() {
+	void should_throw_exception_when_column_is_out_of_board() {
 
 		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(1, Board.SIZE + 1);
@@ -113,7 +113,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldReturnTokenWhenBoxIsNotEmpty() {
+	void should_return_token_when_box_is_not_empty() {
 		try {
 			Token boxToken = board.getToken(2, 2);
 
@@ -124,7 +124,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldReturnNullWhenBoxIsEmpty() {
+	void should_return_null_when_box_is_empty() {
 
 		try {
 			Token boxToken = board.getToken(6, 6);
@@ -136,7 +136,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testNoWordFoundIfBoxIsEmpty() {
+	void test_no_word_found_if_box_is_empty() {
 
 		assertThrows(WordNotFoundException.class, () -> {
 			board.getWord(3, 3, Direction.HORIZONTAL);
@@ -144,7 +144,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldDetectLeftWord() {
+	void should_detect_left_word() {
 		try {
 			assertThat(board.getWord(2, 3, Direction.HORIZONTAL)).containsExactlyInAnyOrder(box2_1, box2_2, box2_3);
 		} catch (Exception e) {
@@ -153,7 +153,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldDetectRightWord() {
+	void should_detect_right_word() {
 		try {
 			assertThat(board.getWord(2, 1, Direction.HORIZONTAL)).containsExactlyInAnyOrder(box2_1, box2_2, box2_3);
 		} catch (Exception e) {
@@ -162,7 +162,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldDetectLeftAndRightWord() {
+	void should_detect_left_and_right_word() {
 		try {
 			assertThat(board.getWord(2, 2, Direction.HORIZONTAL)).containsExactlyInAnyOrder(box2_1, box2_2, box2_3);
 		} catch (Exception e) {
@@ -171,7 +171,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldDetectTopWord() {
+	void should_detect_top_word() {
 		try {
 			assertThat(board.getWord(3, 2, Direction.VERTICAL)).containsExactlyInAnyOrder(box3_2, box2_2, box1_2);
 		} catch (Exception e) {
@@ -180,7 +180,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldDetectBottomWord() {
+	void should_detect_bottom_word() {
 		try {
 			assertThat(board.getWord(1, 2, Direction.VERTICAL)).containsExactlyInAnyOrder(box1_2, box2_2, box3_2);
 		} catch (Exception e) {
@@ -189,7 +189,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldDetectTopAndBottomWord() {
+	void should_detect_top_and_bottom_word() {
 		try {
 			assertThat(board.getWord(2, 2, Direction.VERTICAL)).containsExactlyInAnyOrder(box1_2, box2_2, box3_2);
 		} catch (Exception e) {
@@ -198,29 +198,29 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldThrowErrorWhenSingleLetterWord() {
+	void should_throw_error_when_single_letter_word() {
 		assertThrows(WordNotFoundException.class, () -> {
 			board.getWord(5, 5, Direction.HORIZONTAL);
 		});
 	}
 
 	@Test
-	public void shouldClearHistory() {
+	void should_clear_history() {
 		Token token = new Token(FrenchLetter.A);
 
 		try {
 			board.placeToken(token, 6, 6);
-	 	} catch (Exception e) {
+		} catch (Exception e) {
 			fail(e);
 		}
-		
+
 		board.clearHistory();
 
 		assertTrue(board.getActionsHistory().isEmpty());
 	}
 
 	@Test
-	public void shouldCancelLastWord() {
+	void should_cancel_last_word() {
 
 		ArrayList<Token> tokens = board.cancelLastWord();
 
@@ -229,7 +229,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundLeft() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	void test_has_already_played_letter_around_left() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -240,7 +240,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundRight() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	void test_has_already_played_letter_around_right() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -251,7 +251,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundTop() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	void test_has_already_played_letter_around_top() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -262,7 +262,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testHasAlreadyPlayedLetterAroundBottom() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	void test_has_already_played_letter_around_bottom() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -273,7 +273,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldGetWordThrowPositionOutOfBoardException() {
+	void should_get_word_throw_position_out_of_board_exception() {
 
 		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getWord(0, 0, Direction.HORIZONTAL);
@@ -281,7 +281,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testIsAlreadyPlayedLetterAroundActions() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+	void test_is_already_played_letter_around_actions() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 
 		ActionHistory actionHistory = board.getActionsHistory();
 
@@ -294,7 +294,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldGetBoxPosition() throws PositionOutOfBoard {
+	void should_get_box_position() throws PositionOutOfBoard {
 		Board board = new Board();
 		Box box = board.getBox(2, 3);
 		Position position = board.getBoxPosition(box);
@@ -303,10 +303,10 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionWhenBoxNotFound() {
+	void should_throw_exception_when_box_not_found() {
 		Board board = new Board();
 		Box box = new Box(false, null, Effect.NORMAL);
-		
+
 		assertThrows(IllegalArgumentException.class, () -> {
 			board.getBoxPosition(box);
 		});

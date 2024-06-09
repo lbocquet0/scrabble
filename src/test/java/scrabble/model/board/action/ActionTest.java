@@ -1,4 +1,3 @@
-
 package scrabble.model.board.action;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,35 +29,35 @@ public class ActionTest {
 	}
 
 	@Test
-	void testGetRowPosition() {
+	void test_get_row_position() {
 		Integer rowPosition = action.row();
 		
 		assertEquals(ROW, rowPosition);
 	}
 
 	@Test
-	void testGetColumnPosition() {
+	void test_get_column_position() {
 		Integer columnPosition = action.column();
 		
 		assertEquals(COLUMN, columnPosition);
 	}
 
 	@Test
-	void testGetBox() {
+	void test_get_box() {
 		Box box = action.box();
 		
 		assertEquals(box, box);
 	}
 
 	@Test
-	void testGetToken() {
+	void test_get_token() {
 		Token token = action.token();
 		
 		assertEquals(token, token);
 	}
 
 	@Test
-	void shouldThrowEmptyBoxExceptionWhenTokenIsNull() {
+	void should_throw_empty_box_exception_when_token_is_null() {
 		Box emptyBox = new Box(false, null);
 		
 		assertThrows(EmptyBoxException.class, () -> new Action(ROW, COLUMN, emptyBox));
