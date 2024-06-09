@@ -64,7 +64,7 @@ public class ScrabbleApplicationConsole {
 					Boolean isBoardEmpty;
 
 					try {
-						isBoardEmpty = board.gameHaveNotStarted();
+						isBoardEmpty = board.gameIsNotStarted();
 					} catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
 						continueGame = false;

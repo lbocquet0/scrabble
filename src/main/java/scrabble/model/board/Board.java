@@ -81,7 +81,7 @@ public class Board {
 		return this.boxes;
 	}
 
-	public Boolean gameHaveNotStarted() throws PositionOutOfBoard {
+	public Boolean gameIsNotStarted() throws PositionOutOfBoard {
         return this.getBox(8, 8).isEmpty();
 	}
 	
@@ -105,7 +105,7 @@ public class Board {
 	
 	public void setToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box = this.getBox(row, column);
-		if (this.gameHaveNotStarted() && !box.isMiddle()) {
+		if (this.gameIsNotStarted() && !box.isMiddle()) {
 			throw new IllegalMoveException();
 		}
 		

@@ -108,7 +108,7 @@ public class Game {
 	}
 
 	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
-		if (!this.board.gameHaveNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
+		if (!this.board.gameIsNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
 			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
 			if (!isLetterAround) {
 				throw new IllegalMoveException();

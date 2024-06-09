@@ -29,7 +29,7 @@ class GameTest {
     void should_return_empty_board_on_new_object_creation() throws PositionOutOfBoard {
     	Board board = game.getBoard();
     	
-    	Boolean boardIsEmpty = board.gameHaveNotStarted();
+    	Boolean boardIsEmpty = board.gameIsNotStarted();
     	
     	assertTrue(boardIsEmpty);
     }

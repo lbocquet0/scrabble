@@ -246,7 +246,7 @@ public class ScrabbleApplicationFX extends Application {
 	private static void playWord(Game game, Rack rack) throws PositionOutOfBoard {
 		Boolean isFirstRound = false;
 
-		if (game.getBoard().gameHaveNotStarted()) {
+		if (game.getBoard().gameIsNotStarted()) {
 			isFirstRound = true;
 		}
 		
