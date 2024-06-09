@@ -119,7 +119,14 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	public void shouldReturnAction() {
+	public void should_return_null_on_get_action_is_higher_than_amount() {
+		actionHistory.add(action);
+
+		Action action = actionHistory.getAction(1);
+
+		assertNull(action);
+	}
+
 	@Test
 	public void should_return_action() {
 		actionHistory.add(action);
