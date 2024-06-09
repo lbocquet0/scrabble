@@ -66,8 +66,7 @@ public class Game {
 		}
 	}
 
-	public void playLetter(Token token, int row, int column)
-			throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
 		Token currentToken = this.board.getToken(row, column);
 		if (currentToken != null) {
 			if (currentToken.getLetter() == token.getLetter()) {
