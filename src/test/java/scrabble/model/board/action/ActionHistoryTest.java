@@ -1,5 +1,6 @@
 package scrabble.model.board.action;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -135,4 +136,71 @@ public class ActionHistoryTest {
 
 		assertEquals(this.action, action);
 	}
+
+	  @Test
+    void should_return_true_when_empty() {
+        boolean result = actionHistory.isAllActionsInSameDirection();
+
+        assertTrue(result);
+    }
+
+    @Test
+    void should_return_true_when_single_action() throws EmptyBoxException {
+		Box box1 = new Box(false, new Token(FrenchLetter.A));
+
+        Action action = new Action(0, 0, box1);
+        actionHistory.add(action);
+
+        boolean result = actionHistory.isAllActionsInSameDirection();
+
+        assertTrue(result);
+    }
+
+    @Test
+    void should_return_true_when_horizontal_actions() throws EmptyBoxException {
+		Box box1 = new Box(false, new Token(FrenchLetter.A));
+		Box box2 = new Box(false, new Token(FrenchLetter.B));
+
+        Action action1 = new Action(0, 0, box1);
+        Action action2 = new Action(0, 1, box2);
+        actionHistory.add(action1);
+        actionHistory.add(action2);
+
+        boolean result = actionHistory.isAllActionsInSameDirection();
+
+        assertTrue(result);
+    }
+
+    @Test
+    void should_return_true_when_vertical_actions() throws EmptyBoxException {
+		Box box1 = new Box(false, new Token(FrenchLetter.A));
+		Box box2 = new Box(false, new Token(FrenchLetter.B));
+
+        Action action1 = new Action(0, 0, box1);
+        Action action2 = new Action(1, 0, box2);
+        actionHistory.add(action1);
+        actionHistory.add(action2);
+
+        boolean result = actionHistory.isAllActionsInSameDirection();
+
+        assertTrue(result);
+    }
+
+    @Test
+    void should_return_false_when_mixed_actions() throws EmptyBoxException {
+		Box box1 = new Box(false, new Token(FrenchLetter.A));
+		Box box2 = new Box(false, new Token(FrenchLetter.B));
+		Box box3 = new Box(false, new Token(FrenchLetter.C));
+
+        Action action1 = new Action(0, 0, box1);
+        Action action2 = new Action(1, 0, box2);
+        Action action3 = new Action(0, 1, box3);
+        actionHistory.add(action1);
+        actionHistory.add(action2);
+        actionHistory.add(action3);
+
+        boolean result = actionHistory.isAllActionsInSameDirection();
+
+        assertFalse(result);
+    }
 }
