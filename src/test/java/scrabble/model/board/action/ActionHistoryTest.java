@@ -33,7 +33,7 @@ public class ActionHistoryTest {
 	}
 	
 	@Test
-	void shouldBeEmptyAtInitialization() {
+	void should_be_empty_at_initialization() {
 		ActionHistory actionHistory = new ActionHistory();
 		
 		Integer amount = actionHistory.amount();
@@ -42,7 +42,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldAddAction() {
+	void should_add_action() {
 		actionHistory.add(action);
 
 		Integer amount = actionHistory.amount();
@@ -52,7 +52,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldClearActions() {
+	void should_clear_actions() {
 		actionHistory.add(action);
 		actionHistory.clear();
 
@@ -62,7 +62,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldUndoAction() {
+	void should_undo_action() {
 		Token undidToken = actionHistory.undoAction(action);
 
 		ArrayList<Action> actions = actionHistory.actions();
@@ -72,7 +72,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldUndoAllActions() throws EmptyBoxException {
+	void should_undo_all_actions() throws EmptyBoxException {
 		Token token2 = new Token(FrenchLetter.B);
 		Box box2 = new Box(false, token2);
 
@@ -89,7 +89,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-    void shouldUndoLastAction() {
+    void should_undo_last_action() {
         actionHistory.add(action);
         Token undidToken = actionHistory.undoLastAction();
 
@@ -98,21 +98,21 @@ public class ActionHistoryTest {
     }
 
     @Test
-    void shouldReturnNullWhenUndoingLastActionFromEmptyHistory() {
+    void should_return_null_when_undoing_last_action_from_empty_history() {
         Token undidToken = actionHistory.undoLastAction();
 
         assertNull(undidToken);
     }
 
 	@Test
-	public void shouldReturnNullOnGetFirstActionWhenEmpty() {
+	public void should_return_null_on_get_first_action_when_empty() {
 		Action firstAction = actionHistory.getFirstAction();
 
 		assertNull(firstAction);
 	}
 
 	@Test
-	public void shouldReturnNullOnGetActionWhenDoesntExists() {
+	public void should_return_null_on_get_action_when_doesnt_exists() {
 		Action action = actionHistory.getAction(0);
 
 		assertNull(action);
@@ -120,6 +120,8 @@ public class ActionHistoryTest {
 
 	@Test
 	public void shouldReturnAction() {
+	@Test
+	public void should_return_action() {
 		actionHistory.add(action);
 
 		Action action = actionHistory.getAction(0);
