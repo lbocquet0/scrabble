@@ -30,6 +30,16 @@ public class JokerTest {
 	}
 
 	@Test
+	public void testDescribeJokerWhenContainsLetter() {
+		FrenchLetter letter = FrenchLetter.A;
+		joker.setLetter(letter);
+		
+		String display = joker.display();
+
+		assertEquals(FrenchLetter.A.display(), display);
+	}
+
+	@Test
 	public void testGetScoreJoker() {	
 		Integer score = joker.getScore();
 
