@@ -1,5 +1,7 @@
 package scrabble.model.board.action;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -85,5 +87,43 @@ public class ActionHistoryTest {
 		assertThat(undidTokens).contains(token, token2);
 		assertThat(actionHistory.actions()).isEmpty();
 	}
-	
+
+	@Test
+    void shouldUndoLastAction() {
+        actionHistory.add(action);
+        Token undidToken = actionHistory.undoLastAction();
+
+        assertEquals(token, undidToken);
+        assertTrue(actionHistory.isEmpty());
+    }
+
+    @Test
+    void shouldReturnNullWhenUndoingLastActionFromEmptyHistory() {
+        Token undidToken = actionHistory.undoLastAction();
+
+        assertNull(undidToken);
+    }
+
+	@Test
+	public void shouldReturnNullOnGetFirstActionWhenEmpty() {
+		Action firstAction = actionHistory.getFirstAction();
+
+		assertNull(firstAction);
+	}
+
+	@Test
+	public void shouldReturnNullOnGetActionWhenDoesntExists() {
+		Action action = actionHistory.getAction(0);
+
+		assertNull(action);
+	}
+
+	@Test
+	public void shouldReturnAction() {
+		actionHistory.add(action);
+
+		Action action = actionHistory.getAction(0);
+
+		assertEquals(this.action, action);
+	}
 }
