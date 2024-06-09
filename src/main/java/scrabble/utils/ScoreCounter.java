@@ -16,6 +16,7 @@ public class ScoreCounter {
 	private static int SCORE_BONUS_WHEN_ALL_TOKENS_USED = 50;
 
 	public static Integer countWordScore(ArrayList<Box> wordLetters, ActionHistory actionHistory) {
+
 		Integer score = 0;
 		Integer wordMultiplicator = 1;
 
@@ -37,7 +38,6 @@ public class ScoreCounter {
 
 	public static Integer countScore(Board board, Direction direction) {
 		ActionHistory actionHistory = board.getActionsHistory();
-		System.out.println(actionHistory.actions());
 		
 		if (actionHistory.isEmpty()) {
 			return 0;
@@ -50,13 +50,12 @@ public class ScoreCounter {
 		ArrayList<Box> wordLetters = null;
 		try {
 			wordLetters = board.getWord(firstAction.row(), firstAction.column(), direction);
+			score += countWordScore(wordLetters, actionHistory);
 		} catch (PositionOutOfBoard e) {
 			return 0;
 		} catch (WordNotFoundException e) {
-			return 0;
+			
 		}
-
-		score += countWordScore(wordLetters, actionHistory);
 
 		Direction oppositeDirection;
 		
