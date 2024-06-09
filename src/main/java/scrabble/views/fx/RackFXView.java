@@ -43,7 +43,7 @@ public class RackFXView extends HBox implements FXView {
 			}
 
 			TokenDragAndDropController.manageSourceDragAndDrop(fxView);
-			TokenDragAndDropController.manageTokenUpdateOrderTargetDragAndDrop(this, fxView);
+			TokenDragAndDropController.manageTokenUpdateOrderTargetDragAndDrop(fxView);
 		}
 	}
 
