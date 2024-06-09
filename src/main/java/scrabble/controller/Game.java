@@ -8,19 +8,18 @@ import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
-import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.ScoreCounter;
 import scrabble.utils.exceptions.*;
 
 public class Game {
-	
+
 	private Player player;
 	private Board board;
 	private Bag bag;
 	private IntegerProperty roundNumber;
-	
+
 	public Game() {
 		this.bag = new Bag();
 		this.player = new Player();
@@ -28,11 +27,11 @@ public class Game {
 
 		this.roundNumber = new SimpleIntegerProperty(1);
 	}
-	
+
 	public Board getBoard() {
 		return this.board;
 	}
-	
+
 	public Bag getBag() {
 		return this.bag;
 	}
@@ -52,11 +51,11 @@ public class Game {
 	public Boolean rackIsEmpty() {
 		return this.player.remainingTokenInRack() == 0;
 	}
-	
+
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
 		if (player.remainingTokenInRack() < Rack.MAX_TOKENS_AMOUNT) {
 			Token token = this.bag.pickToken();
-			
+
 			player.addTokenToRack(token);
 		}
 	}
@@ -67,7 +66,8 @@ public class Game {
 		}
 	}
 
-	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	public void playLetter(Token token, int row, int column)
+			throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
 		Token currentToken = this.board.getToken(row, column);
 		if (currentToken != null) {
 			if (currentToken.getLetter() == token.getLetter()) {
@@ -75,7 +75,7 @@ public class Game {
 			} else {
 				throw new OccupiedBoxException();
 			}
-        }
+		}
 
 		this.player.removeTokenFromRack(token);
 
@@ -124,16 +124,16 @@ public class Game {
 	}
 
 	public void switchTokenFromRack(Player player, Token token) throws EmptyBagException, TokenDoesntExists {
-		
-        if (this.bag.remainingTokens() == 0) {
-            throw new EmptyBagException();
-        }
+
+		if (this.bag.remainingTokens() == 0) {
+			throw new EmptyBagException();
+		}
 
 		player.removeTokenFromRack(token);
-        
-        this.fillUpPlayerRack(player);
-        this.bag.putToken(token);
-    }
+
+		this.fillUpPlayerRack(player);
+		this.bag.putToken(token);
+	}
 
 	public Integer roundNumber() {
 		return this.roundNumber.get();
