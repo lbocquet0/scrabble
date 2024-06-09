@@ -32,6 +32,7 @@ import scrabble.utils.Direction;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
 import scrabble.utils.exceptions.OccupiedBoxException;
 import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
@@ -298,7 +299,7 @@ public class ScrabbleApplicationFX extends Application {
 	
 			try {
 				game.playLetter(token, row, column);
-			} catch (OccupiedBoxException | PositionOutOfBoard | TokenDoesntExists | EmptyBoxException e) {
+			} catch (OccupiedBoxException | PositionOutOfBoard | TokenDoesntExists | EmptyBoxException | IllegalMoveException e) {
 				displayError(e.getMessage());
 				game.cancelLastWord();
 				return;

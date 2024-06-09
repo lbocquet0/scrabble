@@ -111,6 +111,10 @@ public class ScrabbleApplicationConsole {
 						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelLastAction();
+					} catch (IllegalMoveException e) {
+						Console.message(e.getMessage());
+						continueGame = false;
+						game.cancelLastAction();
 					}
 
 					Integer response;
@@ -177,6 +181,14 @@ public class ScrabbleApplicationConsole {
 								Console.message(e.getMessage());
 							} catch (TokenDoesntExists e) {
 								Console.message(e.getMessage());
+							} catch (IllegalMoveException e) {
+								Console.message(e.getMessage());
+								game.cancelLastAction();
+								if (direction == Direction.HORIZONTAL) {
+									column -= 1;
+								} else {
+									row -= 1;
+								}
 							}
 
 							Console.message("Avez-vous d'autres lettres à jouer ?");

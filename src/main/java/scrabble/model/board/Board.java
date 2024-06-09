@@ -10,6 +10,7 @@ import scrabble.utils.Direction;
 import scrabble.utils.Position;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
 import scrabble.utils.exceptions.WordNotFoundException;
 
 public class Board {
@@ -81,7 +82,11 @@ public class Board {
 	}
 
 	public Boolean gameHaveNotStarted() throws PositionOutOfBoard {
-        return this.getBox(8, 8).isEmpty() || this.actionHistory.positionIsInActions(8, 8);
+        return this.getBox(8, 8).isEmpty();
+	}
+	
+	public Boolean isMiddleBoxInActionHistory() {
+		return this.actionHistory.positionIsInActions(8, 8);
 	}
 
 	public Box getBox(Integer row, Integer column) throws PositionOutOfBoard {
@@ -98,8 +103,11 @@ public class Board {
 		return box.token();
 	}
 	
-	public void setToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException {
+	public void setToken(Token token, Integer row, Integer column) throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
 		Box box = this.getBox(row, column);
+		if (this.gameHaveNotStarted() && !box.isMiddle()) {
+			throw new IllegalMoveException();
+		}
 		
 		box.setToken(token);
 		this.actionHistory.add(new Action(row, column, box));
