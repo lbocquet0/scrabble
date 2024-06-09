@@ -241,4 +241,187 @@ class GameTest {
 
 		assertTrue(board.getActionsHistory().isEmpty());
 	}
+
+
+	@Test
+	void should_add_token_to_rack_on_cancel_last_action() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+		game.initialize();
+
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+
+		game.playLetter(token, 8, 8);
+		game.cancelLastAction();
+
+		assertThat(rack.tokens()).containsOnlyOnce(token);
+	}
+
+	@Test
+	void should_remove_token_from_board_on_cancel_last_action() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+		game.initialize();
+
+		Board board = game.getBoard();
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+
+		game.playLetter(token, 8, 8);
+		game.cancelLastAction();
+
+		Token placedToken = board.getToken(8, 8);
+		assertEquals(null, placedToken);
+	}
+
+	@Test
+	void should_clear_round_history_on_cancel_last_action() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+		game.initialize();
+
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Board board = game.getBoard();
+		Token token = rack.token(0);
+
+		game.playLetter(token, 8, 8);
+		game.cancelLastAction();
+
+		assertTrue(board.getActionsHistory().isEmpty());
+	}
+
+	@Test
+	void should_return_true_when_bag_is_empty() {
+		Bag bag = game.getBag();
+		bag.clear();
+
+		Boolean bagIsEmpty = game.bagIsEmpty();
+
+		assertTrue(bagIsEmpty);
+	}
+
+	@Test
+	void should_return_true_when_rack_is_empty() {
+		Player player = game.getPlayer();
+		player.rack().tokens().clear();
+
+		Boolean rackIsEmpty = game.rackIsEmpty();
+
+		assertTrue(rackIsEmpty);
+	}
+
+	@Test
+	void should_return_false_when_rack_is_not_empty() throws EmptyBagException {
+		game.initialize();
+		Boolean rackIsEmpty = game.rackIsEmpty();
+
+		assertTrue(!rackIsEmpty);
+	}
+	
+	@Test
+	void should_return_false_when_bag_is_not_empty() {
+		Boolean bagIsEmpty = game.bagIsEmpty();
+		
+		assertTrue(!bagIsEmpty);
+	}
+
+	@Test
+	void should_throw_exception_on_play_letter_without_any_around() throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException, EmptyBagException {
+		game.initialize();
+		
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+
+		Token token = rack.token(0);
+		game.playLetter(token, 8, 8);
+		
+		game.validateWord(Direction.HORIZONTAL);
+		
+		token = rack.token(0);
+		game.playLetter(token, 1, 1);
+
+		assertThrows(IllegalMoveException.class, () -> {
+			game.validateWord(Direction.HORIZONTAL);
+		});
+	}
+
+	@Test
+	void should_throws_exception_on_switch_tokens_but_bag_is_empty() throws EmptyBagException {
+		game.initialize();
+		Bag bag = game.getBag();
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+		bag.clear();
+
+		assertThrows(EmptyBagException.class, () -> {
+			game.switchTokenFromRack(player, token);
+		});
+	}
+
+	@Test
+	void should_remove_token_from_rack_on_switch_tokens() throws EmptyBagException, TokenDoesntExists {
+		game.initialize();
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+
+		game.switchTokenFromRack(player, token);
+
+		assertThat(rack.tokens()).doesNotContain(token);
+	}
+
+	@Test
+	void should_fill_rack_on_switch_tokens() throws EmptyBagException, TokenDoesntExists {
+		game.initialize();
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+
+		game.switchTokenFromRack(player, token);
+
+		assertThat(rack.tokens()).hasSize(Rack.MAX_TOKENS_AMOUNT);
+	}
+
+	@Test
+	void should_add_token_in_bag_on_switch_tokens() throws EmptyBagException, TokenDoesntExists {
+		game.initialize();
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+
+		game.switchTokenFromRack(player, token);
+
+		assertThat(game.getBag().tokens()).contains(token);
+	}
+
+	@Test
+	void should_increment_round_number_on_nextRound() throws EmptyBagException {
+		Game game = new Game();
+		int initialRoundNumber = game.roundNumber();
+
+		int newRoundNumber = game.nextRound();
+
+		assertEquals(initialRoundNumber + 1, newRoundNumber);
+	}
+
+	@Test
+	void should_full_fill_player_rack_on_nextRound() throws EmptyBagException {
+		Game game = new Game();
+		Player player = game.getPlayer();
+		Rack rack = player.rack();
+		rack.tokens().clear();
+
+		game.nextRound();
+		int newRackCount = player.remainingTokenInRack();
+
+		assertEquals(Rack.MAX_TOKENS_AMOUNT, newRackCount);
+	}
+
+	@Test
+	void rank_number_should_be_1_on_new_object_creation() {
+		Game game = new Game();
+
+		IntegerProperty roundNumber = game.roundNumberProperty();
+
+		assertEquals(1, roundNumber.get());
+	}
 }
