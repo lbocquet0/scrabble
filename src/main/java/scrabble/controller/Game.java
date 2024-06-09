@@ -8,6 +8,7 @@ import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
+import scrabble.model.board.action.Action;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.ScoreCounter;
@@ -147,5 +148,9 @@ public class Game {
 
 	public IntegerProperty roundNumberProperty() {
 		return this.roundNumber;
+	}
+
+	public ArrayList<Action> getActions() {
+		return this.board.getActions();
 	}
 }
