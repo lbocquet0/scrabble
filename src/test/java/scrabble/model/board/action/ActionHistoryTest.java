@@ -1,5 +1,7 @@
 package scrabble.model.board.action;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class ActionHistoryTest {
 	}
 	
 	@Test
-	void shouldBeEmptyAtInitialization() {
+	void should_be_empty_at_initialization() {
 		ActionHistory actionHistory = new ActionHistory();
 		
 		Integer amount = actionHistory.amount();
@@ -40,7 +42,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldAddAction() {
+	void should_add_action() {
 		actionHistory.add(action);
 
 		Integer amount = actionHistory.amount();
@@ -50,7 +52,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldClearActions() {
+	void should_clear_actions() {
 		actionHistory.add(action);
 		actionHistory.clear();
 
@@ -60,7 +62,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldUndoAction() {
+	void should_undo_action() {
 		Token undidToken = actionHistory.undoAction(action);
 
 		ArrayList<Action> actions = actionHistory.actions();
@@ -70,7 +72,7 @@ public class ActionHistoryTest {
 	}
 
 	@Test
-	void shouldUndoAllActions() throws EmptyBoxException {
+	void should_undo_all_actions() throws EmptyBoxException {
 		Token token2 = new Token(FrenchLetter.B);
 		Box box2 = new Box(false, token2);
 
@@ -85,5 +87,52 @@ public class ActionHistoryTest {
 		assertThat(undidTokens).contains(token, token2);
 		assertThat(actionHistory.actions()).isEmpty();
 	}
-	
+
+	@Test
+    void should_undo_last_action() {
+        actionHistory.add(action);
+        Token undidToken = actionHistory.undoLastAction();
+
+        assertEquals(token, undidToken);
+        assertTrue(actionHistory.isEmpty());
+    }
+
+    @Test
+    void should_return_null_when_undoing_last_action_from_empty_history() {
+        Token undidToken = actionHistory.undoLastAction();
+
+        assertNull(undidToken);
+    }
+
+	@Test
+	public void should_return_null_on_get_first_action_when_empty() {
+		Action firstAction = actionHistory.getFirstAction();
+
+		assertNull(firstAction);
+	}
+
+	@Test
+	public void should_return_null_on_get_action_when_doesnt_exists() {
+		Action action = actionHistory.getAction(0);
+
+		assertNull(action);
+	}
+
+	@Test
+	public void should_return_null_on_get_action_is_higher_than_amount() {
+		actionHistory.add(action);
+
+		Action action = actionHistory.getAction(1);
+
+		assertNull(action);
+	}
+
+	@Test
+	public void should_return_action() {
+		actionHistory.add(action);
+
+		Action action = actionHistory.getAction(0);
+
+		assertEquals(this.action, action);
+	}
 }

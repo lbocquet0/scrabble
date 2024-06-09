@@ -1,6 +1,7 @@
 package scrabble.model.board;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
@@ -10,10 +11,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
 public class BoardTest {
@@ -35,6 +39,9 @@ public class BoardTest {
 		token = new Token(FrenchLetter.A);
 
 		try {
+			board.setToken(token, 8, 8);
+			board.clearHistory();
+
 			box2_1 = board.getBox(2, 1);
 			box2_2 = board.getBox(2, 2);
 			box2_3 = board.getBox(2, 3);
@@ -83,11 +90,11 @@ public class BoardTest {
 	@Test
 	public void shouldThrowExceptionWhenRowIsOutOfBoard() {
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(Board.SIZE + 1, 1);
 		});
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(0, 1);
 		});
 	}
@@ -95,11 +102,11 @@ public class BoardTest {
 	@Test
 	public void shouldThrowExceptionWhenColumnIsOutOfBoard() {
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(1, Board.SIZE + 1);
 		});
 
-		assertThrows(BoxIndexOutOfBoard.class, () -> {
+		assertThrows(PositionOutOfBoard.class, () -> {
 			board.getBox(1, 0);
 		});
 	}
@@ -208,7 +215,7 @@ public class BoardTest {
 		
 		board.clearHistory();
 
-		assertThat(board.getActionsHistory()).isEmpty();
+		assertTrue(board.getActionsHistory().isEmpty());
 	}
 
 	@Test
@@ -218,5 +225,70 @@ public class BoardTest {
 
 		assertThat(tokens).hasSize(6);
 		assertThat(tokens.get(0)).isEqualTo(token);
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundLeft() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(4, 5));
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundRight() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(4, 3));
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundTop() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(5, 4));
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundBottom() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(3, 4));
+	}
+
+	@Test
+	public void shouldGetWordThrowPositionOutOfBoardException() {
+
+		assertThrows(PositionOutOfBoard.class, () -> {
+			board.getWord(0, 0, Direction.HORIZONTAL);
+		});
+	}
+
+	@Test
+	public void testIsAlreadyPlayedLetterAroundActions() throws PositionOutOfBoard, EmptyBoxException, IllegalMoveException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		board.setToken(token, 4, 5);
+
+		assertTrue(board.isAlreadyPlayedLetterAroundActions());
 	}
 }

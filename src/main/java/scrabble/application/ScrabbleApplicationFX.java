@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import scrabble.controller.Game;
@@ -30,9 +29,10 @@ import scrabble.model.token.FrenchLetterComparator;
 import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
-import scrabble.utils.exceptions.BoxIndexOutOfBoard;
+import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.EmptyBagException;
 import scrabble.utils.exceptions.EmptyBoxException;
+import scrabble.utils.exceptions.IllegalMoveException;
 import scrabble.utils.exceptions.OccupiedBoxException;
 import scrabble.utils.exceptions.TokenDoesntExists;
 import scrabble.views.fx.BoardFXView;
@@ -130,8 +130,8 @@ public class ScrabbleApplicationFX extends Application {
 
 	private static boolean createConfirmation(String title, String header) {
 		Alert alert = new Alert(Alert.AlertType.NONE);
-		alert.setTitle("Jouer un mot");
-		alert.setHeaderText("Voulez-vous continuer à jouer ?");
+		alert.setTitle(title);
+		alert.setHeaderText(header);
 
 		alert.getDialogPane().getButtonTypes().add(ButtonType.YES);
 		alert.getDialogPane().getButtonTypes().add(ButtonType.NO);
@@ -172,7 +172,7 @@ public class ScrabbleApplicationFX extends Application {
 		playButton.setOnAction(e -> {
 			try {
 				playWord(game, rack);
-			} catch (BoxIndexOutOfBoard err) {
+			} catch (PositionOutOfBoard err) {
 				displayError(err.getMessage());
 			}
 
@@ -207,7 +207,7 @@ public class ScrabbleApplicationFX extends Application {
 		}
 	}
 
-	private static void playWord(Game game, Rack rack) throws BoxIndexOutOfBoard {
+	private static void playWord(Game game, Rack rack) throws PositionOutOfBoard {
 		Boolean isFirstRound = false;
 
 		if (game.getBoard().gameHaveNotStarted()) {
@@ -299,7 +299,7 @@ public class ScrabbleApplicationFX extends Application {
 	
 			try {
 				game.playLetter(token, row, column);
-			} catch (OccupiedBoxException | BoxIndexOutOfBoard | TokenDoesntExists | EmptyBoxException e) {
+			} catch (OccupiedBoxException | PositionOutOfBoard | TokenDoesntExists | EmptyBoxException | IllegalMoveException e) {
 				displayError(e.getMessage());
 				game.cancelLastWord();
 				return;
@@ -330,6 +330,18 @@ public class ScrabbleApplicationFX extends Application {
 				row++;
 			}
 
+            try {
+				while (row <= Board.SIZE && column <= Board.SIZE && !game.getBoard().getBox(row, column).isEmpty()) {
+				    if (direction == Direction.HORIZONTAL) {
+				        column++;
+				    } else {
+				        row++;
+				    }
+				}
+			} catch (PositionOutOfBoard e) {
+				displayError(e.getMessage());
+			}
+
 			playLetter(game, rack, row, column, direction);
 		} else {
 			
@@ -346,7 +358,7 @@ public class ScrabbleApplicationFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws EmptyBagException {
 		primaryStage.setTitle("Scrabble");
-		this.startGame(primaryStage);
+		startGame(primaryStage);
 		primaryStage.show();
 	}
 

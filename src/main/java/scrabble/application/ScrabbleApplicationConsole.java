@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import scrabble.controller.Game;
 import scrabble.gui.console.Console;
-import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
@@ -32,7 +31,6 @@ public class ScrabbleApplicationConsole {
 		
 		Player player = game.getPlayer();
 		Board board = game.getBoard();
-		Bag bag = game.getBag();
 		Rack rack = player.rack();
 
 		Boolean continueGame = true;
@@ -67,7 +65,7 @@ public class ScrabbleApplicationConsole {
 
 					try {
 						isBoardEmpty = board.gameHaveNotStarted();
-					} catch (BoxIndexOutOfBoard e) {
+					} catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
 						continueGame = false;
 						break;
@@ -105,11 +103,15 @@ public class ScrabbleApplicationConsole {
 						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelLastAction();
-					} catch (BoxIndexOutOfBoard e) {
+					} catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelLastAction();
 					} catch (TokenDoesntExists e) {
+						Console.message(e.getMessage());
+						continueGame = false;
+						game.cancelLastAction();
+					} catch (IllegalMoveException e) {
 						Console.message(e.getMessage());
 						continueGame = false;
 						game.cancelLastAction();
@@ -175,10 +177,18 @@ public class ScrabbleApplicationConsole {
 								} else {
 									row -= 1;
 								}
-							} catch (BoxIndexOutOfBoard e) {
+							} catch (PositionOutOfBoard e) {
 								Console.message(e.getMessage());
 							} catch (TokenDoesntExists e) {
 								Console.message(e.getMessage());
+							} catch (IllegalMoveException e) {
+								Console.message(e.getMessage());
+								game.cancelLastAction();
+								if (direction == Direction.HORIZONTAL) {
+									column -= 1;
+								} else {
+									row -= 1;
+								}
 							}
 
 							Console.message("Avez-vous d'autres lettres à jouer ?");
@@ -194,7 +204,7 @@ public class ScrabbleApplicationConsole {
                     try {
                         Integer newScore = game.validateWord(direction);
 						Console.message("Vous avez maintenant " + newScore + " points.");
-                    } catch (BoxIndexOutOfBoard e) {
+                    } catch (PositionOutOfBoard e) {
 						Console.message(e.getMessage());
                     } catch (IllegalMoveException e) {
 						Console.message(e.getMessage());

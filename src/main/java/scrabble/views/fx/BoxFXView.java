@@ -1,9 +1,11 @@
 package scrabble.views.fx;
 
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import scrabble.model.board.Box;
+import scrabble.model.board.Effect;
 import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 
@@ -42,6 +44,21 @@ public class BoxFXView extends StackPane implements FXView {
 
 			ImageView middleImageView = this.getMiddleImageView();
 			this.getChildren().add(middleImageView);
+		
+		} else {
+			Effect effect = this.box.effect();
+			String content = effect.content();
+
+
+			if (content != null) {
+				Label label = new Label(content);
+				this.getChildren().add(label);
+			}
+
+			String backgroundColor = effect.backgroundColor();
+			if (backgroundColor != null) {
+				this.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: black; -fx-border-width: 1;");
+			}
 		}
 	}
 

@@ -8,19 +8,18 @@ import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
-import scrabble.model.board.action.Action;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.ScoreCounter;
 import scrabble.utils.exceptions.*;
 
 public class Game {
-	
+
 	private Player player;
 	private Board board;
 	private Bag bag;
 	private IntegerProperty roundNumber;
-	
+
 	public Game() {
 		this.bag = new Bag();
 		this.player = new Player();
@@ -28,11 +27,11 @@ public class Game {
 
 		this.roundNumber = new SimpleIntegerProperty(1);
 	}
-	
+
 	public Board getBoard() {
 		return this.board;
 	}
-	
+
 	public Bag getBag() {
 		return this.bag;
 	}
@@ -52,11 +51,11 @@ public class Game {
 	public Boolean rackIsEmpty() {
 		return this.player.remainingTokenInRack() == 0;
 	}
-	
+
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
 		if (player.remainingTokenInRack() < Rack.MAX_TOKENS_AMOUNT) {
 			Token token = this.bag.pickToken();
-			
+
 			player.addTokenToRack(token);
 		}
 	}
@@ -67,7 +66,7 @@ public class Game {
 		}
 	}
 
-	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, BoxIndexOutOfBoard, TokenDoesntExists, EmptyBoxException {
+	public void playLetter(Token token, int row, int column) throws OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
 		Token currentToken = this.board.getToken(row, column);
 		if (currentToken != null) {
 			if (currentToken.getLetter() == token.getLetter()) {
@@ -75,7 +74,7 @@ public class Game {
 			} else {
 				throw new OccupiedBoxException();
 			}
-        }
+		}
 
 		this.player.removeTokenFromRack(token);
 
@@ -107,30 +106,15 @@ public class Game {
 		this.board.clearHistory();
 	}
 
-	public Integer validateWord(Direction direction) throws BoxIndexOutOfBoard, IllegalMoveException {
-		ArrayList<Action> actions = this.board.getActionsHistory();
-
-		Boolean isLetterAround = false;
-		Integer i = 0;
-		
-		Action firstAction = actions.get(0);
-		
-		if (firstAction.getRowPosition() == 8 && firstAction.getColumnPosition() == 8) {
-			isLetterAround = true;
-		}
-		
-		
-		while (!isLetterAround && i < actions.size()) {
-			Action action = actions.get(i);
-			isLetterAround = board.isLetterAround(action.getRowPosition(), action.getColumnPosition(), actions);
-			i++;
+	public Integer validateWord(Direction direction) throws PositionOutOfBoard, IllegalMoveException {
+		if (!this.board.gameHaveNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
+			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
+			if (!isLetterAround) {
+				throw new IllegalMoveException();
+			}
 		}
 
-		if (!isLetterAround) {
-			throw new IllegalMoveException();
-		}
-
-		Integer score = ScoreCounter.countScore(this.board, actions, direction);
+		Integer score = ScoreCounter.countScore(this.board, direction);
 		Integer newScore = this.player.addScore(score);
 
 		this.clearRoundHistory();
@@ -139,16 +123,16 @@ public class Game {
 	}
 
 	public void switchTokenFromRack(Player player, Token token) throws EmptyBagException, TokenDoesntExists {
-		
-        if (this.bag.remainingTokens() == 0) {
-            throw new EmptyBagException();
-        }
+
+		if (this.bag.remainingTokens() == 0) {
+			throw new EmptyBagException();
+		}
 
 		player.removeTokenFromRack(token);
-        
-        this.fillUpPlayerRack(player);
-        this.bag.putToken(token);
-    }
+
+		this.fillUpPlayerRack(player);
+		this.bag.putToken(token);
+	}
 
 	public Integer roundNumber() {
 		return this.roundNumber.get();

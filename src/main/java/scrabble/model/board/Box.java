@@ -6,10 +6,16 @@ public class Box {
 
 	private final boolean middle;
 	private Token token;
-	
+	private Effect effect;
+
 	public Box(boolean middle, Token token) {
+		this(middle, token, Effect.NORMAL);
+	}
+	
+	public Box(boolean middle, Token token, Effect effect) {
 		this.middle = middle;
 		this.token = token;
+		this.effect = effect;
 	}
 	
 	public void setToken(Token token) {
@@ -46,5 +52,29 @@ public class Box {
 		}
 		
 		return this.token.getScore();
+	}
+
+	public Integer getLetterEffectMultiplicator() {
+		if (this.effect == Effect.DOUBLE_LETTER) {
+			return 2;
+		} else if (this.effect == Effect.TRIPLE_LETTER) {
+			return 3;
+		}
+		
+		return 1;
+	}
+
+	public Integer getWordEffectMultiplicator() {
+		if (this.effect == Effect.DOUBLE_WORD) {
+			return 2;
+		} else if (this.effect == Effect.TRIPLE_WORD) {
+			return 3;
+		}
+		
+		return 1;
+	}
+
+	public Effect effect() {
+		return this.effect;
 	}
 }
