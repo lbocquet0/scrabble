@@ -53,7 +53,7 @@ public class ScrabbleApplicationFX extends Application {
 	}
 
 	private static VBox getStatisticPane(Game game) {
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 
 		VBox statisticPane = new VBox();
 
@@ -74,7 +74,7 @@ public class ScrabbleApplicationFX extends Application {
 	private static void startGame(Stage primaryStage) {
 		Game game = new Game();
 		Board board = game.getBoard();
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 
 		try {
@@ -89,7 +89,7 @@ public class ScrabbleApplicationFX extends Application {
 		RackFXView rackFXView = new RackFXView(rack);
 		rackFXView.setAlignment(Pos.CENTER);
 		
-		VBox buttonsPanel = getButtons(game, primaryStage, player, rack, boardFXView, rackFXView);
+		VBox buttonsPanel = getButtons(game, primaryStage, boardFXView, rackFXView);
 
 		BorderPane root = new BorderPane();
 		root.setCenter(boardFXView);
@@ -151,7 +151,8 @@ public class ScrabbleApplicationFX extends Application {
 		return false;
 	}
 
-	private static void swapTokens(Game game, Player player) {
+	private static void swapTokens(Game game) {
+		Player player = game.getCurrentPlayer();
 		Rack rack = player.rack();
 
 		Token token = answerToken(rack, "Changer un jeton", "Sélectionnez le jeton que vous voulez échanger");
@@ -164,11 +165,13 @@ public class ScrabbleApplicationFX extends Application {
 		}
 	}
 
-	private static VBox getButtons(Game game, Stage primaryStage, Player player, Rack rack, BoardFXView boardFXView, RackFXView rackFXView) {
+	private static VBox getButtons(Game game, Stage primaryStage, BoardFXView boardFXView, RackFXView rackFXView) {
 		Button swapTokenButton = new Button("Changer un jeton");
+		Player player = game.getCurrentPlayer();
+		Rack rack = player.rack();
 		
 		swapTokenButton.setOnAction(e -> {
-			swapTokens(game, player);
+			swapTokens(game);
 			rackFXView.updateView();
 		});
 
@@ -194,7 +197,6 @@ public class ScrabbleApplicationFX extends Application {
 		});
 
 		Button validateButton = new Button("Valider le mot");
-		// Mouse pressed filter
 		validateButton.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -215,6 +217,9 @@ public class ScrabbleApplicationFX extends Application {
 				game.cancelLastWord();
 			}
 
+			Rack newRack = game.getCurrentPlayer().rack();			
+			rackFXView.setRack(newRack);
+
 			rackFXView.updateView();
 			boardFXView.updateView();
 			
@@ -223,15 +228,32 @@ public class ScrabbleApplicationFX extends Application {
 			}
 		});
 
+		Button passButton = new Button("Passer mon tour");
+		passButton.setOnAction(e -> {
+			try {
+				game.nextRound();
+			} catch (EmptyBagException err) {
+				displayError(err.getMessage());
+			}
+			Rack newRack = game.getCurrentPlayer().rack();
+			rackFXView.setRack(newRack);
+
+			rackFXView.updateView();
+			boardFXView.updateView();
+
+			if (game.bagIsEmpty() && rack.isEmpty()) {
+				endGame(game, primaryStage);
+			}
+		});
 
 		VBox buttonsPanel = new VBox();
-		buttonsPanel.getChildren().addAll(swapTokenButton, playButton, exitButton, validateButton);
+		buttonsPanel.getChildren().addAll(swapTokenButton, playButton, validateButton, passButton, exitButton);
 		
 		return buttonsPanel;
 	}
 
 	private static void endGame(Game game, Stage primaryStage) {
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		String message = "La partie est terminée !\n";
 		message += "Votre score est de " + player.score() + " points.\n";
 		message += "Voulez-vous rejouer ?";
