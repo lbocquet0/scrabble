@@ -261,8 +261,8 @@ public class Board {
 		Boolean result = false;
 
 		for (Action action : this.actionHistory.actions()) {
-			Integer row = action.getRowPosition();
-			Integer column = action.getColumnPosition();
+			Integer row = action.row();
+			Integer column = action.column();
 
 			if (!result) {
 				result = this.hasAlreadyPlayedLetterAround(row, column);

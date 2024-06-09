@@ -31,14 +31,14 @@ public class ActionTest {
 
 	@Test
 	void testGetRowPosition() {
-		Integer rowPosition = action.getRowPosition();
+		Integer rowPosition = action.row();
 		
 		assertEquals(ROW, rowPosition);
 	}
 
 	@Test
 	void testGetColumnPosition() {
-		Integer columnPosition = action.getColumnPosition();
+		Integer columnPosition = action.column();
 		
 		assertEquals(COLUMN, columnPosition);
 	}
