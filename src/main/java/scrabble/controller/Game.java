@@ -16,14 +16,14 @@ import scrabble.utils.exceptions.*;
 
 public class Game {
 
-	private Player player;
+	private Player currentPlayer;
 	private Board board;
 	private Bag bag;
 	private IntegerProperty roundNumber;
 
 	public Game() {
 		this.bag = new Bag();
-		this.player = new Player();
+		this.currentPlayer = new Player();
 		this.board = new Board();
 
 		this.roundNumber = new SimpleIntegerProperty(1);
@@ -38,11 +38,11 @@ public class Game {
 	}
 
 	public Player getPlayer() {
-		return this.player;
+		return this.currentPlayer;
 	}
 
 	public void initialize() throws EmptyBagException {
-		this.fullFillPlayerRack(this.player);
+		this.fullFillPlayerRack(this.currentPlayer);
 	}
 
 	public Boolean bagIsEmpty() {
@@ -50,7 +50,7 @@ public class Game {
 	}
 
 	public Boolean rackIsEmpty() {
-		return this.player.remainingTokenInRack() == 0;
+		return this.currentPlayer.remainingTokenInRack() == 0;
 	}
 
 	public void fillUpPlayerRack(Player player) throws EmptyBagException {
@@ -77,12 +77,12 @@ public class Game {
 			}
 		}
 
-		this.player.removeTokenFromRack(token);
+		this.currentPlayer.removeTokenFromRack(token);
 
 		try {
 			this.board.placeToken(token, row, column);
 		} catch (Exception e) {
-			this.player.addTokenToRack(token);
+			this.currentPlayer.addTokenToRack(token);
 
 			throw e;
 		}
@@ -92,14 +92,14 @@ public class Game {
 		ArrayList<Token> tokens = this.board.cancelLastWord();
 
 		for (Token token : tokens) {
-			this.player.addTokenToRack(token);
+			this.currentPlayer.addTokenToRack(token);
 		}
 	}
 
 	public void cancelLastAction() {
 		Token token = this.board.cancelLastAction();
 		if (token != null) {
-			this.player.addTokenToRack(token);
+			this.currentPlayer.addTokenToRack(token);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Game {
 		}
 
 		Integer score = ScoreCounter.countScore(this.board, direction);
-		Integer newScore = this.player.addScore(score);
+		Integer newScore = this.currentPlayer.addScore(score);
 
 		this.clearRoundHistory();
 
@@ -141,7 +141,7 @@ public class Game {
 
 	public Integer nextRound() throws EmptyBagException {
 		this.roundNumber.set(this.roundNumber() + 1);
-		this.fullFillPlayerRack(this.player);
+		this.fullFillPlayerRack(this.currentPlayer);
 
 		return this.roundNumber();
 	}
