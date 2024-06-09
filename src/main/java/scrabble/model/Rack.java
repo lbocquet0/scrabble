@@ -27,39 +27,37 @@ public class Rack {
 	public Token token(int index) {
 		return this.tokens.get(index);
 	}
-	
+
 	public boolean removeToken(Token token) throws TokenDoesntExists {
 		if (this.tokens.contains(token)) {
 			this.tokens.remove(token);
 			return true;
 		}
-		
+
 		throw new TokenDoesntExists();
 	}
 
 	public void addToken(Token token) {
 		this.tokens.add(token);
 	}
-	
+
 	public void display() {
 		String HORIZONTAL_LINE = "---------------------------------------------------------";
-		
+
 		Console.message(HORIZONTAL_LINE);
-				
-		if(this.isEmpty()) {
-			for(int i=0;i < MAX_TOKENS_AMOUNT; i++) {
+
+		if (this.isEmpty()) {
+			for (int i = 0; i < MAX_TOKENS_AMOUNT; i++) {
 				Console.message("   |");
 			}
-		}else {
-			
+		} else {
+
 			String line = "|  ";
-			// TODO :  to refactor with a for each loop
-			for(int i=0;i < MAX_TOKENS_AMOUNT; i++) {
-				Token token = this.token(i);
-				
+			for (Token token : this.tokens()) {
+
 				if (token != null) {
 					String tokenDisplay = token.display();
-					
+
 					if (tokenDisplay.length() == 3) {
 						line = line + tokenDisplay + "  |  ";
 					} else {
@@ -78,7 +76,7 @@ public class Rack {
 		if (this.remainingTokens() == 0) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
