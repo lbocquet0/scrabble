@@ -29,7 +29,7 @@ public class ScrabbleApplicationConsole {
 			return;
 		}
 		
-		Player player = game.getPlayer();
+		Player player = game.getCurrentPlayer();
 		Board board = game.getBoard();
 		Rack rack = player.rack();
 
@@ -225,7 +225,7 @@ public class ScrabbleApplicationConsole {
 
 			game.clearRoundHistory();
 			try {
-				game.nextRound();
+				game.fillUpPlayerRack(player);
 			} catch (EmptyBagException e) {
 				
 			}
