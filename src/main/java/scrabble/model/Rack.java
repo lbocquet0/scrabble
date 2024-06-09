@@ -89,4 +89,16 @@ public class Rack {
 
 		return -1;
 	}
+
+	public void swapTokens(Token source, Token target) throws TokenDoesntExists {
+		int sourceIndex = this.tokens.indexOf(source);
+		int targetIndex = this.tokens.indexOf(target);
+
+		if (sourceIndex == -1 || targetIndex == -1) {
+			throw new TokenDoesntExists();
+		}
+
+		this.tokens.set(sourceIndex, target);
+		this.tokens.set(targetIndex, source);
+	}
 }
