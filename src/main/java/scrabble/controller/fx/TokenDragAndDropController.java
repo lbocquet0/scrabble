@@ -6,10 +6,12 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import scrabble.application.ScrabbleApplicationFX;
 import scrabble.controller.Game;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
 import scrabble.model.board.Box;
+import scrabble.model.token.Joker;
 import scrabble.model.token.Token;
 import scrabble.utils.Position;
 import scrabble.utils.exceptions.TokenDoesntExists;
@@ -126,6 +128,11 @@ public class TokenDragAndDropController {
 				BoardFXView boardFxView = (BoardFXView) target.getParent();
 
 				Token token = source.token();
+				if (token.isJoker()) {
+					Joker joker = (Joker) token;
+					ScrabbleApplicationFX.updateJokerLetter(joker);
+				}
+
 				Box box = target.box();
 				Board board = boardFxView.board();
 

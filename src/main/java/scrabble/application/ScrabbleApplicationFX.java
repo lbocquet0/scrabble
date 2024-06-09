@@ -307,7 +307,7 @@ public class ScrabbleApplicationFX extends Application {
 		}
 	}
 
-	private static void updateJokerLetter(Joker joker) {
+	public static void updateJokerLetter(Joker joker) {
 		FrenchLetter[] choices = FrenchLetter.values();
 		Arrays.sort(choices, new FrenchLetterComparator());
 		
