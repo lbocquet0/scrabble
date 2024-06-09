@@ -37,6 +37,7 @@ public class ScoreCounter {
 
 	public static Integer countScore(Board board, Direction direction) {
 		ActionHistory actionHistory = board.getActionsHistory();
+		System.out.println(actionHistory.actions());
 		
 		if (actionHistory.isEmpty()) {
 			return 0;
@@ -49,6 +50,7 @@ public class ScoreCounter {
 		ArrayList<Box> wordLetters = null;
 		try {
 			wordLetters = board.getWord(firstAction.row(), firstAction.column(), direction);
+			System.out.println(wordLetters);
 		} catch (PositionOutOfBoard e) {
 			return 0;
 		} catch (WordNotFoundException e) {

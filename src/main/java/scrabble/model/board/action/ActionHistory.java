@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import scrabble.model.board.Box;
 import scrabble.model.token.Token;
+import scrabble.utils.Direction;
 
 public class ActionHistory {
 	private ArrayList<Action> actions;
@@ -101,5 +102,48 @@ public class ActionHistory {
 		}
 
 		return false;
+	}
+
+	public Direction getDirectionByActions() {
+		if (this.actions.isEmpty()) {
+			return null;
+		}
+
+		if (this.actions.size() == 1) {
+			return Direction.HORIZONTAL;
+		}
+
+		Action firstAction = this.actions.get(0);
+		Action secondAction = this.actions.get(1);
+
+		if (firstAction.row() == secondAction.row()) {
+			return Direction.HORIZONTAL;
+		}
+
+		return Direction.VERTICAL;
+	
+	}
+
+	public boolean isAllActionsInSameDirection() {
+		if (this.actions.size() < 2) {
+			return true;
+		}
+
+		Direction direction = this.getDirectionByActions();
+
+		Action firstAction = this.actions.get(0);
+		for (int i = 1; i < this.actions.size(); i++) {
+			Action action = this.actions.get(i);
+
+			if (direction == Direction.HORIZONTAL && firstAction.row() != action.row()) {
+				return false;
+			}
+
+			if (direction == Direction.VERTICAL && firstAction.column() != action.column()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

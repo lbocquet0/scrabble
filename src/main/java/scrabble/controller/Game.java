@@ -130,6 +130,10 @@ public class Game {
 			}
 		}
 
+		if (!this.board.isAllActionsInSameDirection()) {
+			throw new IllegalMoveException();
+		}
+
 		if (!this.board.gameIsNotStarted() && !this.board.isMiddleBoxInActionHistory()) {
 			Boolean isLetterAround = this.board.isAlreadyPlayedLetterAroundActions();
 			if (!isLetterAround) {

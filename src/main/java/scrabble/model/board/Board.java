@@ -355,4 +355,8 @@ public class Board {
 			return position;
 		}
 	}
+
+	public boolean isAllActionsInSameDirection() {
+		return this.actionHistory.isAllActionsInSameDirection();
+	}
 }
