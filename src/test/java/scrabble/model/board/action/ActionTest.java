@@ -45,14 +45,14 @@ public class ActionTest {
 
 	@Test
 	void testGetBox() {
-		Box box = action.getBox();
+		Box box = action.box();
 		
 		assertEquals(box, box);
 	}
 
 	@Test
 	void testGetToken() {
-		Token token = action.getToken();
+		Token token = action.token();
 		
 		assertEquals(token, token);
 	}

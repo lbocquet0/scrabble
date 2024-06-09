@@ -95,7 +95,7 @@ public class ActionHistory {
 
 	public boolean boxIsInActions(Box box) {
 		for (Action action : this.actions) {
-			if (action.getBox().equals(box)) {
+			if (action.box().equals(box)) {
 				return true;
 			}
 		}

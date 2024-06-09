@@ -27,11 +27,11 @@ public class Action {
 		return column;
 	}
 
-	public Box getBox() {
+	public Box box() {
 		return box;
 	}
 
-	public Token getToken() {
+	public Token token() {
 		return box.token();
 	}
 
