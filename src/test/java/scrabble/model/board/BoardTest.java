@@ -266,4 +266,12 @@ public class BoardTest {
 
 		assertTrue(board.hasAlreadyPlayedLetterAround(3, 4));
 	}
+
+	@Test
+	public void shouldGetWordThrowPositionOutOfBoardException() {
+
+		assertThrows(PositionOutOfBoard.class, () -> {
+			board.getWord(0, 0, Direction.HORIZONTAL);
+		});
+	}
 }
