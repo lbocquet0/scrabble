@@ -100,7 +100,7 @@ class GameTest {
     }
     
     @Test
-    void test_playLetter_in_general_condition() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException {
+    void test_playLetter_in_general_condition() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
     	game.initialize();
     	Player player = game.getPlayer();
     	Rack rack = player.rack();
