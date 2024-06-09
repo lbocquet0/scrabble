@@ -14,7 +14,7 @@ public class JokerFXView extends TokenFXView {
 		Label letterLabel = this.getLetterLabel();
 		Label pointsLabel = this.getPointsLabel();
 
-		Joker joker = (Joker) this.getToken();
+		Joker joker = (Joker) this.token();
 
 		if (joker.haveLetter()) {
 			FrenchLetter letter = joker.getLetter();

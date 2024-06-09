@@ -66,12 +66,11 @@ public class TokenDragAndDropController {
 			public void handle(DragEvent event) {
 
 				TokenFXView source = (TokenFXView) event.getGestureSource();
-				System.out.println("ok");
 
 				Rack rack = rackView.rack();
 
 				try {
-					rack.swapTokens(source.getToken(), target.getToken());
+					rack.swapTokens(source.token(), target.token());
 					event.setDropCompleted(true);
 
 					rackView.updateView();
