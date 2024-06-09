@@ -274,4 +274,17 @@ public class BoardTest {
 			board.getWord(0, 0, Direction.HORIZONTAL);
 		});
 	}
+
+	@Test
+	public void testIsAlreadyPlayedLetterAroundActions() throws PositionOutOfBoard, EmptyBoxException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		board.setToken(token, 4, 5);
+
+		assertTrue(board.isAlreadyPlayedLetterAroundActions());
+	}
 }
