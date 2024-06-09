@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import scrabble.model.board.action.ActionHistory;
 import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
+import scrabble.utils.exceptions.EmptyBoxException;
 import scrabble.utils.exceptions.PositionOutOfBoard;
 import scrabble.utils.exceptions.WordNotFoundException;
 
@@ -219,5 +221,49 @@ public class BoardTest {
 
 		assertThat(tokens).hasSize(6);
 		assertThat(tokens.get(0)).isEqualTo(token);
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundLeft() throws PositionOutOfBoard, EmptyBoxException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(4, 5));
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundRight() throws PositionOutOfBoard, EmptyBoxException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(4, 3));
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundTop() throws PositionOutOfBoard, EmptyBoxException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(5, 4));
+	}
+
+	@Test
+	public void testHasAlreadyPlayedLetterAroundBottom() throws PositionOutOfBoard, EmptyBoxException {
+
+		ActionHistory actionHistory = board.getActionsHistory();
+
+		board.setToken(token, 4, 4);
+		actionHistory.clear();
+
+		assertTrue(board.hasAlreadyPlayedLetterAround(3, 4));
 	}
 }
