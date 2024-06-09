@@ -16,7 +16,7 @@ import scrabble.utils.exceptions.*;
 
 public class Game {
 
-	private static int MAX_PLAYERS = 2;
+	public static int MAX_PLAYERS = 2;
 
 	private Player currentPlayer;
 	private ArrayList<Player> players;

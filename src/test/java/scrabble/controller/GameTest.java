@@ -51,6 +51,11 @@ class GameTest {
     	
     	assertEquals(0, playerRackCount);
     }
+
+	@Test
+	void should_contains_max_players_at_initialize() {
+		assertThat(game.getPlayers()).hasSize(Game.MAX_PLAYERS);
+	}
     
     @Test
     void should_return_a_player_with_full_rack_on_initialize() throws EmptyBagException {
@@ -357,6 +362,25 @@ class GameTest {
 		game.playLetter(token, 8, 8);
 
 		assertThrows(CantPlaySingleLetterException.class, () -> {
+			game.validateWord(Direction.HORIZONTAL);
+		});
+	}
+
+	@Test
+	void should_throw_exception_if_all_letters_are_not_in_same_direction() throws EmptyBagException, OccupiedBoxException, PositionOutOfBoard, TokenDoesntExists, EmptyBoxException, IllegalMoveException {
+		game.initialize();
+
+		Player player = game.getCurrentPlayer();
+		Rack rack = player.rack();
+		Token token = rack.token(0);
+		Token token2 = rack.token(1);
+		Token token3 = rack.token(2);
+
+		game.playLetter(token, 8, 8);
+		game.playLetter(token2, 9, 8);
+		game.playLetter(token3, 8, 10);
+
+		assertThrows(IllegalMoveException.class, () -> {
 			game.validateWord(Direction.HORIZONTAL);
 		});
 	}
