@@ -13,7 +13,6 @@ import scrabble.model.Bag;
 import scrabble.model.Player;
 import scrabble.model.Rack;
 import scrabble.model.board.Board;
-import scrabble.model.token.FrenchLetter;
 import scrabble.model.token.Token;
 import scrabble.utils.Direction;
 import scrabble.utils.exceptions.*;
